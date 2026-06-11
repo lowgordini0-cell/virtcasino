@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VirtCasino — Crash</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f1923; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 100vh; gap: 24px; padding: 40px;
+    }
+    .login-logo { font-size: 36px; font-weight: 900; color: #57FFA5; letter-spacing: -1px; }
+    .login-logo span { color: #fff; }
+    .login-card {
+      background: #1a2332; border: 1px solid #2d3f55; border-radius: 16px;
+      padding: 32px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .login-title { font-size: 20px; font-weight: 700; color: #fff; text-align: center; }
+    .login-subtitle { font-size: 13px; color: #64748b; text-align: center; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group label { font-size: 13px; color: #94a3b8; font-weight: 500; }
+    .input-group input {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 11px 14px; color: #fff; font-size: 14px; outline: none; transition: border-color 0.2s; width: 100%;
+    }
+    .input-group input:focus { border-color: #57FFA5; }
+    .btn-discord {
+      background: #5865F2; color: #fff; border: none; border-radius: 8px; padding: 13px;
+      font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: 8px; transition: background 0.2s;
+    }
+    .btn-discord:hover { background: #4752c4; }
+    .divider { display: flex; align-items: center; gap: 12px; color: #2d3f55; font-size: 12px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #2d3f55; }
+    .btn-login {
+      background: #57FFA5; color: #0f1923; border: none; border-radius: 8px; padding: 13px;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-login:hover { background: #3de88f; }
+
+    /* ── MAIN ── */
+    #main-screen { display: none; flex-direction: column; min-height: 100vh; }
+
+    .navbar {
+      background: #1a2332; border-bottom: 1px solid #2d3f55; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: sticky; top: 0; z-index: 40;
+    }
+    .nav-logo { font-size: 20px; font-weight: 900; color: #57FFA5; letter-spacing: -0.5px; flex-shrink: 0; }
+    .nav-logo span { color: #fff; }
+    .nav-games { display: flex; gap: 4px; }
+    .nav-game-btn {
+      background: transparent; border: 1px solid transparent; border-radius: 8px;
+      color: #64748b; padding: 6px 12px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .nav-game-btn.active { background: #0f1923; border-color: #57FFA5; color: #57FFA5; }
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .balance-pill {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 20px;
+      padding: 6px 14px; font-size: 13px; font-weight: 600; color: #57FFA5;
+      display: flex; align-items: center; gap: 6px; cursor: pointer;
+    }
+    .coin-icon {
+      width: 16px; height: 16px; background: #57FFA5; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 9px; color: #0f1923; font-weight: 900;
+    }
+    .btn-admin {
+      background: #f59e0b; color: #0f1923; border: none; border-radius: 20px;
+      padding: 6px 14px; font-size: 12px; font-weight: 800; cursor: pointer;
+      transition: all 0.2s; display: none;
+    }
+    .btn-admin:hover { background: #fbbf24; transform: scale(1.05); }
+    .username-nav { font-size: 13px; font-weight: 500; color: #94a3b8; }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #5865F2, #57FFA5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: #fff; cursor: pointer;
+    }
+
+    /* ── MODALS ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100;
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: #1a2332; border: 1px solid #2d3f55; border-radius: 16px;
+      padding: 28px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .modal-title { font-size: 18px; font-weight: 700; color: #fff; }
+    .modal-subtitle { font-size: 13px; color: #64748b; }
+    .modal-input {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 11px 14px; color: #fff; font-size: 14px; outline: none; width: 100%;
+      transition: border-color 0.2s;
+    }
+    .modal-input:focus { border-color: #57FFA5; }
+    .modal-row { display: flex; gap: 8px; }
+    .btn-modal-confirm {
+      background: #57FFA5; color: #0f1923; border: none; border-radius: 8px;
+      padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; flex: 1;
+    }
+    .btn-modal-confirm:hover { background: #3de88f; }
+    .btn-modal-cancel {
+      background: transparent; color: #64748b; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 11px 20px; font-size: 14px; cursor: pointer;
+    }
+    .btn-modal-cancel:hover { color: #94a3b8; }
+    .modal-error { font-size: 13px; color: #ef4444; display: none; }
+    .modal-error.show { display: block; }
+
+    /* Admin modal */
+    .admin-coins-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .admin-coin-btn {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      color: #57FFA5; font-size: 14px; font-weight: 700; padding: 10px;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .admin-coin-btn:hover { border-color: #57FFA5; background: rgba(87,255,165,0.08); }
+    .admin-coin-btn.infini {
+      grid-column: 1/-1; background: rgba(245,158,11,0.1);
+      border-color: #f59e0b; color: #f59e0b; font-size: 15px;
+    }
+    .admin-coin-btn.infini:hover { background: rgba(245,158,11,0.2); }
+
+    /* Transfer modal */
+    .transfer-info {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 12px; font-size: 13px; color: #94a3b8;
+    }
+    .online-users { display: flex; flex-direction: column; gap: 6px; max-height: 160px; overflow-y: auto; }
+    .online-user-btn {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 10px 12px; display: flex; align-items: center; gap: 10px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .online-user-btn:hover { border-color: #57FFA5; }
+    .online-user-btn.selected { border-color: #57FFA5; background: rgba(87,255,165,0.08); }
+    .ou-avatar {
+      width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #5865F2, #57FFA5);
+      display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .ou-name { font-size: 13px; color: #e2e8f0; font-weight: 500; }
+    .ou-bal { font-size: 12px; color: #57FFA5; margin-left: auto; }
+
+    /* ── GAME LAYOUT ── */
+    .game-layout { display: grid; grid-template-columns: 250px 1fr; flex: 1; }
+
+    .bet-panel {
+      background: #1a2332; border-right: 1px solid #2d3f55;
+      padding: 16px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .panel-title { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+    .bet-amount-label { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+    .bet-input-wrap { position: relative; }
+    .bet-input {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 10px 36px 10px 14px; color: #fff; font-size: 16px; font-weight: 600;
+      width: 100%; outline: none; transition: border-color 0.2s;
+    }
+    .bet-input:focus { border-color: #57FFA5; }
+    .bet-coin-icon { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 12px; color: #57FFA5; font-weight: 700; }
+    .bet-quick { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .bet-quick-btn {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 6px;
+      color: #94a3b8; font-size: 12px; font-weight: 600; padding: 7px;
+      cursor: pointer; transition: all 0.2s; text-align: center;
+    }
+    .bet-quick-btn:hover { border-color: #57FFA5; color: #57FFA5; }
+
+    .auto-cashout-label {
+      font-size: 13px; color: #94a3b8; margin-bottom: 6px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .toggle {
+      width: 34px; height: 18px; background: #2d3f55; border-radius: 9px;
+      cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle.on { background: #57FFA5; }
+    .toggle::after {
+      content: ''; position: absolute; width: 14px; height: 14px; background: #fff;
+      border-radius: 50%; top: 2px; left: 2px; transition: left 0.2s;
+    }
+    .toggle.on::after { left: 18px; }
+    .auto-cashout-input {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 10px 14px; color: #fff; font-size: 14px; width: 100%; outline: none;
+    }
+
+    .btn-bet {
+      background: #57FFA5; color: #0f1923; border: none; border-radius: 10px;
+      padding: 14px; font-size: 15px; font-weight: 800; cursor: pointer;
+      transition: all 0.15s; width: 100%;
+    }
+    .btn-bet:hover { background: #3de88f; transform: translateY(-1px); }
+    .btn-bet:active { transform: translateY(0); }
+    .btn-bet.cashout { background: #f59e0b; color: #fff; }
+    .btn-bet.cashout:hover { background: #d97706; }
+    .btn-bet:disabled { background: #2d3f55; color: #64748b; cursor: not-allowed; transform: none; }
+
+    .my-bet-info {
+      background: #0f1923; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 12px; font-size: 13px; display: none;
+    }
+    .my-bet-info.show { display: block; }
+    .my-bet-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .my-bet-row:last-child { margin-bottom: 0; }
+    .mbl { color: #64748b; }
+    .mbv { color: #fff; font-weight: 600; }
+    .mbv.green { color: #57FFA5; }
+    .mbv.yellow { color: #f59e0b; }
+
+    .btn-transfer {
+      background: transparent; color: #94a3b8; border: 1px solid #2d3f55; border-radius: 8px;
+      padding: 9px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%;
+    }
+    .btn-transfer:hover { border-color: #57FFA5; color: #57FFA5; }
+
+    /* ── CRASH AREA ── */
+    .crash-area { display: flex; flex-direction: column; background: #0f1923; padding: 14px; gap: 10px; }
+    .crash-canvas-wrap {
+      position: relative; background: #111d2c; border-radius: 12px;
+      border: 1px solid #1e3048; overflow: hidden; flex: 1; min-height: 260px;
+    }
+    canvas { display: block; width: 100%; height: 100%; }
+    .multiplier-display {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 56px; font-weight: 900; color: #57FFA5; letter-spacing: -2px; pointer-events: none;
+    }
+    .multiplier-display.crashed { color: #ef4444; }
+    .multiplier-display.waiting { color: #64748b; font-size: 20px; font-weight: 600; letter-spacing: 0; }
+    .phase-badge {
+      position: absolute; top: 12px; left: 12px; padding: 4px 10px;
+      border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .phase-badge.waiting { background: #1e3048; color: #64748b; }
+    .phase-badge.running { background: rgba(87,255,165,0.15); color: #57FFA5; }
+    .phase-badge.crashed { background: rgba(239,68,68,0.15); color: #ef4444; }
+
+    .history-bar { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0; scrollbar-width: none; }
+    .history-bar::-webkit-scrollbar { display: none; }
+    .hist-pill {
+      flex-shrink: 0; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
+    }
+    .hist-pill.low { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
+    .hist-pill.mid { background: rgba(87,255,165,0.15); color: #57FFA5; border: 1px solid rgba(87,255,165,0.2); }
+    .hist-pill.high { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+    .hist-pill.vhigh { background: rgba(139,92,246,0.15); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
+
+    .live-bets-panel { background: #1a2332; border-top: 1px solid #2d3f55; padding: 10px 16px; }
+    .lb-title { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .lb-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+    .lb-table th { color: #64748b; text-align: left; padding: 3px 8px; font-weight: 500; }
+    .lb-table td { color: #94a3b8; padding: 4px 8px; border-top: 1px solid #1e2d3d; }
+    .lb-table td.green { color: #57FFA5; font-weight: 600; }
+    .lb-table td.yellow { color: #f59e0b; font-weight: 600; }
+
+    /* ── NOTIF TOAST ── */
+    .notif {
+      position: fixed; bottom: 24px; right: 24px; background: #1a2332;
+      border: 1px solid #2d3f55; border-radius: 12px; padding: 14px 20px;
+      font-size: 14px; color: #fff; font-weight: 500; opacity: 0;
+      transform: translateY(12px); transition: all 0.3s; pointer-events: none; z-index: 200; max-width: 300px;
+    }
+    .notif.show { opacity: 1; transform: translateY(0); }
+    .notif.win { border-color: #57FFA5; }
+    .notif.loss { border-color: #ef4444; }
+    .notif.coins { border-color: #f59e0b; }
+    .notif.transfer { border-color: #5865F2; }
+
+    @media (max-width: 640px) {
+      .game-layout { grid-template-columns: 1fr; }
+      .bet-panel { border-right: none; border-bottom: 1px solid #2d3f55; }
+      .nav-games { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="login-screen">
+  <div class="login-logo">VIRT<span>CASINO</span></div>
+  <div class="login-card">
+    <div class="login-title">Connexion</div>
+    <div class="login-subtitle">Coins virtuels · Aucun vrai argent 🎮</div>
+    <button class="btn-discord" onclick="loginDiscord()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.079.11 18.1.124 18.116a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.030z"/></svg>
+      Connexion Discord (bientôt)
+    </button>
+    <div class="divider">ou jouer maintenant</div>
+    <div class="input-group">
+      <label>Pseudo</label>
+      <input type="text" id="username-input" placeholder="Ton pseudo..." maxlength="20" />
+    </div>
+    <button class="btn-login" onclick="loginGuest()">Jouer →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div id="main-screen">
+  <nav class="navbar">
+    <div class="nav-logo">VIRT<span>CASINO</span></div>
+    <div class="nav-games">
+      <button class="nav-game-btn active">💥 Crash</button>
+      <button class="nav-game-btn" style="opacity:0.4;cursor:not-allowed" title="Bientôt">💣 Mines</button>
+      <button class="nav-game-btn" style="opacity:0.4;cursor:not-allowed" title="Bientôt">🎰 Slots</button>
+    </div>
+    <div class="nav-right">
+      <div class="balance-pill" onclick="openTransferModal()">
+        <span class="coin-icon">V</span>
+        <span id="balance-display">1000</span>
+      </div>
+      <button class="btn-admin" id="admin-btn" onclick="openAdminModal()">⚡ Admin</button>
+      <div class="username-nav" id="username-display"></div>
+      <div class="user-avatar" id="user-avatar">?</div>
+    </div>
+  </nav>
+
+  <div class="game-layout">
+    <!-- BET PANEL -->
+    <div class="bet-panel">
+      <div class="panel-title">Mise</div>
+      <div>
+        <div class="bet-amount-label">Montant</div>
+        <div class="bet-input-wrap">
+          <input type="number" class="bet-input" id="bet-amount" value="10" min="1" />
+          <span class="bet-coin-icon">V</span>
+        </div>
+      </div>
+      <div class="bet-quick">
+        <button class="bet-quick-btn" onclick="quickBet(0.5)">½</button>
+        <button class="bet-quick-btn" onclick="quickBet(2)">×2</button>
+        <button class="bet-quick-btn" onclick="quickBet('min')">Min</button>
+        <button class="bet-quick-btn" onclick="quickBet('max')">Max</button>
+      </div>
+      <div>
+        <div class="auto-cashout-label">
+          <span>Auto Cash-out</span>
+          <div class="toggle" id="auto-toggle" onclick="toggleAuto()"></div>
+        </div>
+        <input type="number" class="auto-cashout-input" id="auto-cashout-val" value="2.00" min="1.01" step="0.1" />
+      </div>
+      <button class="btn-bet" id="main-btn" onclick="handleBet()">Miser</button>
+      <div class="my-bet-info" id="my-bet-info">
+        <div class="my-bet-row"><span class="mbl">Mise</span><span class="mbv" id="info-bet">-</span></div>
+        <div class="my-bet-row"><span class="mbl">Multiplicateur</span><span class="mbv yellow" id="info-mult">1.00×</span></div>
+        <div class="my-bet-row"><span class="mbl">Gain potentiel</span><span class="mbv green" id="info-gain">-</span></div>
+      </div>
+      <button class="btn-transfer" onclick="openTransferModal()">💸 Envoyer des coins</button>
+    </div>
+
+    <!-- CRASH AREA -->
+    <div class="crash-area">
+      <div class="history-bar" id="history-bar"></div>
+      <div class="crash-canvas-wrap">
+        <canvas id="crash-canvas"></canvas>
+        <div class="multiplier-display waiting" id="mult-display">En attente...</div>
+        <div class="phase-badge waiting" id="phase-badge">Attente</div>
+      </div>
+      <div class="live-bets-panel">
+        <div class="lb-title">Mises en direct</div>
+        <table class="lb-table">
+          <thead><tr><th>Joueur</th><th>Mise</th><th>Cash-out</th><th>Gain</th></tr></thead>
+          <tbody id="live-bets-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL ADMIN ═══════════════ -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal">
+    <div class="modal-title">⚡ Panel Admin</div>
+    <div class="modal-subtitle">Mot de passe requis</div>
+    <div id="admin-pw-step">
+      <input type="password" class="modal-input" id="admin-pw-input" placeholder="Mot de passe..." style="margin-bottom:12px" />
+      <div class="modal-error" id="admin-pw-error">Mot de passe incorrect</div>
+      <div class="modal-row" style="margin-top:12px">
+        <button class="btn-modal-cancel" onclick="closeAdminModal()">Annuler</button>
+        <button class="btn-modal-confirm" onclick="checkAdminPw()">Valider</button>
+      </div>
+    </div>
+    <div id="admin-coins-step" style="display:none">
+      <div class="modal-subtitle">Ajouter des coins à ton compte</div>
+      <div class="admin-coins-grid">
+        <button class="admin-coin-btn" onclick="adminAddCoins(1000)">+1 000</button>
+        <button class="admin-coin-btn" onclick="adminAddCoins(5000)">+5 000</button>
+        <button class="admin-coin-btn" onclick="adminAddCoins(10000)">+10 000</button>
+        <button class="admin-coin-btn" onclick="adminAddCoins(50000)">+50 000</button>
+        <button class="admin-coin-btn infini" onclick="adminAddCoins(Infinity)">♾️ Coins infinis</button>
+      </div>
+      <div class="modal-row" style="margin-top:8px">
+        <button class="btn-modal-cancel" onclick="closeAdminModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODAL TRANSFERT ═══════════════ -->
+<div class="modal-overlay" id="transfer-modal">
+  <div class="modal">
+    <div class="modal-title">💸 Envoyer des coins</div>
+    <div class="modal-subtitle">Sélectionne un joueur en ligne</div>
+    <div class="online-users" id="online-users-list">
+      <div style="color:#64748b;font-size:13px;padding:8px">Aucun autre joueur en ligne...</div>
+    </div>
+    <div class="input-group">
+      <label>Ou entrer un pseudo manuellement</label>
+      <input type="text" class="modal-input" id="transfer-target" placeholder="Pseudo du destinataire..." />
+    </div>
+    <div class="input-group">
+      <label>Montant à envoyer</label>
+      <input type="number" class="modal-input" id="transfer-amount" placeholder="Ex: 500" min="1" />
+    </div>
+    <div class="modal-error" id="transfer-error"></div>
+    <div class="modal-row">
+      <button class="btn-modal-cancel" onclick="closeTransferModal()">Annuler</button>
+      <button class="btn-modal-confirm" onclick="doTransfer()">Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ NOTIF ═══════════════ -->
+<div class="notif" id="notif"></div>
+
+<script>
+// ── CONFIG ──
+// Le mot de passe admin est défini ici — change-le !
+const ADMIN_PASSWORD = 'monmotdepasse123';
+
+// ── STATE ──
+let balance = 1000;
+let username = '';
+let isAdmin = false;
+let gameState = 'waiting';
+let currentMult = 1.0;
+let crashAt = 1.0;
+let betPlaced = false;
+let cashedOut = false;
+let betAmount = 10;
+let autoEnabled = false;
+let animFrame = null;
+let history = [];
+let gameStartTime = null;
+let liveBots = [];
+
+// Simule les joueurs en ligne (dans un vrai site, ce serait via WebSocket)
+let onlinePlayers = [];
+
+const FAKE_NAMES = ['Shadow_42','NightWolf','Crypto_K','FastBet','LuckyAce','ProGambler','XxBetterxX','ZeroLoss','MaxWin','StarPlayer','QuickDraw','BetMaster','DarkMoon','SpeedRun','GoldBet'];
+
+// ── CRASH FORMULA (identique à Stake) ──
+function stakeCrashPoint() {
+  const r = Math.random();
+  if (r < 0.01) return 1.0; // 1% house edge force crash à 1×
+  return Math.max(1.0, Math.round((99 / (1 - r)) * 100) / 100);
+}
+
+// ── LOGIN ──
+function loginDiscord() {
+  showNotif('Connexion Discord bientôt disponible — utilise un pseudo pour l\'instant', '');
+}
+
+function loginGuest() {
+  const inp = document.getElementById('username-input');
+  const val = inp.value.trim();
+  if (!val) { inp.focus(); inp.style.borderColor = '#ef4444'; setTimeout(()=>inp.style.borderColor='',1000); return; }
+  username = val;
+  // Génère quelques "joueurs en ligne" simulés
+  onlinePlayers = FAKE_NAMES.slice(0, 5 + Math.floor(Math.random() * 4)).map(n => ({
+    name: n, balance: Math.floor(Math.random() * 5000) + 100
+  }));
+  startGame();
+}
+
+function startGame() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-screen').style.display = 'flex';
+  document.getElementById('username-display').textContent = username;
+  document.getElementById('user-avatar').textContent = username[0].toUpperCase();
+  updateBalance();
+  setupCanvas();
+  scheduleRound();
+}
+
+// ── BALANCE ──
+function updateBalance() {
+  const el = document.getElementById('balance-display');
+  el.textContent = balance === Infinity ? '∞' : balance.toLocaleString('fr-FR');
+}
+
+function quickBet(v) {
+  const inp = document.getElementById('bet-amount');
+  let cur = parseFloat(inp.value) || 10;
+  if (v === 'min') inp.value = 1;
+  else if (v === 'max') inp.value = balance === Infinity ? 100000 : Math.min(balance, 100000);
+  else inp.value = Math.max(1, Math.round(cur * v));
+}
+
+function toggleAuto() {
+  autoEnabled = !autoEnabled;
+  document.getElementById('auto-toggle').classList.toggle('on', autoEnabled);
+}
+
+// ── ADMIN MODAL ──
+function openAdminModal() {
+  document.getElementById('admin-modal').classList.add('open');
+  document.getElementById('admin-pw-step').style.display = 'block';
+  document.getElementById('admin-coins-step').style.display = 'none';
+  document.getElementById('admin-pw-input').value = '';
+  document.getElementById('admin-pw-error').classList.remove('show');
+  setTimeout(() => document.getElementById('admin-pw-input').focus(), 100);
+}
+function closeAdminModal() { document.getElementById('admin-modal').classList.remove('open'); }
+
+function checkAdminPw() {
+  const pw = document.getElementById('admin-pw-input').value;
+  if (pw === ADMIN_PASSWORD) {
+    document.getElementById('admin-pw-step').style.display = 'none';
+    document.getElementById('admin-coins-step').style.display = 'block';
+  } else {
+    document.getElementById('admin-pw-error').classList.add('show');
+    document.getElementById('admin-pw-input').value = '';
+    document.getElementById('admin-pw-input').focus();
+  }
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('admin-modal').classList.contains('open')) checkAdminPw();
+});
+
+function adminAddCoins(amount) {
+  if (amount === Infinity) {
+    balance = Infinity;
+    showNotif('♾️ Coins infinis activés !', 'coins');
+  } else {
+    if (!isFinite(balance)) balance = 0;
+    balance += amount;
+    showNotif('+' + amount.toLocaleString('fr-FR') + ' coins ajoutés ! 🪙', 'coins');
+  }
+  updateBalance();
+  closeAdminModal();
+}
+
+// ── TRANSFER MODAL ──
+function openTransferModal() {
+  const list = document.getElementById('online-users-list');
+  if (onlinePlayers.length > 0) {
+    list.innerHTML = onlinePlayers.map(p => `
+      <div class="online-user-btn" onclick="selectTransferTarget('${p.name}', this)">
+        <div class="ou-avatar">${p.name[0].toUpperCase()}</div>
+        <span class="ou-name">${p.name}</span>
+        <span class="ou-bal">${p.balance.toLocaleString('fr-FR')} V</span>
+      </div>
+    `).join('');
+  } else {
+    list.innerHTML = '<div style="color:#64748b;font-size:13px;padding:8px">Aucun autre joueur en ligne...</div>';
+  }
+  document.getElementById('transfer-error').textContent = '';
+  document.getElementById('transfer-error').classList.remove('show');
+  document.getElementById('transfer-amount').value = '';
+  document.getElementById('transfer-target').value = '';
+  document.getElementById('transfer-modal').classList.add('open');
+}
+function closeTransferModal() { document.getElementById('transfer-modal').classList.remove('open'); }
+
+function selectTransferTarget(name, el) {
+  document.querySelectorAll('.online-user-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('transfer-target').value = name;
+}
+
+function doTransfer() {
+  const target = document.getElementById('transfer-target').value.trim();
+  const amount = parseInt(document.getElementById('transfer-amount').value);
+  const errEl = document.getElementById('transfer-error');
+  errEl.classList.remove('show');
+
+  if (!target) { errEl.textContent = 'Indique un pseudo destinataire.'; errEl.classList.add('show'); return; }
+  if (target.toLowerCase() === username.toLowerCase()) { errEl.textContent = 'Tu ne peux pas t\'envoyer des coins à toi-même !'; errEl.classList.add('show'); return; }
+  if (!amount || amount < 1) { errEl.textContent = 'Montant invalide.'; errEl.classList.add('show'); return; }
+  if (balance !== Infinity && amount > balance) { errEl.textContent = 'Solde insuffisant.'; errEl.classList.add('show'); return; }
+
+  if (balance !== Infinity) balance -= amount;
+  updateBalance();
+  closeTransferModal();
+
+  // Met à jour le joueur simulé s'il existe
+  const player = onlinePlayers.find(p => p.name.toLowerCase() === target.toLowerCase());
+  if (player) player.balance += amount;
+
+  showNotif(`💸 ${amount.toLocaleString('fr-FR')} V envoyés à ${target} !`, 'transfer');
+}
+
+// ── CANVAS ──
+let canvas, ctx, cw, ch;
+function setupCanvas() {
+  canvas = document.getElementById('crash-canvas');
+  const wrap = canvas.parentElement;
+  cw = wrap.offsetWidth || 600;
+  ch = wrap.offsetHeight || 260;
+  canvas.width = cw;
+  canvas.height = ch;
+  ctx = canvas.getContext('2d');
+  drawWaiting();
+}
+
+function drawWaiting() {
+  if (!ctx) return;
+  ctx.fillStyle = '#111d2c'; ctx.fillRect(0, 0, cw, ch);
+  drawGrid();
+}
+
+function drawGrid() {
+  ctx.strokeStyle = 'rgba(45,63,85,0.4)'; ctx.lineWidth = 0.5;
+  for (let x = 0; x < cw; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, ch); ctx.stroke(); }
+  for (let y = 0; y < ch; y += 50) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cw, y); ctx.stroke(); }
+}
+
+let points = [];
+function drawCrashLine(mult, crashed) {
+  if (!ctx || points.length < 2) return;
+  ctx.fillStyle = '#111d2c'; ctx.fillRect(0, 0, cw, ch);
+  drawGrid();
+  const maxMult = Math.max(mult * 1.2, 2);
+  const padL = 30, padB = 20, padT = 20, padR = 10;
+  const gw = cw - padL - padR, gh = ch - padB - padT;
+  const toX = i => padL + (i / (points.length - 1)) * gw;
+  const toY = m => ch - padB - ((m - 1) / (maxMult - 1)) * gh;
+  const g = ctx.createLinearGradient(0, 0, 0, ch);
+  if (crashed) { g.addColorStop(0, 'rgba(239,68,68,0.3)'); g.addColorStop(1, 'rgba(239,68,68,0.02)'); }
+  else { g.addColorStop(0, 'rgba(87,255,165,0.25)'); g.addColorStop(1, 'rgba(87,255,165,0.02)'); }
+  ctx.beginPath();
+  ctx.moveTo(toX(0), ch - padB);
+  for (let i = 0; i < points.length; i++) ctx.lineTo(toX(i), toY(points[i]));
+  ctx.lineTo(toX(points.length - 1), ch - padB);
+  ctx.closePath(); ctx.fillStyle = g; ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(points[0]));
+  for (let i = 1; i < points.length; i++) ctx.lineTo(toX(i), toY(points[i]));
+  ctx.strokeStyle = crashed ? '#ef4444' : '#57FFA5';
+  ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.stroke();
+  if (!crashed) {
+    const lx = toX(points.length - 1), ly = toY(points[points.length - 1]);
+    ctx.beginPath(); ctx.arc(lx, ly, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#57FFA5'; ctx.fill();
+  }
+}
+
+// ── BOTS ──
+function generateBots() {
+  liveBots = [];
+  const count = 3 + Math.floor(Math.random() * 6);
+  for (let i = 0; i < count; i++) {
+    const name = FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)];
+    const bet = [5,10,20,50,100][Math.floor(Math.random() * 5)];
+    const autoCO = Math.random() < 0.6 ? Math.round((1.2 + Math.random() * 4) * 100) / 100 : null;
+    liveBots.push({ name, bet, autoCO, cashedOut: false, cashoutMult: null });
+  }
+  renderLiveBets();
+}
+
+function renderLiveBets() {
+  const tbody = document.getElementById('live-bets-body');
+  let rows = '';
+  if (betPlaced && !cashedOut) {
+    const pot = (betAmount * currentMult).toFixed(2);
+    rows += `<tr><td style="color:#57FFA5;font-weight:700">${username}</td><td>${betAmount}V</td><td class="yellow">${currentMult.toFixed(2)}×</td><td class="green">+${pot}V</td></tr>`;
+  } else if (betPlaced && cashedOut) {
+    rows += `<tr><td style="color:#57FFA5;font-weight:700">${username}</td><td>${betAmount}V</td><td class="green">✓</td><td class="green">-</td></tr>`;
+  }
+  liveBots.forEach(b => {
+    if (b.cashedOut) rows += `<tr><td>${b.name}</td><td>${b.bet}V</td><td class="green">${b.cashoutMult}×</td><td class="green">+${(b.bet*b.cashoutMult).toFixed(1)}V</td></tr>`;
+    else rows += `<tr><td>${b.name}</td><td>${b.bet}V</td><td>-</td><td>-</td></tr>`;
+  });
+  tbody.innerHTML = rows;
+}
+
+// ── GAME LOOP ──
+function scheduleRound() {
+  gameState = 'waiting'; betPlaced = false; cashedOut = false; currentMult = 1.0; points = [];
+  document.getElementById('mult-display').textContent = 'Prochaine manche...';
+  document.getElementById('mult-display').className = 'multiplier-display waiting';
+  document.getElementById('phase-badge').textContent = 'Attente';
+  document.getElementById('phase-badge').className = 'phase-badge waiting';
+  document.getElementById('main-btn').textContent = 'Miser';
+  document.getElementById('main-btn').disabled = false;
+  document.getElementById('main-btn').className = 'btn-bet';
+  document.getElementById('my-bet-info').classList.remove('show');
+  generateBots(); drawWaiting();
+  let cd = 5;
+  const cdInt = setInterval(() => {
+    document.getElementById('mult-display').textContent = `Démarrage dans ${cd}s`;
+    cd--; if (cd < 0) { clearInterval(cdInt); startRound(); }
+  }, 1000);
+}
+
+function startRound() {
+  crashAt = stakeCrashPoint();
+  gameState = 'running'; gameStartTime = Date.now(); points = [1.0];
+  document.getElementById('phase-badge').textContent = 'En cours';
+  document.getElementById('phase-badge').className = 'phase-badge running';
+  if (betPlaced) {
+    document.getElementById('main-btn').textContent = 'Cash-out 1.00×';
+    document.getElementById('main-btn').className = 'btn-bet cashout';
+    document.getElementById('main-btn').disabled = false;
+  } else {
+    document.getElementById('main-btn').disabled = true;
+    document.getElementById('main-btn').textContent = 'Manche en cours';
+  }
+  tick();
+}
+
+function tick() {
+  const elapsed = (Date.now() - gameStartTime) / 1000;
+  currentMult = Math.round(Math.pow(Math.E, 0.00006 * elapsed * 1000) * 100) / 100;
+  points.push(currentMult);
+  if (points.length > 300) points.shift();
+  liveBots.forEach(b => {
+    if (!b.cashedOut && b.autoCO && currentMult >= b.autoCO) { b.cashedOut = true; b.cashoutMult = b.autoCO; }
+  });
+  const autoVal = parseFloat(document.getElementById('auto-cashout-val').value);
+  if (betPlaced && !cashedOut && autoEnabled && currentMult >= autoVal) doCashout();
+  if (betPlaced && !cashedOut) {
+    document.getElementById('main-btn').textContent = `Cash-out ${currentMult.toFixed(2)}×`;
+    document.getElementById('info-mult').textContent = currentMult.toFixed(2) + '×';
+    document.getElementById('info-gain').textContent = '+' + (betAmount * currentMult).toFixed(2) + ' V';
+  }
+  drawCrashLine(currentMult, false);
+  document.getElementById('mult-display').textContent = currentMult.toFixed(2) + '×';
+  document.getElementById('mult-display').className = 'multiplier-display';
+  renderLiveBets();
+  if (currentMult >= crashAt) { doCrash(); return; }
+  animFrame = requestAnimationFrame(tick);
+}
+
+function doCrash() {
+  cancelAnimationFrame(animFrame);
+  gameState = 'crashed';
+  drawCrashLine(crashAt, true);
+  document.getElementById('mult-display').textContent = crashAt.toFixed(2) + '×';
+  document.getElementById('mult-display').className = 'multiplier-display crashed';
+  document.getElementById('phase-badge').textContent = 'Crash!';
+  document.getElementById('phase-badge').className = 'phase-badge crashed';
+  document.getElementById('main-btn').disabled = true;
+  document.getElementById('main-btn').textContent = 'Crashed 💥';
+  document.getElementById('main-btn').className = 'btn-bet';
+  addHistory(crashAt);
+  if (betPlaced && !cashedOut) showNotif(`💥 Crash à ${crashAt.toFixed(2)}× — Perdu ${betAmount} V`, 'loss');
+  setTimeout(scheduleRound, 3000);
+}
+
+function doCashout() {
+  if (!betPlaced || cashedOut || gameState !== 'running') return;
+  cashedOut = true;
+  const mult = currentMult;
+  const win = Math.floor(betAmount * mult);
+  if (balance !== Infinity) balance += win;
+  updateBalance();
+  document.getElementById('main-btn').textContent = '✓ Cash-out effectué';
+  document.getElementById('main-btn').disabled = true;
+  document.getElementById('info-mult').textContent = mult.toFixed(2) + '×';
+  document.getElementById('info-gain').textContent = '+' + win + ' V';
+  showNotif(`🎉 Cash-out à ${mult.toFixed(2)}× — +${win} V !`, 'win');
+  renderLiveBets();
+}
+
+function handleBet() {
+  if (gameState === 'running' && betPlaced && !cashedOut) { doCashout(); return; }
+  if (gameState !== 'waiting') return;
+  betAmount = parseInt(document.getElementById('bet-amount').value) || 10;
+  if (betAmount < 1) { showNotif('Mise minimale : 1 V', ''); return; }
+  if (balance !== Infinity && betAmount > balance) { showNotif('Solde insuffisant !', 'loss'); return; }
+  if (balance !== Infinity) balance -= betAmount;
+  updateBalance();
+  betPlaced = true; cashedOut = false;
+  document.getElementById('main-btn').textContent = 'Misé — en attente du départ...';
+  document.getElementById('main-btn').disabled = true;
+  document.getElementById('my-bet-info').classList.add('show');
+  document.getElementById('info-bet').textContent = betAmount + ' V';
+  document.getElementById('info-mult').textContent = '1.00×';
+  document.getElementById('info-gain').textContent = betAmount + ' V';
+  showNotif(`✅ Mise de ${betAmount} V placée !`, '');
+}
+
+function addHistory(mult) {
+  history.unshift(mult);
+  if (history.length > 20) history.pop();
+  document.getElementById('history-bar').innerHTML = history.map(m => {
+    const cls = m < 1.5 ? 'low' : m < 3 ? 'mid' : m < 10 ? 'high' : 'vhigh';
+    return `<span class="hist-pill ${cls}">${m.toFixed(2)}×</span>`;
+  }).join('');
+}
+
+let notifTimer;
+function showNotif(msg, type) {
+  const el = document.getElementById('notif');
+  el.textContent = msg;
+  el.className = 'notif show' + (type ? ' ' + type : '');
+  clearTimeout(notifTimer);
+  notifTimer = setTimeout(() => { el.className = 'notif'; }, 3500);
+}
+
+// Bouton admin visible uniquement si on est admin (pour l'instant caché par défaut)
+// Pour l'activer, tu peux cliquer sur ton avatar dans la navbar
+document.getElementById('user-avatar').addEventListener('click', openAdminModal);
+</script>
+</body>
+</html>
