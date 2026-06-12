@@ -568,10 +568,14 @@
     .bj-actions button.danger { color: #ef4444; }
 
     /* ═══ ROULETTE REALISTIC ═══ */
-    .roulette-area { display: flex; flex-direction: column; gap: 14px; padding: 10px; }
+    .roulette-area { display: flex; flex-direction: column; gap: 14px; padding: 10px; width: 100%; align-items: center; }
     .roulette-stage {
-      position: relative; width: 100%; aspect-ratio: 1; max-width: 340px;
-      margin: 0 auto; perspective: 800px;
+      position: relative;
+      width: min(320px, 78vw);
+      height: min(320px, 78vw);
+      margin: 52px auto 10px; /* espace pour le badge resultat au-dessus */
+      perspective: 800px;
+      flex-shrink: 0;
     }
     .roul-bowl {
       position: absolute; inset: 0;
@@ -601,7 +605,7 @@
       z-index: 5;
     }
     .roul-result {
-      position: absolute; top: -42px; left: 50%; transform: translateX(-50%);
+      position: absolute; top: -48px; left: 50%; transform: translateX(-50%);
       background: #120b24; border: 2px solid #3b2d63; border-radius: 10px;
       padding: 6px 16px; font-size: 22px; font-weight: 900;
       color: #fff; min-width: 60px; text-align: center;
@@ -824,7 +828,7 @@
         <button class="btn-main" id="roul-spin-btn" onclick="spinRoulette()" style="margin-top:10px">🎲 LANCER LA BILLE</button>
         <div class="game-status" id="roulette-status">Mise sur rouge.</div>
       </div>
-      <div class="mini-board" style="display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center, #2a1f4d 0%, #0e0a1c 100%);border:1px solid #3b2d63">
+      <div class="mini-board" style="display:flex;align-items:center;justify-content:center;min-height:440px;background:radial-gradient(circle at center, #2a1f4d 0%, #0e0a1c 100%);border:1px solid #3b2d63">
         <div class="roulette-area">
           <div class="roulette-stage">
             <div class="roul-result" id="roul-result">?</div>
@@ -1463,8 +1467,8 @@ function rollFloorMult(floorIndex) {
 }
 
 function towerSpeed() {
-  // Vitesse de base qui augmente avec les etages
-  return 2.0 * (1 + tower.floors * 0.06);
+  // Plus rapide qu'avant, et accelere plus fort avec les etages
+  return 2.8 * (1 + tower.floors * 0.09);
 }
 
 let towerCanvas, towerCtx, tcw, tch;
@@ -1612,7 +1616,8 @@ async function startTower() {
 function spawnNextBlock() {
   const last = tower.blocks[tower.blocks.length - 1];
   const color = TOWER_COLORS[tower.blocks.length % TOWER_COLORS.length];
-  const speed = towerSpeed();
+  // Vitesse de base + variation aleatoire +-25%
+  const speed = towerSpeed() * (0.75 + Math.random() * 0.5);
   const dir = Math.random() < 0.5 ? 1 : -1;
   const startX = dir === 1 ? -last.w - 10 : tcw + 10;
   tower.current = {
@@ -1622,19 +1627,36 @@ function spawnNextBlock() {
     h: last.h,
     color,
     dir,
-    speed
+    speed,
+    // Mouvement complexe : ondulation de vitesse + inversions surprises
+    wobblePhase: Math.random() * Math.PI * 2,
+    wobbleFreq: 1.5 + Math.random() * 2.5,      // frequence de l'ondulation
+    wobbleAmp: 0.25 + Math.random() * 0.30,      // amplitude (jusqu'a +-55% de vitesse)
+    flipChance: Math.min(0.35, 0.10 + tower.floors * 0.02), // proba d'inversion par seconde (monte avec les etages)
+    bornAt: performance.now()
   };
   tower.phase = 'moving';
 }
 
 function towerLoop(now) {
   if (!tower.active || !tower.current || tower.phase !== 'moving') return;
-  const dt = Math.min(50, now - tower.lastTime) / 16; // normalize to ~60fps
+  const dtRaw = Math.min(50, now - tower.lastTime);
+  const dt = dtRaw / 16; // normalise ~60fps
   tower.lastTime = now;
 
   const b = tower.current;
-  b.x += b.dir * b.speed * dt;
-  // Bounce off edges
+  // Vitesse ondulante : le bloc accelere et ralentit de facon imprevisible
+  const t = (now - b.bornAt) / 1000;
+  const wobble = 1 + b.wobbleAmp * Math.sin(b.wobblePhase + t * b.wobbleFreq);
+  b.x += b.dir * b.speed * wobble * dt;
+
+  // Inversion surprise au milieu de l'ecran (de plus en plus frequente avec les etages)
+  const midZone = b.x + b.w / 2 > tcw * 0.25 && b.x + b.w / 2 < tcw * 0.75;
+  if (midZone && Math.random() < b.flipChance * (dtRaw / 1000)) {
+    b.dir *= -1;
+  }
+
+  // Rebonds sur les bords
   const margin = 10;
   if (b.dir > 0 && b.x + b.w > tcw - margin) { b.x = tcw - margin - b.w; b.dir = -1; }
   if (b.dir < 0 && b.x < margin) { b.x = margin; b.dir = 1; }
@@ -1695,7 +1717,7 @@ async function towerDrop() {
     return;
   }
 
-  const perfectThreshold = prev.w * 0.92;
+  const perfectThreshold = prev.w * 0.94; // perfect plus exigeant
   const isPerfect = overlap >= perfectThreshold;
 
   const placed = {
@@ -2337,6 +2359,7 @@ function buildRouletteWheelSVG() {
 }
 
 function initRouletteView() {
+  // Toujours reconstruire : si la vue etait cachee au 1er build, les dimensions etaient fausses
   buildRouletteWheelSVG();
   // Reset ball
   const ball = document.getElementById('roul-ball');
