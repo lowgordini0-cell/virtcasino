@@ -464,8 +464,176 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
+    /* ═══ TOWER RUSH (stacking) ═══ */
+    .tower-stack-wrap {
+      position: relative; width: 100%; min-height: 480px;
+      background: linear-gradient(180deg, #1a3a52 0%, #0f1d2e 60%, #0a1118 100%);
+      border-radius: 12px; overflow: hidden;
+    }
+    .tower-stack-wrap canvas {
+      display: block; width: 100%; height: 100%; image-rendering: pixelated;
+    }
+    .tower-build-btn {
+      position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+      padding: 14px 38px; background: linear-gradient(180deg, #fbbf24, #f59e0b);
+      color: #1a1a1a; border: 2px solid #d97706; border-radius: 30px;
+      font-size: 18px; font-weight: 900; cursor: pointer;
+      letter-spacing: 1px; text-transform: uppercase;
+      box-shadow: 0 6px 0 #92400e, 0 10px 20px rgba(0,0,0,0.4);
+      transition: all 0.1s;
+    }
+    .tower-build-btn:hover:not(:disabled) {
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 8px 0 #92400e, 0 14px 24px rgba(0,0,0,0.4);
+    }
+    .tower-build-btn:active:not(:disabled) {
+      transform: translateX(-50%) translateY(4px);
+      box-shadow: 0 2px 0 #92400e, 0 6px 12px rgba(0,0,0,0.4);
+    }
+    .tower-build-btn:disabled { background: #475569; border-color: #334155; color: #94a3b8; cursor: not-allowed; box-shadow: 0 4px 0 #1e293b; }
+    .tower-hud {
+      position: absolute; top: 12px; left: 12px; right: 12px;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      pointer-events: none; z-index: 5;
+    }
+    .tower-hud-box {
+      background: rgba(15,29,46,0.85); backdrop-filter: blur(6px);
+      border: 1px solid #2d3f55; border-radius: 10px; padding: 8px 14px;
+      color: #fff; font-size: 13px; font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .tower-hud-box.mult { color: #fbbf24; font-size: 22px; font-weight: 900; padding: 6px 16px; letter-spacing: -0.5px; }
+    .tower-perfect-pop {
+      position: absolute; top: 30%; left: 50%; transform: translateX(-50%);
+      font-size: 26px; font-weight: 900; color: #fbbf24;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7); pointer-events: none;
+      opacity: 0; z-index: 8;
+    }
+    .tower-perfect-pop.show {
+      animation: perfectPop 1.2s ease forwards;
+    }
+    @keyframes perfectPop {
+      0% { opacity: 0; transform: translateX(-50%) scale(0.5) translateY(20px); }
+      30% { opacity: 1; transform: translateX(-50%) scale(1.2) translateY(0); }
+      70% { opacity: 1; transform: translateX(-50%) scale(1) translateY(-10px); }
+      100% { opacity: 0; transform: translateX(-50%) scale(1) translateY(-50px); }
+    }
+
     /* TOWER LEGACY ALIAS */
     .tower-grid { display: flex; flex-direction: column-reverse; gap: 6px; }
+
+    /* ═══ BLACKJACK CARDS 3D ═══ */
+    .bj-area { display: flex; flex-direction: column; gap: 14px; padding: 8px; }
+    .bj-section { background: #0f1923; border: 1px solid #2d3f55; border-radius: 10px; padding: 12px; }
+    .bj-section-title { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; margin-bottom: 8px; }
+    .bj-section-score { color: #fbbf24; font-size: 16px; font-weight: 900; }
+    .bj-section-score.bust { color: #ef4444; }
+    .bj-section-score.bj { color: #57FFA5; }
+    .bj-hand-row { display: flex; flex-wrap: wrap; gap: 6px; min-height: 100px; }
+    .bj-hand-row.split-hand { padding: 8px; border: 1px dashed #2d3f55; border-radius: 8px; }
+    .bj-hand-row.split-hand.active { border-color: #fbbf24; border-style: solid; background: rgba(251,191,36,0.05); }
+    .card {
+      width: 64px; height: 94px; border-radius: 8px;
+      background: linear-gradient(145deg, #fff, #e2e8f0);
+      color: #0f1923; padding: 6px 8px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      font-weight: 900; box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+      border: 2px solid #cbd5e1;
+      position: relative; flex-shrink: 0;
+      animation: cardDeal 0.4s ease;
+    }
+    .card.red { color: #dc2626; }
+    .card.back {
+      background: linear-gradient(135deg, #5865F2, #4338ca);
+      color: transparent; border-color: #3730a3;
+    }
+    .card.back::before {
+      content: ''; position: absolute; inset: 6px;
+      border: 2px solid rgba(255,255,255,0.3); border-radius: 4px;
+      background: repeating-linear-gradient(45deg, transparent, transparent 4px, rgba(255,255,255,0.1) 4px, rgba(255,255,255,0.1) 8px);
+    }
+    .card-corner-top { font-size: 14px; line-height: 1; display: flex; flex-direction: column; align-items: flex-start; }
+    .card-corner-bot { font-size: 14px; line-height: 1; transform: rotate(180deg); display: flex; flex-direction: column; align-items: flex-start; }
+    .card-suit-big { font-size: 26px; align-self: center; line-height: 1; }
+    @keyframes cardDeal {
+      0% { transform: translateY(-30px) rotate(-8deg); opacity: 0; }
+      100% { transform: translateY(0) rotate(0); opacity: 1; }
+    }
+    .bj-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
+    .bj-actions button { background: #0f1923; border: 1px solid #2d3f55; color: #cbd5e1; padding: 10px 8px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+    .bj-actions button:hover:not(:disabled) { border-color: #57FFA5; color: #57FFA5; transform: translateY(-1px); }
+    .bj-actions button:disabled { opacity: 0.4; cursor: not-allowed; }
+    .bj-actions button.primary { background: #57FFA5; color: #0f1923; border-color: #57FFA5; }
+    .bj-actions button.primary:hover:not(:disabled) { background: #3de88f; }
+    .bj-actions button.danger { color: #ef4444; }
+
+    /* ═══ ROULETTE REALISTIC ═══ */
+    .roulette-area { display: flex; flex-direction: column; gap: 14px; padding: 10px; }
+    .roulette-stage {
+      position: relative; width: 100%; aspect-ratio: 1; max-width: 340px;
+      margin: 0 auto; perspective: 800px;
+    }
+    .roul-bowl {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 40%, #1a2332 0%, #0a0d12 70%);
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5);
+    }
+    .roul-wheel {
+      position: absolute; inset: 8%; border-radius: 50%;
+      box-shadow: 0 0 0 4px #5a3a1a, 0 0 0 6px #3a240e, inset 0 0 30px rgba(0,0,0,0.6);
+      transition: transform 5s cubic-bezier(0.15, 0.05, 0.1, 1);
+    }
+    .roul-wheel svg { width: 100%; height: 100%; display: block; }
+    .roul-ball {
+      position: absolute; width: 12px; height: 12px;
+      background: radial-gradient(circle at 30% 30%, #fff, #cbd5e1 60%, #94a3b8);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255,255,255,0.6), inset -2px -2px 3px rgba(0,0,0,0.3);
+      top: 50%; left: 50%;
+      transform-origin: center;
+      z-index: 10;
+    }
+    .roul-center {
+      position: absolute; inset: 38%; border-radius: 50%;
+      background: linear-gradient(145deg, #d4a574 0%, #8b6332 100%);
+      box-shadow: inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.5);
+      z-index: 5;
+    }
+    .roul-result {
+      position: absolute; top: -42px; left: 50%; transform: translateX(-50%);
+      background: #0f1923; border: 2px solid #2d3f55; border-radius: 10px;
+      padding: 6px 16px; font-size: 22px; font-weight: 900;
+      color: #fff; min-width: 60px; text-align: center;
+      z-index: 20; transition: all 0.3s;
+    }
+    .roul-result.red { background: #991b1b; border-color: #ef4444; }
+    .roul-result.black { background: #1a1a1a; border-color: #475569; }
+    .roul-result.green { background: #14532d; border-color: #16a34a; }
+
+    .roul-bet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 340px; margin: 0 auto; }
+    .roul-bet-cell {
+      background: #1a2332; border: 1px solid #2d3f55; border-radius: 6px;
+      color: #cbd5e1; font-size: 12px; font-weight: 700; padding: 8px 6px;
+      cursor: pointer; transition: all 0.15s; text-align: center;
+    }
+    .roul-bet-cell:hover:not(.disabled) { transform: translateY(-1px); }
+    .roul-bet-cell.red { background: #7f1d1d; border-color: #dc2626; }
+    .roul-bet-cell.red:hover:not(.disabled) { background: #991b1b; }
+    .roul-bet-cell.black { background: #1f2937; border-color: #4b5563; }
+    .roul-bet-cell.black:hover:not(.disabled) { background: #374151; }
+    .roul-bet-cell.green { background: #14532d; border-color: #16a34a; }
+    .roul-bet-cell.green:hover:not(.disabled) { background: #166534; }
+    .roul-bet-cell.active { outline: 2px solid #fbbf24; outline-offset: 1px; }
+    .roul-bet-cell.disabled { opacity: 0.5; cursor: not-allowed; }
+
+    @keyframes ballSpin {
+      from { transform: rotate(var(--start-angle)) translateX(var(--orbit-r)) rotate(calc(-1 * var(--start-angle))); }
+      to { transform: rotate(var(--end-angle)) translateX(var(--end-r)) rotate(calc(-1 * var(--end-angle))); }
+    }
+    .roul-ball.spinning {
+      animation: ballSpin 5s cubic-bezier(0.15, 0.05, 0.1, 1) forwards;
+    }
     .cards-row { display: flex; flex-wrap: wrap; gap: 8px; min-height: 86px; margin: 8px 0 14px; }
     .card-face { width: 54px; height: 78px; border-radius: 8px; background: #f8fafc; color: #0f1923; display:flex; align-items:center; justify-content:center; font-weight:900; border: 2px solid #dbeafe; }
     .roulette-wheel { width: 240px; height: 240px; border-radius: 50%; margin: 0 auto 16px; border: 10px solid #0f1923; background: conic-gradient(#ef4444 0 10deg,#111827 10deg 20deg,#57FFA5 20deg 30deg,#111827 30deg 40deg,#ef4444 40deg 50deg,#111827 50deg 60deg,#ef4444 60deg 70deg,#111827 70deg 80deg,#57FFA5 80deg 90deg,#111827 90deg 100deg,#ef4444 100deg 110deg,#111827 110deg 120deg,#ef4444 120deg 130deg,#111827 130deg 140deg,#57FFA5 140deg 150deg,#111827 150deg 160deg,#ef4444 160deg 170deg,#111827 170deg 180deg,#ef4444 180deg 190deg,#111827 190deg 200deg,#57FFA5 200deg 210deg,#111827 210deg 220deg,#ef4444 220deg 230deg,#111827 230deg 240deg,#ef4444 240deg 250deg,#111827 250deg 260deg,#57FFA5 260deg 270deg,#111827 270deg 280deg,#ef4444 280deg 290deg,#111827 290deg 300deg,#ef4444 300deg 310deg,#111827 310deg 320deg,#57FFA5 320deg 330deg,#111827 330deg 340deg,#ef4444 340deg 350deg,#111827 350deg 360deg); position: relative; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
@@ -539,31 +707,35 @@
   <div class="view mini-view" id="view-tower">
     <div class="mini-shell">
       <div class="mini-panel">
-        <div class="mini-title">🗼 Tower Rush</div>
-        <div class="mini-sub">Choisis une case par etage. Evite la mine, monte le plus haut possible !</div>
+        <div class="mini-title">🏗️ Tower Rush</div>
+        <div class="mini-sub">Empile les blocs ! Clique BUILD au bon moment pour aligner. Manqué = la tour s'écroule.</div>
         <div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="tower-bet" value="10" min="1" /></div>
-        <div style="margin-top:10px"><label style="font-size:12px;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.5px">Difficulte</label>
+        <div style="margin-top:10px"><label style="font-size:12px;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.5px">Difficulte (vitesse du bloc)</label>
           <div class="diff-row" id="tower-diff-row">
-            <button class="diff-btn active" data-diff="easy" onclick="setTowerDiff('easy',this)">Facile</button>
-            <button class="diff-btn" data-diff="medium" onclick="setTowerDiff('medium',this)">Moyen</button>
-            <button class="diff-btn" data-diff="hard" onclick="setTowerDiff('hard',this)">Difficile</button>
-          </div>
-          <div class="diff-row">
-            <button class="diff-btn" data-diff="expert" onclick="setTowerDiff('expert',this)">Expert</button>
-            <button class="diff-btn" data-diff="master" onclick="setTowerDiff('master',this)">Master</button>
+            <button class="diff-btn active" data-diff="easy" onclick="setTowerDiff('easy',this)">Facile<br><span style="font-size:9px;opacity:0.7">x1.10/étage</span></button>
+            <button class="diff-btn" data-diff="medium" onclick="setTowerDiff('medium',this)">Moyen<br><span style="font-size:9px;opacity:0.7">x1.20/étage</span></button>
+            <button class="diff-btn" data-diff="hard" onclick="setTowerDiff('hard',this)">Difficile<br><span style="font-size:9px;opacity:0.7">x1.35/étage</span></button>
           </div>
         </div>
         <div class="mult-badge" id="tower-mult-badge" style="display:none">
-          <div class="mult-badge-label">Multiplicateur actuel</div>
+          <div class="mult-badge-label">Multiplicateur · Etage</div>
           <div class="mult-badge-val" id="tower-mult-val">1.00x</div>
-          <div class="mult-badge-next" id="tower-mult-next">Prochain: -</div>
+          <div class="mult-badge-next" id="tower-mult-next">Etage 0</div>
         </div>
-        <button class="btn-main" id="tower-start-btn" onclick="startTower()" style="margin-top:10px">Lancer la tour</button>
+        <button class="btn-main" id="tower-start-btn" onclick="startTower()" style="margin-top:10px">Lancer la construction</button>
         <button class="btn-outline" style="margin-top:8px" id="tower-cash-btn" onclick="cashTower()" disabled>Encaisser</button>
         <div class="game-status" id="tower-status">Choisis ta difficulte puis lance.</div>
       </div>
-      <div class="mini-board">
-        <div class="tower-wrap" id="tower-grid"></div>
+      <div class="mini-board" style="padding:0;background:transparent;border:none">
+        <div class="tower-stack-wrap" id="tower-stage">
+          <canvas id="tower-canvas"></canvas>
+          <div class="tower-hud">
+            <div class="tower-hud-box" id="tower-hud-floor">Étage: 0</div>
+            <div class="tower-hud-box mult" id="tower-hud-mult">1.00x</div>
+          </div>
+          <div class="tower-perfect-pop" id="tower-perfect">PERFECT! +5%</div>
+          <button class="tower-build-btn" id="tower-build-btn" onclick="towerDrop()" disabled>BUILD</button>
+        </div>
       </div>
     </div>
   </div>
@@ -591,11 +763,76 @@
   </div>
 
   <div class="view mini-view" id="view-blackjack">
-    <div class="mini-shell"><div class="mini-panel"><div class="mini-title">Blackjack</div><div class="mini-sub">Approche-toi de 21 sans depasser. Le croupier tire jusqu'a 17.</div><div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="bj-bet" value="10" min="1" /></div><button class="btn-main" onclick="startBlackjack()" style="margin-top:10px">Distribuer</button><div class="choice-row"><button class="choice-btn" onclick="hitBlackjack()">Carte</button><button class="choice-btn" onclick="standBlackjack()">Rester</button></div><div class="game-status" id="bj-status">Pret a jouer.</div></div><div class="mini-board"><div class="panel-title">Croupier</div><div class="cards-row" id="dealer-cards"></div><div class="panel-title">Toi</div><div class="cards-row" id="player-cards"></div></div></div>
+    <div class="mini-shell">
+      <div class="mini-panel">
+        <div class="mini-title">🃏 Blackjack</div>
+        <div class="mini-sub">21 sans dépasser. Le croupier tire jusqu'à 17. Blackjack paye 3:2.</div>
+        <div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="bj-bet" value="10" min="1" /></div>
+        <button class="btn-main" id="bj-deal-btn" onclick="startBlackjack()" style="margin-top:10px">Distribuer</button>
+        <div class="bj-actions">
+          <button id="bj-hit-btn" class="primary" disabled onclick="bjHit()">🃟 Tirer</button>
+          <button id="bj-stand-btn" disabled onclick="bjStand()">✋ Rester</button>
+          <button id="bj-double-btn" disabled onclick="bjDouble()">2x Doubler</button>
+          <button id="bj-split-btn" disabled onclick="bjSplit()">✂️ Split</button>
+          <button id="bj-surrender-btn" class="danger" disabled onclick="bjSurrender()">🏳️ Abandon</button>
+          <button id="bj-insurance-btn" disabled onclick="bjInsurance()">🛡️ Assurance</button>
+        </div>
+        <div class="game-status" id="bj-status">Place ta mise et distribue.</div>
+      </div>
+      <div class="mini-board">
+        <div class="bj-area">
+          <div class="bj-section">
+            <div class="bj-section-title"><span>Croupier</span><span class="bj-section-score" id="bj-dealer-score">-</span></div>
+            <div class="bj-hand-row" id="bj-dealer-hand"></div>
+          </div>
+          <div class="bj-section">
+            <div class="bj-section-title"><span>Toi · Mise: <span id="bj-bet-display">-</span></span><span class="bj-section-score" id="bj-player-score">-</span></div>
+            <div class="bj-hand-row" id="bj-player-hand"></div>
+            <div class="bj-hand-row split-hand" id="bj-split-hand" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="view mini-view" id="view-roulette">
-    <div class="mini-shell"><div class="mini-panel"><div class="mini-title">Roulette</div><div class="mini-sub">Choisis une couleur ou un nombre. Rouge/noir paie x2, vert x14, nombre exact x36.</div><div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="roulette-bet" value="10" min="1" /></div><div class="choice-row"><button class="choice-btn active" onclick="setRouletteBet('red',this)">Rouge</button><button class="choice-btn" onclick="setRouletteBet('black',this)">Noir</button><button class="choice-btn" onclick="setRouletteBet('green',this)">Vert</button></div><div style="display:flex;gap:8px;margin-top:8px"><input type="number" class="modal-inp" id="roulette-number" min="0" max="36" placeholder="Numero exact" /><button class="btn-confirm" onclick="setRouletteNumber()">OK</button></div><button class="btn-main" onclick="spinRoulette()" style="margin-top:10px">Lancer</button><div class="game-status" id="roulette-status">Mise sur rouge.</div></div><div class="mini-board"><div class="roulette-wheel" id="roulette-wheel"><div class="roulette-number" id="roulette-result">?</div></div></div></div>
+    <div class="mini-shell">
+      <div class="mini-panel">
+        <div class="mini-title">🎡 Roulette Européenne</div>
+        <div class="mini-sub">37 numéros (0-36). Rouge/noir paie ×2, Pair/Impair ×2, Douzaine ×3, Numéro exact ×36.</div>
+        <div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="roulette-bet" value="10" min="1" /></div>
+        <div style="margin-top:10px"><label style="font-size:12px;color:#94a3b8;font-weight:500;text-transform:uppercase;letter-spacing:0.5px">Type de mise</label></div>
+        <div class="roul-bet-grid" style="margin-top:8px">
+          <button class="roul-bet-cell red active" data-bet="red" onclick="setRouletteBet('red',this)">Rouge<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell black" data-bet="black" onclick="setRouletteBet('black',this)">Noir<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell green" data-bet="green" onclick="setRouletteBet('green',this)">Vert (0)<br><span style="opacity:.7;font-size:10px">×36</span></button>
+          <button class="roul-bet-cell" data-bet="even" onclick="setRouletteBet('even',this)">Pair<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell" data-bet="odd" onclick="setRouletteBet('odd',this)">Impair<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell" data-bet="low" onclick="setRouletteBet('low',this)">1-18<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell" data-bet="high" onclick="setRouletteBet('high',this)">19-36<br><span style="opacity:.7;font-size:10px">×2</span></button>
+          <button class="roul-bet-cell" data-bet="d1" onclick="setRouletteBet('d1',this)">1-12<br><span style="opacity:.7;font-size:10px">×3</span></button>
+          <button class="roul-bet-cell" data-bet="d2" onclick="setRouletteBet('d2',this)">13-24<br><span style="opacity:.7;font-size:10px">×3</span></button>
+          <button class="roul-bet-cell" data-bet="d3" onclick="setRouletteBet('d3',this)">25-36<br><span style="opacity:.7;font-size:10px">×3</span></button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;align-items:center">
+          <input type="number" class="modal-inp" id="roulette-number" min="0" max="36" placeholder="N° exact (0-36)" style="flex:1" />
+          <button class="btn-confirm" style="flex:0 0 auto;padding:10px 14px" onclick="setRouletteNumber()">×36</button>
+        </div>
+        <button class="btn-main" id="roul-spin-btn" onclick="spinRoulette()" style="margin-top:10px">🎲 LANCER LA BILLE</button>
+        <div class="game-status" id="roulette-status">Mise sur rouge.</div>
+      </div>
+      <div class="mini-board" style="display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at center, #1a3a52 0%, #0c1620 100%);border:1px solid #2d3f55">
+        <div class="roulette-area">
+          <div class="roulette-stage">
+            <div class="roul-result" id="roul-result">?</div>
+            <div class="roul-bowl"></div>
+            <div class="roul-wheel" id="roul-wheel"></div>
+            <div class="roul-center"></div>
+            <div class="roul-ball" id="roul-ball"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="view stats-view" id="view-stats">
@@ -832,8 +1069,9 @@ function showView(name, btn) {
   document.getElementById('view-' + name).classList.add('active');
   if (btn) btn.classList.add('active');
   if (name === 'stats') loadStats();
-  if (name === 'tower' && !tower.active && document.getElementById('tower-grid').children.length === 0) renderTowerEmpty();
+  if (name === 'tower' && !tower.active) { setTimeout(setupTowerCanvas, 50); }
   if (name === 'mines' && !mines.active && document.getElementById('mines-grid').children.length === 0) renderMines();
+  if (name === 'roulette') { setTimeout(initRouletteView, 50); }
 }
 
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
@@ -1105,194 +1343,337 @@ function setStatus(id, msg, kind = '') {
   el.className = 'game-status' + (kind ? ' ' + kind : '');
 }
 
-// ═══ TOWER RUSH (Dragon Tower - Stake formula) ═══
-// Difficulty configs: cols = tiles per row, mines = mines per row
-const TOWER_DIFFS = {
-  easy:   { cols: 4, mines: 1, label: 'Facile' },   // mult/lvl = 0.99 * 4/3  ≈ 1.32
-  medium: { cols: 3, mines: 1, label: 'Moyen' },    // mult/lvl = 0.99 * 3/2  ≈ 1.485
-  hard:   { cols: 2, mines: 1, label: 'Difficile' },// mult/lvl = 0.99 * 2/1  = 1.98
-  expert: { cols: 3, mines: 2, label: 'Expert' },   // mult/lvl = 0.99 * 3/1  ≈ 2.97
-  master: { cols: 4, mines: 3, label: 'Master' }    // mult/lvl = 0.99 * 4/1  ≈ 3.96
-};
-const TOWER_ROWS = 9; // 9 etages
-let tower = { active:false, bet:0, level:0, mines:[], diff:'easy' };
+// ═══ TOWER RUSH (Galaxsys-style stacking game) ═══
+// Player taps "BUILD" to drop a moving block onto the previous one.
+// Perfect overlap → block stays same size + perfect bonus.
+// Partial → block shrinks (overhang falls off).
+// No overlap → tower collapses, lose bet.
 
-function towerMultAt(level, diff) {
-  if (level <= 0) return 1;
-  const cfg = TOWER_DIFFS[diff];
-  const safe = cfg.cols - cfg.mines;
-  // House edge 1% applied once globally
-  return 0.99 * Math.pow(cfg.cols / safe, level);
+const TOWER_DIFFS = {
+  easy:   { speed: 1.4, multStep: 1.10, perfectBonus: 0.05, label: 'Facile' },
+  medium: { speed: 2.2, multStep: 1.20, perfectBonus: 0.08, label: 'Moyen' },
+  hard:   { speed: 3.2, multStep: 1.35, perfectBonus: 0.12, label: 'Difficile' }
+};
+
+let tower = {
+  active: false,
+  bet: 0,
+  diff: 'easy',
+  floors: 0,         // number of placed blocks
+  multiplier: 1.0,
+  blocks: [],        // {x, y, w, h, color}
+  current: null,     // {x, y, w, h, dir, speed, color}
+  cameraY: 0,        // scroll offset
+  animFrame: null,
+  lastTime: 0
+};
+
+let towerCanvas, towerCtx, tcw, tch;
+
+const TOWER_COLORS = [
+  ['#f59e0b', '#d97706'],  // amber
+  ['#10b981', '#059669'],  // emerald
+  ['#3b82f6', '#1d4ed8'],  // blue
+  ['#ec4899', '#be185d'],  // pink
+  ['#8b5cf6', '#6d28d9'],  // violet
+  ['#ef4444', '#b91c1c'],  // red
+  ['#14b8a6', '#0f766e'],  // teal
+];
+
+function setupTowerCanvas() {
+  towerCanvas = document.getElementById('tower-canvas');
+  if (!towerCanvas) return;
+  const wrap = towerCanvas.parentElement;
+  tcw = wrap.offsetWidth || 480;
+  tch = wrap.offsetHeight || 480;
+  towerCanvas.width = tcw;
+  towerCanvas.height = tch;
+  towerCtx = towerCanvas.getContext('2d');
+  drawTowerScene();
+}
+
+function drawTowerScene() {
+  if (!towerCtx) return;
+  // Sky
+  const sky = towerCtx.createLinearGradient(0, 0, 0, tch);
+  sky.addColorStop(0, '#1e3a52');
+  sky.addColorStop(0.6, '#0f1d2e');
+  sky.addColorStop(1, '#0a1118');
+  towerCtx.fillStyle = sky;
+  towerCtx.fillRect(0, 0, tcw, tch);
+
+  // Stars / clouds
+  towerCtx.fillStyle = 'rgba(255,255,255,0.4)';
+  const starSeeds = [[0.1,0.15],[0.3,0.08],[0.55,0.12],[0.78,0.05],[0.92,0.18],[0.18,0.32],[0.65,0.28],[0.85,0.35]];
+  starSeeds.forEach(([sx,sy]) => {
+    towerCtx.beginPath();
+    towerCtx.arc(sx * tcw, sy * tch, 1.2, 0, Math.PI * 2);
+    towerCtx.fill();
+  });
+
+  // Ground
+  const groundY = tch - 30;
+  const groundGrad = towerCtx.createLinearGradient(0, groundY, 0, tch);
+  groundGrad.addColorStop(0, '#3a5a30');
+  groundGrad.addColorStop(1, '#1a3015');
+  towerCtx.fillStyle = groundGrad;
+  towerCtx.fillRect(0, groundY, tcw, 30);
+  // Grass line
+  towerCtx.strokeStyle = '#57FFA5';
+  towerCtx.lineWidth = 1.5;
+  towerCtx.beginPath();
+  towerCtx.moveTo(0, groundY);
+  towerCtx.lineTo(tcw, groundY);
+  towerCtx.stroke();
+
+  // Apply camera scroll
+  towerCtx.save();
+  towerCtx.translate(0, tower.cameraY);
+
+  // Draw placed blocks
+  tower.blocks.forEach((b, i) => {
+    drawBlock(b);
+  });
+
+  // Draw current moving block
+  if (tower.current && tower.active) {
+    drawBlock(tower.current, true);
+  }
+
+  towerCtx.restore();
+}
+
+function drawBlock(b, isMoving = false) {
+  const grad = towerCtx.createLinearGradient(b.x, b.y, b.x, b.y + b.h);
+  grad.addColorStop(0, b.color[0]);
+  grad.addColorStop(1, b.color[1]);
+  towerCtx.fillStyle = grad;
+  towerCtx.fillRect(b.x, b.y, b.w, b.h);
+  // Top highlight
+  towerCtx.fillStyle = 'rgba(255,255,255,0.25)';
+  towerCtx.fillRect(b.x, b.y, b.w, 3);
+  // Right shadow
+  towerCtx.fillStyle = 'rgba(0,0,0,0.2)';
+  towerCtx.fillRect(b.x + b.w - 3, b.y + 3, 3, b.h - 3);
+  // Border
+  towerCtx.strokeStyle = isMoving ? '#fbbf24' : 'rgba(0,0,0,0.4)';
+  towerCtx.lineWidth = isMoving ? 2 : 1;
+  towerCtx.strokeRect(b.x, b.y, b.w, b.h);
+
+  // Windows pattern
+  if (b.w > 40 && b.h > 24) {
+    towerCtx.fillStyle = 'rgba(255,255,200,0.6)';
+    const winW = 6, winH = 8, gap = 4;
+    const cols = Math.floor((b.w - 8) / (winW + gap));
+    const startX = b.x + (b.w - cols * (winW + gap) + gap) / 2;
+    for (let i = 0; i < cols; i++) {
+      towerCtx.fillRect(startX + i * (winW + gap), b.y + 6, winW, winH);
+    }
+  }
 }
 
 function setTowerDiff(diff, btn) {
-  if (tower.active) { toast("Termine ta tour avant de changer de difficulte !", ''); return; }
+  if (tower.active) { toast("Termine d'abord la tour en cours !", ''); return; }
   tower.diff = diff;
   document.querySelectorAll('#view-tower .diff-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   const cfg = TOWER_DIFFS[diff];
-  const mult1 = towerMultAt(1, diff).toFixed(2);
-  setStatus('tower-status', `${cfg.label} - ${cfg.cols} cases/etage, ${cfg.mines} mine(s). Premier mult: ${mult1}x`);
-  renderTowerEmpty();
-}
-
-function renderTowerEmpty() {
-  const grid = document.getElementById('tower-grid');
-  if (!grid) return;
-  const cfg = TOWER_DIFFS[tower.diff];
-  grid.innerHTML = '';
-  for (let lvl = 1; lvl <= TOWER_ROWS; lvl++) {
-    const row = document.createElement('div');
-    row.className = 'tower-row future';
-    row.style.gridTemplateColumns = `repeat(${cfg.cols}, 1fr)`;
-    row.dataset.level = lvl;
-    row.dataset.mult = towerMultAt(lvl, tower.diff).toFixed(2) + 'x';
-    for (let c = 0; c < cfg.cols; c++) {
-      const tile = document.createElement('button');
-      tile.className = 'tower-tile';
-      tile.disabled = true;
-      tile.textContent = '·';
-      row.appendChild(tile);
-    }
-    grid.appendChild(row);
-  }
-}
-
-function renderTower(revealAll = false) {
-  const grid = document.getElementById('tower-grid');
-  if (!grid) return;
-  const cfg = TOWER_DIFFS[tower.diff];
-  grid.innerHTML = '';
-  for (let lvl = 1; lvl <= TOWER_ROWS; lvl++) {
-    const row = document.createElement('div');
-    row.style.gridTemplateColumns = `repeat(${cfg.cols}, 1fr)`;
-    row.dataset.level = lvl;
-    row.dataset.mult = towerMultAt(lvl, tower.diff).toFixed(2) + 'x';
-    if (lvl < tower.level + 1) row.className = 'tower-row passed';
-    else if (lvl === tower.level + 1 && tower.active) row.className = 'tower-row current';
-    else row.className = 'tower-row future';
-
-    const minesOfRow = tower.mines[lvl - 1] || [];
-    const picked = tower.picks?.[lvl - 1];
-
-    for (let c = 0; c < cfg.cols; c++) {
-      const tile = document.createElement('button');
-      tile.className = 'tower-tile';
-      const isMine = minesOfRow.includes(c);
-
-      if (picked !== undefined && c === picked) {
-        // Tile was picked
-        if (isMine) { tile.classList.add('bomb'); tile.textContent = '💣'; }
-        else { tile.classList.add('safe'); tile.textContent = '💎'; }
-      } else if (revealAll) {
-        if (isMine) { tile.textContent = '💣'; tile.classList.add('mine-hidden'); }
-        else { tile.textContent = '·'; }
-      } else if (lvl === tower.level + 1 && tower.active) {
-        tile.textContent = '?';
-        tile.onclick = () => pickTower(lvl - 1, c);
-      } else {
-        tile.textContent = '·';
-        tile.disabled = true;
-      }
-      tile.disabled = !(lvl === tower.level + 1 && tower.active && picked === undefined);
-      row.appendChild(tile);
-    }
-    grid.appendChild(row);
-  }
-}
-
-function updateTowerBadge() {
-  const badge = document.getElementById('tower-mult-badge');
-  if (!badge) return;
-  if (!tower.active && tower.level === 0) { badge.style.display = 'none'; return; }
-  badge.style.display = 'flex';
-  const curMult = towerMultAt(tower.level, tower.diff);
-  const nextMult = towerMultAt(tower.level + 1, tower.diff);
-  document.getElementById('tower-mult-val').textContent = curMult.toFixed(2) + 'x';
-  const curWin = Math.floor(tower.bet * curMult);
-  const nextWin = Math.floor(tower.bet * nextMult);
-  document.getElementById('tower-mult-next').textContent =
-    tower.level === 0 ? `Premier coup: ${nextMult.toFixed(2)}x` :
-    tower.level >= TOWER_ROWS ? `🏆 Sommet atteint ! Encaisse +${curWin} V` :
-    `Gain actuel: ${curWin} V → Prochain: ${nextMult.toFixed(2)}x`;
+  setStatus('tower-status', `${cfg.label} - Mult ×${cfg.multStep.toFixed(2)}/étage. Vitesse ${cfg.speed}x.`);
 }
 
 async function startTower() {
-  if (tower.active) { toast("Une tour est deja en cours !", ''); return; }
+  if (tower.active) { toast("Une tour est déjà en cours !", ''); return; }
   const bet = parseBetValue('tower-bet');
   if (!bet) return;
   await debitCoins(bet);
+
   const cfg = TOWER_DIFFS[tower.diff];
-  // Generate mines for each row
-  const mines = [];
-  for (let r = 0; r < TOWER_ROWS; r++) {
-    const positions = Array.from({length: cfg.cols}, (_, i) => i);
-    // Pick `cfg.mines` random positions
-    const rowMines = [];
-    for (let m = 0; m < cfg.mines; m++) {
-      const idx = Math.floor(Math.random() * positions.length);
-      rowMines.push(positions.splice(idx, 1)[0]);
-    }
-    mines.push(rowMines);
-  }
-  tower = { active: true, bet, level: 0, mines, picks: [], diff: tower.diff };
-  document.getElementById('tower-cash-btn').disabled = true;
+  // First block (base) — placed in center, decent width
+  const baseW = Math.min(140, tcw * 0.35);
+  const baseH = 26;
+  const baseX = (tcw - baseW) / 2;
+  const baseY = tch - 30 - baseH;
+
+  tower = {
+    active: true,
+    bet,
+    diff: tower.diff,
+    floors: 0,
+    multiplier: 1.0,
+    blocks: [{ x: baseX, y: baseY, w: baseW, h: baseH, color: TOWER_COLORS[0] }],
+    current: null,
+    cameraY: 0,
+    animFrame: null,
+    lastTime: 0
+  };
+
+  // Spawn first moving block
+  spawnNextBlock();
   document.getElementById('tower-start-btn').disabled = true;
+  document.getElementById('tower-build-btn').disabled = false;
+  document.getElementById('tower-cash-btn').disabled = true;
   document.querySelectorAll('#view-tower .diff-btn').forEach(b => b.disabled = true);
-  setStatus('tower-status', `Tour lancee en ${cfg.label}. Clique sur une case !`, 'good');
-  updateTowerBadge();
-  renderTower();
+  document.getElementById('tower-mult-badge').style.display = 'flex';
+  updateTowerHUD();
+  setStatus('tower-status', `🏗️ Construction lancée ! Clique BUILD au bon moment.`, 'good');
+
+  tower.lastTime = performance.now();
+  tower.animFrame = requestAnimationFrame(towerLoop);
 }
 
-async function pickTower(rowIdx, col) {
-  if (!tower.active || rowIdx !== tower.level) return;
-  tower.picks[rowIdx] = col;
-  const isMine = tower.mines[rowIdx].includes(col);
+function spawnNextBlock() {
+  const last = tower.blocks[tower.blocks.length - 1];
+  const cfg = TOWER_DIFFS[tower.diff];
+  const color = TOWER_COLORS[tower.blocks.length % TOWER_COLORS.length];
+  // Speed grows slightly with each floor for added difficulty
+  const speed = cfg.speed * (1 + tower.floors * 0.02);
+  // Spawn from either left or right
+  const dir = Math.random() < 0.5 ? 1 : -1;
+  const startX = dir === 1 ? -last.w - 10 : tcw + 10;
+  tower.current = {
+    x: startX,
+    y: last.y - last.h,
+    w: last.w,
+    h: last.h,
+    color,
+    dir,
+    speed
+  };
+}
 
-  if (isMine) {
-    // BOOM
+function towerLoop(now) {
+  if (!tower.active || !tower.current) return;
+  const dt = Math.min(50, now - tower.lastTime) / 16; // normalize to ~60fps
+  tower.lastTime = now;
+
+  const b = tower.current;
+  b.x += b.dir * b.speed * dt;
+  // Bounce off edges
+  const margin = 10;
+  if (b.dir > 0 && b.x + b.w > tcw - margin) { b.x = tcw - margin - b.w; b.dir = -1; }
+  if (b.dir < 0 && b.x < margin) { b.x = margin; b.dir = 1; }
+
+  drawTowerScene();
+  tower.animFrame = requestAnimationFrame(towerLoop);
+}
+
+async function towerDrop() {
+  if (!tower.active || !tower.current) return;
+
+  const cur = tower.current;
+  const prev = tower.blocks[tower.blocks.length - 1];
+
+  // Compute horizontal overlap with previous block
+  const left = Math.max(cur.x, prev.x);
+  const right = Math.min(cur.x + cur.w, prev.x + prev.w);
+  const overlap = right - left;
+
+  if (overlap <= 0) {
+    // MISS - tower collapses
+    cancelAnimationFrame(tower.animFrame);
     tower.active = false;
+    tower.current = null;
     me.total_wagered = (me.total_wagered || 0) + tower.bet;
     me.total_games = (me.total_games || 0) + 1;
     await saveBalance();
-    // Log bet
     if (me.id) await db.from('bets').insert({
       player_id: me.id, username: me.username, game_type: 'tower',
       amount: tower.bet, cashed_out: false, profit: 0
     }).then(()=>{}).catch(()=>{});
-    setStatus('tower-status', `💥 Mine touchee a l'etage ${rowIdx + 1}. Perdu ${tower.bet} V.`, 'bad');
-    toast(`💥 Tour effondree ! -${tower.bet} V`, 'loss');
-    document.getElementById('tower-start-btn').disabled = false;
+    setStatus('tower-status', `💥 Bloc tombé ! Perdu ${tower.bet} V.`, 'bad');
+    toast(`💥 Tour effondrée ! -${tower.bet} V`, 'loss');
+    document.getElementById('tower-build-btn').disabled = true;
     document.getElementById('tower-cash-btn').disabled = true;
+    document.getElementById('tower-start-btn').disabled = false;
     document.querySelectorAll('#view-tower .diff-btn').forEach(b => b.disabled = false);
-    renderTower(true);
-    setTimeout(updateTowerBadge, 100);
-    setTimeout(() => { tower.level = 0; tower.picks = []; updateTowerBadge(); }, 2500);
+    drawTowerScene();
+    setTimeout(() => {
+      tower.blocks = [];
+      tower.floors = 0;
+      tower.multiplier = 1.0;
+      tower.cameraY = 0;
+      document.getElementById('tower-mult-badge').style.display = 'none';
+      drawTowerScene();
+    }, 2500);
     return;
   }
 
-  // Safe
-  tower.level++;
+  const cfg = TOWER_DIFFS[tower.diff];
+  const perfectThreshold = prev.w * 0.92; // 92%+ overlap = perfect
+  const isPerfect = overlap >= perfectThreshold;
+
+  // Place the block: it takes the overlap width
+  const placed = {
+    x: left,
+    y: cur.y,
+    w: isPerfect ? prev.w : overlap, // perfect = keep full width (no shrink)
+    h: cur.h,
+    color: cur.color
+  };
+  // If perfect, snap to previous position
+  if (isPerfect) placed.x = prev.x;
+
+  tower.blocks.push(placed);
+  tower.floors++;
+  // Multiplier with perfect bonus
+  let stepMult = cfg.multStep;
+  if (isPerfect) stepMult *= (1 + cfg.perfectBonus);
+  tower.multiplier *= stepMult;
+  tower.multiplier = Math.round(tower.multiplier * 100) / 100;
+
+  // Show perfect popup
+  if (isPerfect) {
+    const pop = document.getElementById('tower-perfect');
+    pop.textContent = `PERFECT! +${Math.round(cfg.perfectBonus * 100)}%`;
+    pop.classList.remove('show');
+    void pop.offsetWidth; // force reflow
+    pop.classList.add('show');
+  }
+
+  // Enable cashout
   document.getElementById('tower-cash-btn').disabled = false;
-  updateTowerBadge();
-  renderTower();
 
-  if (tower.level >= TOWER_ROWS) {
-    await cashTower(true, true);
-    return;
+  // Camera scroll up if tower getting tall
+  if (placed.y < tch * 0.35) {
+    tower.cameraY += placed.h + 4;
+    tower.blocks.forEach(b => b.y += placed.h + 4);
+    placed.y += placed.h + 4;
+    // Wait... that doesn't quite work. Better: shift camera.
+    // Actually we shifted all blocks down; let me redo this properly
+    tower.blocks.forEach(b => b.y -= placed.h + 4);
+    tower.cameraY = 0; // reset for now, will do proper camera below
   }
 
-  const nextMult = towerMultAt(tower.level + 1, tower.diff);
-  setStatus('tower-status', `Etage ${tower.level}/${TOWER_ROWS} 💎 ! Prochain: ${nextMult.toFixed(2)}x`, 'good');
+  // Proper camera: if the topmost block is too high, scroll the view down by translating
+  const topY = Math.min(...tower.blocks.map(b => b.y));
+  if (topY < tch * 0.25) {
+    const shift = tch * 0.25 - topY;
+    tower.blocks.forEach(b => b.y += shift);
+  }
+
+  // Spawn next block
+  spawnNextBlock();
+  updateTowerHUD();
+  setStatus('tower-status', isPerfect ? `🎯 PERFECT ! Étage ${tower.floors}, mult ×${tower.multiplier.toFixed(2)}` : `✓ Étage ${tower.floors} posé. Mult ×${tower.multiplier.toFixed(2)}`, 'good');
 }
 
-async function cashTower(force = false, autoTop = false) {
-  if (!tower.active && !force) { setStatus('tower-status', 'Lance une tour avant d\'encaisser.'); return; }
-  if (tower.level < 1) { setStatus('tower-status', 'Trouve au moins une case sure.'); return; }
-  const mult = towerMultAt(tower.level, tower.diff);
+function updateTowerHUD() {
+  document.getElementById('tower-hud-floor').textContent = `Étage: ${tower.floors}`;
+  document.getElementById('tower-hud-mult').textContent = tower.multiplier.toFixed(2) + 'x';
+  document.getElementById('tower-mult-val').textContent = tower.multiplier.toFixed(2) + 'x';
+  const win = Math.floor(tower.bet * tower.multiplier);
+  document.getElementById('tower-mult-next').textContent = `Étage ${tower.floors} · Gain: ${win} V`;
+}
+
+async function cashTower() {
+  if (!tower.active) { setStatus('tower-status', 'Aucune tour en cours.'); return; }
+  if (tower.floors < 1) { setStatus('tower-status', 'Pose au moins un étage avant d\'encaisser.'); return; }
+  cancelAnimationFrame(tower.animFrame);
+  const mult = tower.multiplier;
   const win = Math.floor(tower.bet * mult);
   const profit = win - tower.bet;
   tower.active = false;
+  tower.current = null;
   await creditCoins(win);
   me.total_wagered = (me.total_wagered || 0) + tower.bet;
   me.total_games = (me.total_games || 0) + 1;
@@ -1302,13 +1683,27 @@ async function cashTower(force = false, autoTop = false) {
     player_id: me.id, username: me.username, game_type: 'tower',
     amount: tower.bet, cashout_multiplier: mult, profit, cashed_out: true
   }).then(()=>{}).catch(()=>{});
-  setStatus('tower-status', `${autoTop ? '🏆 SOMMET ! ' : '✓ Encaissement: '} +${win} V (${mult.toFixed(2)}x)`, 'good');
-  toast(`🎉 +${win} V gagnes a ${mult.toFixed(2)}x !`, 'win');
-  document.getElementById('tower-start-btn').disabled = false;
+  setStatus('tower-status', `🏆 Encaissé ! ${tower.floors} étages, +${win} V (×${mult.toFixed(2)})`, 'good');
+  toast(`🎉 +${win} V à ×${mult.toFixed(2)} !`, 'win');
+  document.getElementById('tower-build-btn').disabled = true;
   document.getElementById('tower-cash-btn').disabled = true;
+  document.getElementById('tower-start-btn').disabled = false;
   document.querySelectorAll('#view-tower .diff-btn').forEach(b => b.disabled = false);
-  renderTower(true);
-  setTimeout(() => { tower.level = 0; tower.picks = []; updateTowerBadge(); }, 2500);
+  drawTowerScene();
+  setTimeout(() => {
+    tower.blocks = [];
+    tower.floors = 0;
+    tower.multiplier = 1.0;
+    document.getElementById('tower-mult-badge').style.display = 'none';
+    drawTowerScene();
+  }, 2500);
+}
+
+// Init tower canvas on first view
+function initTowerView() {
+  setTimeout(() => {
+    setupTowerCanvas();
+  }, 50);
 }
 
 // ═══ MINES (Stake formula) ═══
@@ -1445,56 +1840,510 @@ async function cashMines(force = false, autoMax = false) {
   setTimeout(() => { mines.opened = new Set(); mines.mines = new Set(); updateMinesBadge(); }, 3000);
 }
 
-let bj = { active:false, bet:0, deck:[], player:[], dealer:[] };
-function makeDeck() { const ranks=['A','2','3','4','5','6','7','8','9','10','J','Q','K']; return ranks.flatMap(r => [r,r,r,r]).sort(() => Math.random() - .5); }
-function handValue(hand) { let total=0, aces=0; hand.forEach(c => { if (c === 'A') { total += 11; aces++; } else total += ['J','Q','K'].includes(c) ? 10 : parseInt(c,10); }); while (total > 21 && aces) { total -= 10; aces--; } return total; }
-function renderBlackjack(hideDealer = false) {
-  const p = document.getElementById('player-cards'), d = document.getElementById('dealer-cards'); if (!p || !d) return;
-  p.innerHTML = bj.player.map(c => `<div class="card-face">${c}</div>`).join('');
-  d.innerHTML = bj.dealer.map((c,i) => `<div class="card-face">${hideDealer && i === 1 ? '?' : c}</div>`).join('');
-}
-async function startBlackjack() {
-  const bet = parseBetValue('bj-bet'); if (!bet) return;
-  await debitCoins(bet); bj = { active:true, bet, deck:makeDeck(), player:[], dealer:[] };
-  bj.player.push(bj.deck.pop(), bj.deck.pop()); bj.dealer.push(bj.deck.pop(), bj.deck.pop());
-  renderBlackjack(true); setStatus('bj-status', `Ta main : ${handValue(bj.player)}.`, 'good');
-}
-async function hitBlackjack() {
-  if (!bj.active) return;
-  bj.player.push(bj.deck.pop()); renderBlackjack(true);
-  const val = handValue(bj.player);
-  if (val > 21) { bj.active=false; me.total_games=(me.total_games||0)+1; await saveBalance(); renderBlackjack(false); setStatus('bj-status','Tu depasses 21. Perdu.','bad'); }
-  else setStatus('bj-status', `Ta main : ${val}.`, 'good');
-}
-async function standBlackjack() {
-  if (!bj.active) return;
-  while (handValue(bj.dealer) < 17) bj.dealer.push(bj.deck.pop());
-  const pv=handValue(bj.player), dv=handValue(bj.dealer); bj.active=false; renderBlackjack(false); me.total_games=(me.total_games||0)+1;
-  if (dv > 21 || pv > dv) { const win = bj.bet * 2; await creditCoins(win); setStatus('bj-status', `Gagne ! ${pv} contre ${dv}. +${win} V.`, 'good'); }
-  else if (pv === dv) { await creditCoins(bj.bet); setStatus('bj-status', `Egalite ${pv}. Mise rendue.`, 'good'); }
-  else { await saveBalance(); setStatus('bj-status', `Perdu : ${pv} contre ${dv}.`, 'bad'); }
+let bj = {
+  active: false,
+  bet: 0,
+  deck: [],
+  hands: [],         // array of {cards, bet, doubled, surrendered, busted, finished}
+  currentHand: 0,
+  dealer: [],
+  insurance: 0,
+  insuranceTaken: false,
+  finished: false
+};
+
+const CARD_SUITS = ['♠','♥','♦','♣'];
+const CARD_RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+
+function bjMakeDeck() {
+  // 6 decks shuffled (casino standard)
+  const deck = [];
+  for (let d = 0; d < 6; d++) {
+    for (const s of CARD_SUITS) {
+      for (const r of CARD_RANKS) {
+        deck.push({ r, s });
+      }
+    }
+  }
+  // Fisher-Yates shuffle
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
 }
 
-let rouletteBet = 'red', rouletteSpin = 0;
-const redNums = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
-function setRouletteBet(choice, btn) { rouletteBet = choice; document.querySelectorAll('#view-roulette .choice-btn').forEach(b => b.classList.remove('active')); if (btn) btn.classList.add('active'); setStatus('roulette-status', `Mise sur ${choice === 'red' ? 'rouge' : choice === 'black' ? 'noir' : 'vert'}.`); }
-function setRouletteNumber() { const n = parseInt(document.getElementById('roulette-number').value, 10); if (n >= 0 && n <= 36) { rouletteBet = 'num:' + n; document.querySelectorAll('#view-roulette .choice-btn').forEach(b => b.classList.remove('active')); setStatus('roulette-status', `Mise sur le numero ${n}.`); } }
-async function spinRoulette() {
-  const bet = parseBetValue('roulette-bet'); if (!bet) return;
+function bjCardValue(card) {
+  if (card.r === 'A') return 11;
+  if (['J','Q','K'].includes(card.r)) return 10;
+  return parseInt(card.r, 10);
+}
+
+function bjHandValue(hand) {
+  let total = 0, aces = 0;
+  hand.forEach(c => {
+    if (c.r === 'A') { total += 11; aces++; }
+    else total += bjCardValue(c);
+  });
+  while (total > 21 && aces > 0) { total -= 10; aces--; }
+  return total;
+}
+
+function bjIsBlackjack(hand) {
+  return hand.length === 2 && bjHandValue(hand) === 21;
+}
+
+function renderCard(card, hidden = false) {
+  if (hidden) return '<div class="card back"></div>';
+  const isRed = card.s === '♥' || card.s === '♦';
+  return `<div class="card${isRed ? ' red' : ''}">
+    <div class="card-corner-top">${card.r}<span>${card.s}</span></div>
+    <div class="card-suit-big">${card.s}</div>
+    <div class="card-corner-bot">${card.r}<span>${card.s}</span></div>
+  </div>`;
+}
+
+function bjRender() {
+  const dealerHand = document.getElementById('bj-dealer-hand');
+  const playerHand = document.getElementById('bj-player-hand');
+  const splitHand = document.getElementById('bj-split-hand');
+  if (!dealerHand) return;
+
+  const hideDealer = bj.active && !bj.finished;
+  dealerHand.innerHTML = bj.dealer.map((c, i) => renderCard(c, hideDealer && i === 1)).join('');
+  const dealerScore = hideDealer ?
+    (bj.dealer[0] ? bjCardValue(bj.dealer[0]) + '?' : '-') :
+    bjHandValue(bj.dealer);
+  const dEl = document.getElementById('bj-dealer-score');
+  dEl.textContent = dealerScore;
+  dEl.className = 'bj-section-score' + (
+    !hideDealer && bjHandValue(bj.dealer) > 21 ? ' bust' :
+    !hideDealer && bjIsBlackjack(bj.dealer) ? ' bj' : ''
+  );
+
+  if (bj.hands.length === 1) {
+    splitHand.style.display = 'none';
+    playerHand.innerHTML = bj.hands[0].cards.map(c => renderCard(c)).join('');
+    const pv = bjHandValue(bj.hands[0].cards);
+    const pEl = document.getElementById('bj-player-score');
+    pEl.textContent = pv;
+    pEl.className = 'bj-section-score' + (pv > 21 ? ' bust' : bjIsBlackjack(bj.hands[0].cards) ? ' bj' : '');
+  } else {
+    splitHand.style.display = '';
+    // Show both hands
+    const renderHand = (h, idx) => {
+      const isActive = idx === bj.currentHand && bj.active;
+      return `<div style="display:flex;flex-direction:column;gap:4px;width:100%">
+        <div style="font-size:11px;color:#94a3b8;display:flex;justify-content:space-between"><span>Main ${idx+1}${h.doubled?' (x2)':''}${h.surrendered?' (abandon)':''}</span><span style="color:${bjHandValue(h.cards) > 21 ? '#ef4444' : '#fbbf24'};font-weight:900">${bjHandValue(h.cards)}</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;padding:6px;border:${isActive ? '2px solid #fbbf24' : '1px dashed #2d3f55'};border-radius:6px;background:${isActive ? 'rgba(251,191,36,0.05)' : 'transparent'}">${h.cards.map(c => renderCard(c)).join('')}</div>
+      </div>`;
+    };
+    playerHand.innerHTML = renderHand(bj.hands[0], 0);
+    splitHand.innerHTML = renderHand(bj.hands[1], 1);
+    const pEl = document.getElementById('bj-player-score');
+    pEl.textContent = `${bjHandValue(bj.hands[0].cards)} / ${bjHandValue(bj.hands[1].cards)}`;
+    pEl.className = 'bj-section-score';
+  }
+  document.getElementById('bj-bet-display').textContent =
+    bj.hands.reduce((sum, h) => sum + h.bet, 0) + ' V' + (bj.insurance ? ` (+${bj.insurance} assurance)` : '');
+}
+
+function bjUpdateButtons() {
+  const dealBtn = document.getElementById('bj-deal-btn');
+  const hitBtn = document.getElementById('bj-hit-btn');
+  const standBtn = document.getElementById('bj-stand-btn');
+  const dblBtn = document.getElementById('bj-double-btn');
+  const splitBtn = document.getElementById('bj-split-btn');
+  const surBtn = document.getElementById('bj-surrender-btn');
+  const insBtn = document.getElementById('bj-insurance-btn');
+
+  if (!bj.active) {
+    dealBtn.disabled = false;
+    [hitBtn, standBtn, dblBtn, splitBtn, surBtn, insBtn].forEach(b => b.disabled = true);
+    return;
+  }
+  dealBtn.disabled = true;
+  const cur = bj.hands[bj.currentHand];
+  const canPlay = cur && !cur.busted && !cur.finished;
+  hitBtn.disabled = !canPlay;
+  standBtn.disabled = !canPlay;
+  // Double only on first 2 cards
+  dblBtn.disabled = !canPlay || cur.cards.length !== 2 ||
+    (me.is_infinite ? false : me.balance < cur.bet);
+  // Split only on first 2 cards, same value, and only once (max 2 hands)
+  splitBtn.disabled = !canPlay || cur.cards.length !== 2 ||
+    bjCardValue(cur.cards[0]) !== bjCardValue(cur.cards[1]) ||
+    bj.hands.length > 1 || (me.is_infinite ? false : me.balance < cur.bet);
+  // Surrender only on first 2 cards of first hand
+  surBtn.disabled = !canPlay || cur.cards.length !== 2 || bj.hands.length > 1;
+  // Insurance: only if dealer shows Ace, before any other action
+  insBtn.disabled = bj.insuranceTaken || !bj.dealer[0] || bj.dealer[0].r !== 'A' ||
+    cur.cards.length !== 2 ||
+    (me.is_infinite ? false : me.balance < Math.floor(cur.bet / 2));
+}
+
+async function startBlackjack() {
+  if (bj.active) return;
+  const bet = parseBetValue('bj-bet');
+  if (!bet) return;
   await debitCoins(bet);
-  const n = Math.floor(Math.random() * 37);
-  rouletteSpin += 720 + n * 10;
-  const wheel = document.getElementById('roulette-wheel'), result = document.getElementById('roulette-result');
-  if (wheel) wheel.style.transform = `rotate(${rouletteSpin}deg)`;
-  if (result) result.textContent = n;
-  const color = n === 0 ? 'green' : redNums.has(n) ? 'red' : 'black';
-  let mult = 0;
-  if (rouletteBet === color && color !== 'green') mult = 2;
-  if (rouletteBet === 'green' && color === 'green') mult = 14;
-  if (rouletteBet === 'num:' + n) mult = 36;
+
+  bj.deck = bjMakeDeck();
+  bj.bet = bet;
+  bj.hands = [{ cards: [bj.deck.pop(), bj.deck.pop()], bet, doubled: false, surrendered: false, busted: false, finished: false }];
+  bj.dealer = [bj.deck.pop(), bj.deck.pop()];
+  bj.currentHand = 0;
+  bj.active = true;
+  bj.finished = false;
+  bj.insurance = 0;
+  bj.insuranceTaken = false;
+
+  bjRender();
+  bjUpdateButtons();
+
+  // Check blackjack immediately
+  const playerBJ = bjIsBlackjack(bj.hands[0].cards);
+  const dealerBJ = bjIsBlackjack(bj.dealer);
+
+  if (playerBJ || dealerBJ) {
+    await bjFinish();
+    return;
+  }
+  setStatus('bj-status', `Tu as ${bjHandValue(bj.hands[0].cards)}. À toi !`, 'good');
+}
+
+async function bjHit() {
+  const cur = bj.hands[bj.currentHand];
+  cur.cards.push(bj.deck.pop());
+  const val = bjHandValue(cur.cards);
+  bjRender();
+  if (val > 21) {
+    cur.busted = true; cur.finished = true;
+    setStatus('bj-status', `💥 Main ${bj.currentHand + 1}: ${val}, busted !`, 'bad');
+    bjNextHandOrFinish();
+  } else if (val === 21) {
+    cur.finished = true;
+    setStatus('bj-status', `🎯 21 ! Main ${bj.currentHand + 1} terminée.`, 'good');
+    bjNextHandOrFinish();
+  } else {
+    setStatus('bj-status', `Main ${bj.currentHand + 1}: ${val}.`, 'good');
+    bjUpdateButtons();
+  }
+}
+
+function bjStand() {
+  bj.hands[bj.currentHand].finished = true;
+  bjNextHandOrFinish();
+}
+
+async function bjDouble() {
+  const cur = bj.hands[bj.currentHand];
+  await debitCoins(cur.bet);
+  cur.bet *= 2;
+  cur.doubled = true;
+  cur.cards.push(bj.deck.pop());
+  cur.finished = true;
+  const val = bjHandValue(cur.cards);
+  if (val > 21) cur.busted = true;
+  bjRender();
+  setStatus('bj-status', `2x · Main ${bj.currentHand + 1}: ${val}${val > 21 ? ' busted !' : ''}`, val > 21 ? 'bad' : 'good');
+  bjNextHandOrFinish();
+}
+
+async function bjSplit() {
+  const cur = bj.hands[bj.currentHand];
+  if (cur.cards.length !== 2 || bjCardValue(cur.cards[0]) !== bjCardValue(cur.cards[1])) return;
+  await debitCoins(cur.bet);
+  const card2 = cur.cards.pop();
+  cur.cards.push(bj.deck.pop());
+  const newHand = { cards: [card2, bj.deck.pop()], bet: cur.bet, doubled: false, surrendered: false, busted: false, finished: false };
+  bj.hands.push(newHand);
+  bjRender();
+  setStatus('bj-status', `✂️ Split ! Tu joues maintenant la main 1.`, 'good');
+  bjUpdateButtons();
+}
+
+async function bjSurrender() {
+  const cur = bj.hands[bj.currentHand];
+  cur.surrendered = true; cur.finished = true;
+  const refund = Math.floor(cur.bet / 2);
+  if (!me.is_infinite) me.balance += refund;
+  await saveBalance();
+  updateBalanceDisplay();
+  setStatus('bj-status', `🏳️ Abandon. Tu récupères ${refund} V.`);
+  bjNextHandOrFinish();
+}
+
+async function bjInsurance() {
+  if (bj.insuranceTaken || bj.dealer[0].r !== 'A') return;
+  const insBet = Math.floor(bj.hands[0].bet / 2);
+  await debitCoins(insBet);
+  bj.insurance = insBet;
+  bj.insuranceTaken = true;
+  setStatus('bj-status', `🛡️ Assurance prise (${insBet} V).`);
+  bjRender();
+  bjUpdateButtons();
+}
+
+function bjNextHandOrFinish() {
+  // Move to next un-finished hand
+  for (let i = bj.currentHand + 1; i < bj.hands.length; i++) {
+    if (!bj.hands[i].finished) {
+      bj.currentHand = i;
+      bjRender();
+      bjUpdateButtons();
+      setStatus('bj-status', `Main ${i + 1}: ${bjHandValue(bj.hands[i].cards)}.`, 'good');
+      return;
+    }
+  }
+  // All hands finished — dealer plays
+  bjFinish();
+}
+
+async function bjFinish() {
+  bj.finished = true;
+  // Dealer reveals and draws until 17
+  while (bjHandValue(bj.dealer) < 17) {
+    bj.dealer.push(bj.deck.pop());
+  }
+  const dealerVal = bjHandValue(bj.dealer);
+  const dealerBJ = bjIsBlackjack(bj.dealer);
+
+  let totalWin = 0;
+  let summary = [];
+  bj.hands.forEach((h, idx) => {
+    if (h.surrendered) {
+      summary.push(`Main ${idx + 1}: abandon`);
+      return;
+    }
+    const pv = bjHandValue(h.cards);
+    const pBJ = bjIsBlackjack(h.cards);
+    if (h.busted || pv > 21) {
+      summary.push(`Main ${idx + 1}: bust (${pv})`);
+    } else if (pBJ && !dealerBJ) {
+      // BJ pays 3:2
+      const win = Math.floor(h.bet * 2.5);
+      totalWin += win;
+      summary.push(`Main ${idx + 1}: BJ ! +${win} V`);
+    } else if (pBJ && dealerBJ) {
+      totalWin += h.bet; // push
+      summary.push(`Main ${idx + 1}: BJ vs BJ (push)`);
+    } else if (dealerVal > 21 || pv > dealerVal) {
+      const win = h.bet * 2;
+      totalWin += win;
+      summary.push(`Main ${idx + 1}: ${pv} vs ${dealerVal} ✓ +${win} V`);
+    } else if (pv === dealerVal) {
+      totalWin += h.bet; // push
+      summary.push(`Main ${idx + 1}: push (${pv})`);
+    } else {
+      summary.push(`Main ${idx + 1}: ${pv} vs ${dealerVal} ✗`);
+    }
+  });
+
+  // Insurance
+  if (bj.insuranceTaken) {
+    if (dealerBJ) {
+      const insWin = bj.insurance * 3; // insurance pays 2:1 + original
+      totalWin += insWin;
+      summary.push(`🛡️ Assurance ✓ +${insWin} V`);
+    } else {
+      summary.push(`🛡️ Assurance ✗`);
+    }
+  }
+
+  if (totalWin > 0) await creditCoins(totalWin);
+  const totalBet = bj.hands.reduce((s, h) => s + h.bet, 0) + bj.insurance;
+  me.total_wagered = (me.total_wagered || 0) + totalBet;
   me.total_games = (me.total_games || 0) + 1;
-  if (mult) { const win = bet * mult; await creditCoins(win); setStatus('roulette-status', `Sortie ${n} (${color}). Gagne +${win} V.`, 'good'); }
-  else { await saveBalance(); setStatus('roulette-status', `Sortie ${n} (${color}). Perdu.`, 'bad'); }
+  if (totalWin > totalBet) {
+    const profit = totalWin - totalBet;
+    if (profit > (me.biggest_win || 0)) me.biggest_win = profit;
+  }
+  await saveBalance();
+
+  bj.active = false;
+  bjRender();
+  bjUpdateButtons();
+
+  const profit = totalWin - totalBet;
+  if (profit > 0) {
+    setStatus('bj-status', `🎉 +${profit} V net | ${summary.join(' · ')}`, 'good');
+    toast(`🎉 Blackjack +${profit} V !`, 'win');
+  } else if (profit === 0) {
+    setStatus('bj-status', `Égalité | ${summary.join(' · ')}`);
+  } else {
+    setStatus('bj-status', `${profit} V | ${summary.join(' · ')}`, 'bad');
+    toast(`💥 Blackjack ${profit} V`, 'loss');
+  }
+}
+
+// European roulette - wheel order
+const ROUL_WHEEL_ORDER = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26];
+const ROUL_RED = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]);
+
+let rouletteBet = 'red';
+let rouletteSpinning = false;
+let rouletteWheelAngle = 0;
+let rouletteBallAngle = 0;
+
+function rouletteColor(n) {
+  if (n === 0) return 'green';
+  return ROUL_RED.has(n) ? 'red' : 'black';
+}
+
+function setRouletteBet(choice, btn) {
+  if (rouletteSpinning) return;
+  rouletteBet = choice;
+  document.querySelectorAll('#view-roulette .roul-bet-cell').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const labels = { red: 'Rouge ×2', black: 'Noir ×2', green: 'Vert (0) ×36', even: 'Pair ×2', odd: 'Impair ×2',
+    low: '1-18 ×2', high: '19-36 ×2', d1: '1-12 ×3', d2: '13-24 ×3', d3: '25-36 ×3' };
+  const lbl = labels[choice] || (choice.startsWith('num:') ? `Numéro ${choice.split(':')[1]} ×36` : choice);
+  setStatus('roulette-status', `Mise sur ${lbl}.`);
+}
+
+function setRouletteNumber() {
+  if (rouletteSpinning) return;
+  const n = parseInt(document.getElementById('roulette-number').value, 10);
+  if (isNaN(n) || n < 0 || n > 36) {
+    setStatus('roulette-status', 'Numéro invalide (0-36).', 'bad');
+    return;
+  }
+  rouletteBet = 'num:' + n;
+  document.querySelectorAll('#view-roulette .roul-bet-cell').forEach(b => b.classList.remove('active'));
+  setStatus('roulette-status', `Mise sur le numéro ${n} (×36).`);
+}
+
+function buildRouletteWheelSVG() {
+  const wheel = document.getElementById('roul-wheel');
+  if (!wheel) return;
+  const N = ROUL_WHEEL_ORDER.length; // 37
+  const segAngle = 360 / N;
+  let svg = '<svg viewBox="-100 -100 200 200">';
+  ROUL_WHEEL_ORDER.forEach((num, i) => {
+    const a0 = (i * segAngle - 90 - segAngle/2) * Math.PI / 180;
+    const a1 = ((i + 1) * segAngle - 90 - segAngle/2) * Math.PI / 180;
+    const r = 95;
+    const x0 = Math.cos(a0) * r, y0 = Math.sin(a0) * r;
+    const x1 = Math.cos(a1) * r, y1 = Math.sin(a1) * r;
+    const color = rouletteColor(num);
+    const fill = color === 'red' ? '#991b1b' : color === 'black' ? '#1a1a1a' : '#14532d';
+    svg += `<path d="M0 0 L${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1} Z" fill="${fill}" stroke="#1a1a1a" stroke-width="0.5"/>`;
+    // Number text
+    const ta = (i * segAngle - 90) * Math.PI / 180;
+    const tr = r * 0.78;
+    const tx = Math.cos(ta) * tr, ty = Math.sin(ta) * tr;
+    const rot = i * segAngle;
+    svg += `<text x="${tx}" y="${ty}" fill="#fff" font-size="8" font-weight="900" text-anchor="middle" dominant-baseline="central" transform="rotate(${rot} ${tx} ${ty})">${num}</text>`;
+  });
+  // Outer rim
+  svg += '<circle cx="0" cy="0" r="95" fill="none" stroke="#3a240e" stroke-width="2"/>';
+  svg += '</svg>';
+  wheel.innerHTML = svg;
+}
+
+function initRouletteView() {
+  buildRouletteWheelSVG();
+  // Reset ball
+  const ball = document.getElementById('roul-ball');
+  if (ball) {
+    ball.style.transform = 'rotate(0) translateX(0) rotate(0)';
+  }
+}
+
+async function spinRoulette() {
+  if (rouletteSpinning) return;
+  const bet = parseBetValue('roulette-bet');
+  if (!bet) return;
+  await debitCoins(bet);
+  rouletteSpinning = true;
+  document.getElementById('roul-spin-btn').disabled = true;
+  document.querySelectorAll('#view-roulette .roul-bet-cell').forEach(b => b.classList.add('disabled'));
+
+  // Pick random outcome
+  const n = Math.floor(Math.random() * 37);
+  const idx = ROUL_WHEEL_ORDER.indexOf(n);
+  const segAngle = 360 / 37;
+
+  setStatus('roulette-status', `🎲 La bille tourne...`, 'good');
+  document.getElementById('roul-result').textContent = '?';
+  document.getElementById('roul-result').className = 'roul-result';
+
+  // Animate wheel spinning
+  const wheel = document.getElementById('roul-wheel');
+  const ball = document.getElementById('roul-ball');
+  // Wheel turns several rotations and stops with target number at top (angle 0 = top in our drawing)
+  const wheelTurns = 4;
+  const wheelFinalAngle = wheelTurns * 360 + (360 - idx * segAngle);
+  rouletteWheelAngle = wheelFinalAngle;
+  wheel.style.transition = 'transform 5s cubic-bezier(0.15, 0.05, 0.1, 1)';
+  wheel.style.transform = `rotate(${wheelFinalAngle}deg)`;
+
+  // Animate ball: orbits opposite direction, decelerates, lands at top (the segment that ends up at top)
+  // Ball orbit radius shrinks slightly to "fall in"
+  const orbitStart = 130; // px from center, outer
+  const orbitEnd = 95;    // lands on rim
+  const ballTurns = -6;
+  const ballFinalAngle = ballTurns * 360; // ball ends at top (0deg from start)
+  ball.style.transition = 'transform 5s cubic-bezier(0.2, 0.05, 0.1, 1)';
+  ball.style.transform = `translate(-50%, -50%) rotate(${ballFinalAngle}deg) translateX(${orbitEnd}px) rotate(${-ballFinalAngle}deg)`;
+  // Actually need to start from current position. Set initial style first.
+  ball.style.transition = 'none';
+  ball.style.transform = `translate(-50%, -50%) rotate(0deg) translateX(${orbitStart}px) rotate(0deg)`;
+  // Force reflow
+  void ball.offsetWidth;
+  ball.style.transition = 'transform 5s cubic-bezier(0.2, 0.05, 0.1, 1)';
+  ball.style.transform = `translate(-50%, -50%) rotate(${ballFinalAngle}deg) translateX(${orbitEnd}px) rotate(${-ballFinalAngle}deg)`;
+
+  // After animation: settle result
+  setTimeout(async () => {
+    const color = rouletteColor(n);
+    const resEl = document.getElementById('roul-result');
+    resEl.textContent = n;
+    resEl.className = 'roul-result ' + color;
+
+    // Determine win
+    let mult = 0;
+    if (rouletteBet === 'red' && color === 'red') mult = 2;
+    else if (rouletteBet === 'black' && color === 'black') mult = 2;
+    else if (rouletteBet === 'green' && color === 'green') mult = 36;
+    else if (rouletteBet === 'even' && n !== 0 && n % 2 === 0) mult = 2;
+    else if (rouletteBet === 'odd' && n % 2 === 1) mult = 2;
+    else if (rouletteBet === 'low' && n >= 1 && n <= 18) mult = 2;
+    else if (rouletteBet === 'high' && n >= 19 && n <= 36) mult = 2;
+    else if (rouletteBet === 'd1' && n >= 1 && n <= 12) mult = 3;
+    else if (rouletteBet === 'd2' && n >= 13 && n <= 24) mult = 3;
+    else if (rouletteBet === 'd3' && n >= 25 && n <= 36) mult = 3;
+    else if (rouletteBet === 'num:' + n) mult = 36;
+
+    me.total_games = (me.total_games || 0) + 1;
+    me.total_wagered = (me.total_wagered || 0) + bet;
+
+    if (mult > 0) {
+      const win = bet * mult;
+      const profit = win - bet;
+      await creditCoins(win);
+      if (profit > (me.biggest_win || 0)) me.biggest_win = profit;
+      if (me.id) await db.from('bets').insert({
+        player_id: me.id, username: me.username, game_type: 'roulette',
+        amount: bet, cashout_multiplier: mult, profit, cashed_out: true
+      }).then(()=>{}).catch(()=>{});
+      setStatus('roulette-status', `🎉 ${n} (${color === 'red' ? 'rouge' : color === 'black' ? 'noir' : 'vert'}) ! Gagné +${win} V (×${mult})`, 'good');
+      toast(`🎉 Roulette +${win} V !`, 'win');
+    } else {
+      await saveBalance();
+      if (me.id) await db.from('bets').insert({
+        player_id: me.id, username: me.username, game_type: 'roulette',
+        amount: bet, cashed_out: false, profit: 0
+      }).then(()=>{}).catch(()=>{});
+      setStatus('roulette-status', `💥 ${n} (${color === 'red' ? 'rouge' : color === 'black' ? 'noir' : 'vert'}). Perdu ${bet} V.`, 'bad');
+      toast(`💥 Roulette -${bet} V`, 'loss');
+    }
+
+    rouletteSpinning = false;
+    document.getElementById('roul-spin-btn').disabled = false;
+    document.querySelectorAll('#view-roulette .roul-bet-cell').forEach(b => b.classList.remove('disabled'));
+  }, 5100);
 }
 
 // MODAL HELPERS
