@@ -14,33 +14,33 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #120b24; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+    body { background: #0a0f1e; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
 
     /* â•â•â•â•â•â•â•â• LOGIN â•â•â•â•â•â•â•â• */
     #login-screen {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       min-height: 100vh; gap: 20px; padding: 40px;
     }
-    .login-logo { font-size: 38px; font-weight: 900; color: #ffd166; letter-spacing: -1px; }
+    .login-logo { font-size: 38px; font-weight: 900; color: #00d4aa; letter-spacing: -1px; }
     .login-logo span { color: #fff; }
     .login-sub { font-size: 13px; color: #64748b; }
     .login-card {
-      background: #1c1336; border: 1px solid #3b2d63; border-radius: 16px;
+      background: #0e1628; border: 1px solid #1e3a5f; border-radius: 16px;
       padding: 28px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 14px;
     }
     .login-title { font-size: 18px; font-weight: 700; color: #fff; text-align: center; }
     .ig { display: flex; flex-direction: column; gap: 5px; }
     .ig label { font-size: 12px; color: #94a3b8; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
     .ig input {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 11px 14px; color: #fff; font-size: 14px; outline: none; transition: border-color 0.2s; width: 100%;
     }
-    .ig input:focus { border-color: #ffd166; }
+    .ig input:focus { border-color: #00d4aa; }
     .btn-go {
-      background: #ffd166; color: #120b24; border: none; border-radius: 8px;
+      background: #00d4aa; color: #0a0f1e; border: none; border-radius: 8px;
       padding: 13px; font-size: 15px; font-weight: 800; cursor: pointer; transition: background 0.2s;
     }
-    .btn-go:hover { background: #ffc233; }
+    .btn-go:hover { background: #00b894; }
     .login-err { font-size: 13px; color: #ef4444; text-align: center; display: none; }
     .login-err.show { display: block; }
 
@@ -49,37 +49,37 @@
 
     /* NAVBAR */
     .navbar {
-      background: #1c1336; border-bottom: 1px solid #3b2d63; padding: 0 20px;
+      background: #0e1628; border-bottom: 1px solid #1e3a5f; padding: 0 20px;
       display: flex; align-items: center; justify-content: space-between; height: 54px;
       position: sticky; top: 0; z-index: 50; gap: 12px;
     }
-    .nav-logo { font-size: 20px; font-weight: 900; color: #ffd166; letter-spacing: -0.5px; flex-shrink: 0; }
+    .nav-logo { font-size: 20px; font-weight: 900; color: #00d4aa; letter-spacing: -0.5px; flex-shrink: 0; }
     .nav-logo span { color: #fff; }
     .nav-tabs { display: flex; gap: 2px; }
     .nav-tab {
       background: transparent; border: none; border-radius: 8px; color: #64748b;
       padding: 6px 12px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
     }
-    .nav-tab.active { background: #120b24; color: #ffd166; }
+    .nav-tab.active { background: #0a0f1e; color: #00d4aa; }
     .nav-tab:hover:not(.active) { color: #94a3b8; }
     .nav-tab.disabled { opacity: 0.35; cursor: not-allowed; }
     .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .balance-pill {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 20px;
-      padding: 5px 12px; font-size: 13px; font-weight: 700; color: #ffd166;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 20px;
+      padding: 5px 12px; font-size: 13px; font-weight: 700; color: #00d4aa;
       display: flex; align-items: center; gap: 5px; cursor: pointer; transition: border-color 0.2s;
     }
-    .balance-pill:hover { border-color: #ffd166; }
-    .ci { width: 15px; height: 15px; background: #ffd166; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; color: #120b24; font-weight: 900; }
+    .balance-pill:hover { border-color: #00d4aa; }
+    .ci { width: 15px; height: 15px; background: #00d4aa; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 8px; color: #0a0f1e; font-weight: 900; }
     .btn-ad {
-      background: linear-gradient(90deg,#f59e0b,#ef4444); color: #fff; border: none;
+      background: linear-gradient(90deg,#00b894,#ef4444); color: #fff; border: none;
       border-radius: 20px; padding: 5px 13px; font-size: 12px; font-weight: 800;
       cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
     }
     .btn-ad:hover { opacity: 0.85; }
     .avatar-btn {
       width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg,#5865F2,#ffd166);
+      background: linear-gradient(135deg,#5865F2,#00d4aa);
       display: flex; align-items: center; justify-content: center;
       font-size: 13px; font-weight: 700; color: #fff; cursor: pointer; flex-shrink: 0;
     }
@@ -93,72 +93,72 @@
 
     /* BET PANEL */
     .bet-panel {
-      background: #1c1336; border-right: 1px solid #3b2d63;
+      background: #0e1628; border-right: 1px solid #1e3a5f;
       padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;
     }
     .panel-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; }
     .field-label { font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
     .inp-wrap { position: relative; }
     .inp {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 10px 36px 10px 12px; color: #fff; font-size: 16px; font-weight: 600;
       width: 100%; outline: none; transition: border-color 0.2s;
     }
-    .inp:focus { border-color: #ffd166; }
-    .inp-suffix { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #ffd166; font-weight: 700; }
+    .inp:focus { border-color: #00d4aa; }
+    .inp-suffix { position: absolute; right: 11px; top: 50%; transform: translateY(-50%); font-size: 11px; color: #00d4aa; font-weight: 700; }
     .inp-sm {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 9px 12px; color: #fff; font-size: 13px; width: 100%; outline: none;
     }
     .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .quick-btn {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 6px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 6px;
       color: #94a3b8; font-size: 12px; font-weight: 600; padding: 7px;
       cursor: pointer; transition: all 0.2s; text-align: center;
     }
-    .quick-btn:hover { border-color: #ffd166; color: #ffd166; }
+    .quick-btn:hover { border-color: #00d4aa; color: #00d4aa; }
     .row-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
     .toggle {
-      width: 34px; height: 18px; background: #3b2d63; border-radius: 9px;
+      width: 34px; height: 18px; background: #1e3a5f; border-radius: 9px;
       cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0;
     }
-    .toggle.on { background: #ffd166; }
+    .toggle.on { background: #00d4aa; }
     .toggle::after { content:''; position:absolute; width:14px; height:14px; background:#fff; border-radius:50%; top:2px; left:2px; transition:left 0.2s; }
     .toggle.on::after { left:18px; }
     .btn-main {
-      background: #ffd166; color: #120b24; border: none; border-radius: 10px;
+      background: #00d4aa; color: #0a0f1e; border: none; border-radius: 10px;
       padding: 13px; font-size: 15px; font-weight: 800; cursor: pointer;
       transition: all 0.15s; width: 100%;
     }
-    .btn-main:hover { background: #ffc233; transform: translateY(-1px); }
+    .btn-main:hover { background: #00b894; transform: translateY(-1px); }
     .btn-main:active { transform: translateY(0); }
-    .btn-main.co { background: #f59e0b; color: #fff; }
+    .btn-main.co { background: #00b894; color: #fff; }
     .btn-main.co:hover { background: #d97706; }
-    .btn-main:disabled { background: #3b2d63; color: #64748b; cursor: not-allowed; transform: none; }
-    .bet-info { background: #120b24; border: 1px solid #3b2d63; border-radius: 8px; padding: 11px; font-size: 12px; display: none; }
+    .btn-main:disabled { background: #1e3a5f; color: #64748b; cursor: not-allowed; transform: none; }
+    .bet-info { background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px; padding: 11px; font-size: 12px; display: none; }
     .bet-info.show { display: block; }
     .bi-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
     .bi-row:last-child { margin-bottom: 0; }
     .bi-k { color: #64748b; }
     .bi-v { color: #fff; font-weight: 600; }
-    .bi-v.g { color: #ffd166; }
-    .bi-v.y { color: #f59e0b; }
+    .bi-v.g { color: #00d4aa; }
+    .bi-v.y { color: #00b894; }
     .btn-outline {
-      background: transparent; color: #94a3b8; border: 1px solid #3b2d63; border-radius: 8px;
+      background: transparent; color: #94a3b8; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 9px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%;
     }
-    .btn-outline:hover { border-color: #ffd166; color: #ffd166; }
+    .btn-outline:hover { border-color: #00d4aa; color: #00d4aa; }
 
     /* CRASH AREA */
-    .crash-area { display: flex; flex-direction: column; background: #120b24; padding: 12px; gap: 10px; }
+    .crash-area { display: flex; flex-direction: column; background: #0a0f1e; padding: 12px; gap: 10px; }
     .canvas-wrap {
-      position: relative; background: #171029; border-radius: 12px; border: 1px solid #2c2150;
+      position: relative; background: #080e1a; border-radius: 12px; border: 1px solid #0f2040;
       overflow: hidden; flex: 1; min-height: 400px;
     }
     canvas { display: block; width: 100%; height: 100%; }
     .mult-big {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-      font-size: 54px; font-weight: 900; color: #ffd166; letter-spacing: -2px; pointer-events: none;
+      font-size: 54px; font-weight: 900; color: #00d4aa; letter-spacing: -2px; pointer-events: none;
     }
     .mult-big.crashed { color: #ef4444; }
     .mult-big.waiting { color: #64748b; font-size: 18px; font-weight: 600; letter-spacing: 0; }
@@ -166,47 +166,47 @@
       position: absolute; top: 10px; left: 10px; padding: 3px 9px;
       border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
     }
-    .phase-tag.w { background: #2c2150; color: #64748b; }
-    .phase-tag.r { background: rgba(255,209,102,0.15); color: #ffd166; }
+    .phase-tag.w { background: #0f2040; color: #64748b; }
+    .phase-tag.r { background: rgba(0,212,170,0.15); color: #00d4aa; }
     .phase-tag.c { background: rgba(239,68,68,0.15); color: #ef4444; }
     .hist-bar { display: flex; gap: 5px; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
     .hist-bar::-webkit-scrollbar { display: none; }
     .hp { flex-shrink:0; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700; }
     .hp.lo { background:rgba(239,68,68,.15); color:#ef4444; border:1px solid rgba(239,68,68,.2); }
-    .hp.mi { background:rgba(255,209,102,.15); color:#ffd166; border:1px solid rgba(255,209,102,.2); }
-    .hp.hi { background:rgba(245,158,11,.15); color:#f59e0b; border:1px solid rgba(245,158,11,.2); }
-    .hp.vhi { background:rgba(139,92,246,.15); color:#a78bfa; border:1px solid rgba(139,92,246,.2); }
-    .live-panel { background: #1c1336; border-top: 1px solid #3b2d63; padding: 10px 14px; }
+    .hp.mi { background:rgba(0,212,170,.15); color:#00d4aa; border:1px solid rgba(0,212,170,.2); }
+    .hp.hi { background:rgba(245,158,11,.15); color:#00b894; border:1px solid rgba(245,158,11,.2); }
+    .hp.vhi { background:rgba(0,212,170,.15); color:#a78bfa; border:1px solid rgba(0,212,170,.2); }
+    .live-panel { background: #0e1628; border-top: 1px solid #1e3a5f; padding: 10px 14px; }
     .live-title { font-size: 11px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; }
     table { width: 100%; font-size: 12px; border-collapse: collapse; }
     th { color: #64748b; text-align: left; padding: 3px 7px; font-weight: 500; }
     td { color: #94a3b8; padding: 4px 7px; border-top: 1px solid #2a2148; }
-    td.g { color: #ffd166; font-weight: 600; }
-    td.y { color: #f59e0b; font-weight: 600; }
+    td.g { color: #00d4aa; font-weight: 600; }
+    td.y { color: #00b894; font-weight: 600; }
 
     /* â•â•â•â•â•â•â•â• STATS VIEW â•â•â•â•â•â•â•â• */
     .stats-view { padding: 24px; gap: 20px; overflow-y: auto; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
     .stat-card {
-      background: #1c1336; border: 1px solid #3b2d63; border-radius: 12px; padding: 18px;
+      background: #0e1628; border: 1px solid #1e3a5f; border-radius: 12px; padding: 18px;
     }
     .stat-card-title { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-    .stat-card-val { font-size: 28px; font-weight: 900; color: #ffd166; }
+    .stat-card-val { font-size: 28px; font-weight: 900; color: #00d4aa; }
     .stat-card-sub { font-size: 12px; color: #64748b; margin-top: 4px; }
     .section-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 2px; }
-    .leaderboard { background: #1c1336; border: 1px solid #3b2d63; border-radius: 12px; overflow: hidden; }
-    .lb-head { display: grid; grid-template-columns: 40px 1fr 120px 120px 100px; padding: 10px 16px; font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #3b2d63; }
+    .leaderboard { background: #0e1628; border: 1px solid #1e3a5f; border-radius: 12px; overflow: hidden; }
+    .lb-head { display: grid; grid-template-columns: 40px 1fr 120px 120px 100px; padding: 10px 16px; font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e3a5f; }
     .lb-row { display: grid; grid-template-columns: 40px 1fr 120px 120px 100px; padding: 12px 16px; border-bottom: 1px solid #1a2d3d; transition: background 0.15s; }
     .lb-row:last-child { border-bottom: none; }
-    .lb-row:hover { background: rgba(255,209,102,0.03); }
+    .lb-row:hover { background: rgba(0,212,170,0.03); }
     .lb-rank { font-size: 14px; font-weight: 700; color: #64748b; }
-    .lb-rank.gold { color: #f59e0b; }
+    .lb-rank.gold { color: #00b894; }
     .lb-rank.silver { color: #94a3b8; }
     .lb-rank.bronze { color: #cd7f32; }
     .lb-name { font-size: 14px; font-weight: 600; color: #e2e8f0; display: flex; align-items: center; gap: 8px; }
-    .lb-av { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#5865F2,#ffd166); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
+    .lb-av { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg,#5865F2,#00d4aa); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; }
     .lb-num { font-size: 13px; color: #94a3b8; display: flex; align-items: center; }
-    .lb-num.green { color: #ffd166; font-weight: 600; }
+    .lb-num.green { color: #00d4aa; font-weight: 600; }
 
     /* â•â•â•â•â•â•â•â• AD MODAL â•â•â•â•â•â•â•â• */
     .modal-bg {
@@ -215,7 +215,7 @@
     }
     .modal-bg.open { display: flex; }
     .modal {
-      background: #1c1336; border: 1px solid #3b2d63; border-radius: 16px;
+      background: #0e1628; border: 1px solid #1e3a5f; border-radius: 16px;
       padding: 0; width: 100%; max-width: 440px; overflow: hidden;
       display: flex; flex-direction: column;
     }
@@ -225,73 +225,73 @@
     .modal-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
     .modal-foot { padding: 0 24px 20px; display: flex; gap: 8px; }
     .btn-confirm {
-      background: #ffd166; color: #120b24; border: none; border-radius: 8px;
+      background: #00d4aa; color: #0a0f1e; border: none; border-radius: 8px;
       padding: 11px 20px; font-size: 14px; font-weight: 700; cursor: pointer; flex: 1;
     }
-    .btn-confirm:hover { background: #ffc233; }
-    .btn-confirm:disabled { background: #3b2d63; color: #64748b; cursor: not-allowed; }
+    .btn-confirm:hover { background: #00b894; }
+    .btn-confirm:disabled { background: #1e3a5f; color: #64748b; cursor: not-allowed; }
     .btn-cancel {
-      background: transparent; color: #64748b; border: 1px solid #3b2d63; border-radius: 8px;
+      background: transparent; color: #64748b; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 11px 20px; font-size: 14px; cursor: pointer;
     }
     .btn-cancel:hover { color: #94a3b8; }
     .modal-inp {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 11px 14px; color: #fff; font-size: 14px; outline: none; width: 100%; transition: border-color 0.2s;
     }
-    .modal-inp:focus { border-color: #ffd166; }
+    .modal-inp:focus { border-color: #00d4aa; }
     .modal-err { font-size: 13px; color: #ef4444; display: none; }
     .modal-err.show { display: block; }
 
     /* AD CARD */
     .ad-card {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 12px; overflow: hidden;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 12px; overflow: hidden;
     }
     .ad-img {
       width: 100%; height: 160px; object-fit: cover; display: block;
     }
     .ad-placeholder {
-      width: 100%; height: 160px; background: linear-gradient(135deg, #2c2150, #3b2d63);
+      width: 100%; height: 160px; background: linear-gradient(135deg, #0f2040, #1e3a5f);
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
     }
     .ad-placeholder-icon { font-size: 40px; }
     .ad-placeholder-name { font-size: 14px; font-weight: 600; color: #94a3b8; }
     .ad-info { padding: 14px; display: flex; flex-direction: column; gap: 6px; }
     .ad-name { font-size: 15px; font-weight: 700; color: #fff; }
-    .ad-reward { font-size: 13px; color: #ffd166; font-weight: 600; }
-    .ad-timer-bar { height: 4px; background: #3b2d63; border-radius: 2px; overflow: hidden; margin-top: 4px; }
-    .ad-timer-fill { height: 100%; background: linear-gradient(90deg,#ffd166,#f59e0b); border-radius: 2px; transition: width 0.5s linear; width: 100%; }
+    .ad-reward { font-size: 13px; color: #00d4aa; font-weight: 600; }
+    .ad-timer-bar { height: 4px; background: #1e3a5f; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+    .ad-timer-fill { height: 100%; background: linear-gradient(90deg,#00d4aa,#00b894); border-radius: 2px; transition: width 0.5s linear; width: 100%; }
     .ad-timer-label { font-size: 12px; color: #64748b; margin-top: 4px; }
 
     /* ADMIN AD PANEL */
     .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
     .admin-tab-btn {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px; padding: 7px 14px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px; padding: 7px 14px;
       font-size: 13px; color: #64748b; cursor: pointer; transition: all 0.2s;
     }
-    .admin-tab-btn.active { border-color: #ffd166; color: #ffd166; }
+    .admin-tab-btn.active { border-color: #00d4aa; color: #00d4aa; }
     .ads-list { display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; }
     .ad-list-item {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px; padding: 12px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px; padding: 12px;
       display: flex; align-items: center; gap: 12px;
     }
     .ad-list-icon { font-size: 22px; }
     .ad-list-info { flex: 1; }
     .ad-list-name { font-size: 13px; font-weight: 600; color: #e2e8f0; }
     .ad-list-meta { font-size: 12px; color: #64748b; }
-    .ad-list-reward { font-size: 13px; color: #ffd166; font-weight: 700; }
+    .ad-list-reward { font-size: 13px; color: #00d4aa; font-weight: 700; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
     /* TRANSFER ONLINE LIST */
     .online-list { display: flex; flex-direction: column; gap: 6px; max-height: 150px; overflow-y: auto; }
     .online-item {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px; padding: 10px 12px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px; padding: 10px 12px;
       display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.2s;
     }
-    .online-item:hover, .online-item.sel { border-color: #ffd166; background: rgba(255,209,102,0.05); }
-    .oi-av { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#5865F2,#ffd166); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .online-item:hover, .online-item.sel { border-color: #00d4aa; background: rgba(0,212,170,0.05); }
+    .oi-av { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#5865F2,#00d4aa); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #fff; flex-shrink: 0; }
     .oi-name { font-size: 13px; font-weight: 500; color: #e2e8f0; flex: 1; }
-    .oi-bal { font-size: 12px; color: #ffd166; font-weight: 600; }
+    .oi-bal { font-size: 12px; color: #00d4aa; font-weight: 600; }
 
     /* ═══ PARIS SPORTIFS ═══ */
     .sport-view { padding: 20px; gap: 14px; overflow-y: auto; }
@@ -300,18 +300,18 @@
     .sport-bet-amount input { width: 110px; }
     .match-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
     .match-card {
-      background: #1c1336; border: 1px solid #3b2d63; border-radius: 14px;
+      background: #0e1628; border: 1px solid #1e3a5f; border-radius: 14px;
       padding: 16px; display: flex; flex-direction: column; gap: 12px;
       transition: border-color 0.2s;
     }
     .match-card.live { border-color: #ef4444; }
-    .match-card.has-bet { border-color: #ffd166; }
+    .match-card.has-bet { border-color: #00d4aa; }
     .match-status {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
       padding: 3px 10px; border-radius: 20px; width: fit-content;
     }
-    .match-status.pre { background: rgba(255,209,102,0.12); color: #ffd166; }
+    .match-status.pre { background: rgba(0,212,170,0.12); color: #00d4aa; }
     .match-status.live { background: rgba(239,68,68,0.15); color: #ef4444; }
     .match-status.live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #ef4444; animation: livePulse 1s infinite; }
     .match-status.done { background: rgba(100,116,139,0.15); color: #94a3b8; }
@@ -320,43 +320,43 @@
     .match-team { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
     .match-team-logo { font-size: 30px; }
     .match-team-name { font-size: 13px; font-weight: 700; color: #e8e6f0; line-height: 1.2; }
-    .match-score { font-size: 26px; font-weight: 900; color: #ffd166; letter-spacing: 1px; white-space: nowrap; }
+    .match-score { font-size: 26px; font-weight: 900; color: #00d4aa; letter-spacing: 1px; white-space: nowrap; }
     .match-minute { font-size: 11px; color: #ef4444; font-weight: 700; text-align: center; }
     .match-odds { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
     .odd-btn {
-      background: #120b24; border: 1px solid #3b2d63; border-radius: 8px;
+      background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 8px;
       padding: 8px 6px; cursor: pointer; transition: all 0.15s;
       display: flex; flex-direction: column; align-items: center; gap: 2px;
     }
-    .odd-btn:hover:not(:disabled) { border-color: #ffd166; transform: translateY(-1px); }
+    .odd-btn:hover:not(:disabled) { border-color: #00d4aa; transform: translateY(-1px); }
     .odd-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .odd-btn.picked { border-color: #ffd166; background: rgba(255,209,102,0.1); }
+    .odd-btn.picked { border-color: #00d4aa; background: rgba(0,212,170,0.1); }
     .odd-label { font-size: 10px; color: #94a3b8; font-weight: 600; }
-    .odd-val { font-size: 15px; color: #ffd166; font-weight: 900; }
-    .match-mybet { font-size: 12px; color: #ffd166; font-weight: 600; background: rgba(255,209,102,0.07); border-radius: 6px; padding: 6px 10px; }
+    .odd-val { font-size: 15px; color: #00d4aa; font-weight: 900; }
+    .match-mybet { font-size: 12px; color: #00d4aa; font-weight: 600; background: rgba(0,212,170,0.07); border-radius: 6px; padding: 6px 10px; }
     .match-result-banner { font-size: 13px; font-weight: 800; text-align: center; padding: 6px; border-radius: 8px; }
-    .match-result-banner.won { background: rgba(255,209,102,0.12); color: #ffd166; }
+    .match-result-banner.won { background: rgba(0,212,170,0.12); color: #00d4aa; }
     .match-result-banner.lost { background: rgba(239,68,68,0.1); color: #ef4444; }
 
     /* ═══ SPORT NAV / TABS ═══ */
     .sport-nav { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px; }
-    .sport-nav-btn { padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#1c1336;border:1px solid #3b2d63;color:#94a3b8;cursor:pointer;transition:all 0.2s; }
-    .sport-nav-btn.active { background:rgba(255,209,102,.12);border-color:#ffd166;color:#ffd166; }
-    .sport-tabs { display:flex;border-bottom:1px solid #3b2d63;margin-bottom:12px;gap:0; }
+    .sport-nav-btn { padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#0e1628;border:1px solid #1e3a5f;color:#94a3b8;cursor:pointer;transition:all 0.2s; }
+    .sport-nav-btn.active { background:rgba(0,212,170,.12);border-color:#00d4aa;color:#00d4aa; }
+    .sport-tabs { display:flex;border-bottom:1px solid #1e3a5f;margin-bottom:12px;gap:0; }
     .sport-tab-btn { padding:8px 16px;font-size:13px;font-weight:600;color:#64748b;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;margin-bottom:-1px; }
-    .sport-tab-btn.active { color:#ffd166;border-bottom-color:#ffd166; }
+    .sport-tab-btn.active { color:#00d4aa;border-bottom-color:#00d4aa; }
     .sport-tab-panel { display:none; }
     .sport-tab-panel.active { display:block; }
     /* MATCH CARDS */
     .match-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px; }
-    .match-card { background:#1c1336;border:1px solid #3b2d63;border-radius:12px;overflow:hidden;transition:border-color 0.2s; }
+    .match-card { background:#0e1628;border:1px solid #1e3a5f;border-radius:12px;overflow:hidden;transition:border-color 0.2s; }
     .match-card.live { border-color:#ef4444; }
-    .match-card.has-bet { border-color:#ffd166; }
-    .match-card-header { padding:8px 12px;border-bottom:1px solid #3b2d63;display:flex;justify-content:space-between;align-items:center; }
+    .match-card.has-bet { border-color:#00d4aa; }
+    .match-card-header { padding:8px 12px;border-bottom:1px solid #1e3a5f;display:flex;justify-content:space-between;align-items:center; }
     .match-card-body { padding:10px 12px; }
     .match-card-footer { padding:0 12px 10px;display:flex;flex-direction:column;gap:5px; }
     .match-status { display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;text-transform:uppercase;padding:3px 9px;border-radius:20px; }
-    .match-status.pre { background:rgba(255,209,102,.12);color:#ffd166; }
+    .match-status.pre { background:rgba(0,212,170,.12);color:#00d4aa; }
     .match-status.live { background:rgba(239,68,68,.15);color:#ef4444; }
     .match-status.live::before { content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;animation:livePulse 1s infinite; }
     .match-status.done { background:rgba(100,116,139,.15);color:#94a3b8; }
@@ -365,78 +365,78 @@
     .match-team { display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center; }
     .match-team-logo { font-size:26px;line-height:1; }
     .match-team-name { font-size:11px;font-weight:700;color:#e8e6f0;line-height:1.2; }
-    .match-score { font-size:26px;font-weight:900;color:#ffd166;letter-spacing:2px;text-align:center; }
+    .match-score { font-size:26px;font-weight:900;color:#00d4aa;letter-spacing:2px;text-align:center; }
     .match-minute { font-size:10px;color:#ef4444;font-weight:700;text-align:center; }
     .quarter-scores { display:flex;justify-content:center;gap:5px;font-size:10px;color:#64748b;margin-top:2px; }
-    .quarter-scores span { background:#120b24;border:1px solid #3b2d63;border-radius:3px;padding:1px 5px; }
+    .quarter-scores span { background:#0a0f1e;border:1px solid #1e3a5f;border-radius:3px;padding:1px 5px; }
     .quarter-scores span.cur { border-color:#ef4444;color:#ef4444; }
     .bet-stitle { font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin:5px 0 4px; }
     .match-odds { display:grid;gap:4px;margin-bottom:4px; }
     .match-odds.c2 { grid-template-columns:1fr 1fr; }
     .match-odds.c3 { grid-template-columns:1fr 1fr 1fr; }
-    .odd-btn { background:#120b24;border:1px solid #3b2d63;border-radius:7px;padding:7px 5px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px; }
-    .odd-btn:hover:not(:disabled) { border-color:#ffd166;transform:translateY(-1px); }
+    .odd-btn { background:#0a0f1e;border:1px solid #1e3a5f;border-radius:7px;padding:7px 5px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px; }
+    .odd-btn:hover:not(:disabled) { border-color:#00d4aa;transform:translateY(-1px); }
     .odd-btn:disabled { opacity:.4;cursor:not-allowed; }
-    .odd-btn.picked { border-color:#ffd166;background:rgba(255,209,102,.1); }
+    .odd-btn.picked { border-color:#00d4aa;background:rgba(0,212,170,.1); }
     .odd-label { font-size:9px;color:#94a3b8;font-weight:600;text-align:center;line-height:1.2; }
-    .odd-val { font-size:13px;color:#ffd166;font-weight:900; }
-    .aup { color:#ffd166;font-size:9px; }
+    .odd-val { font-size:13px;color:#00d4aa;font-weight:900; }
+    .aup { color:#00d4aa;font-size:9px; }
     .adn { color:#ef4444;font-size:9px; }
-    .match-mybet { font-size:11px;color:#ffd166;font-weight:600;background:rgba(255,209,102,.07);border-radius:5px;padding:5px 9px; }
+    .match-mybet { font-size:11px;color:#00d4aa;font-weight:600;background:rgba(0,212,170,.07);border-radius:5px;padding:5px 9px; }
     .match-result-banner { font-size:11px;font-weight:800;text-align:center;padding:5px;border-radius:6px; }
-    .match-result-banner.won { background:rgba(255,209,102,.12);color:#ffd166; }
+    .match-result-banner.won { background:rgba(0,212,170,.12);color:#00d4aa; }
     .match-result-banner.lost { background:rgba(239,68,68,.1);color:#ef4444; }
     /* STANDINGS */
     .standings-table { width:100%;border-collapse:collapse;font-size:12px; }
-    .standings-table th { color:#64748b;text-align:left;padding:5px 7px;border-bottom:1px solid #3b2d63;font-size:10px;font-weight:700; }
-    .standings-table td { padding:6px 7px;border-bottom:1px solid #1a1035;color:#e2e8f0;font-size:12px; }
-    .standings-table tr:hover td { background:rgba(255,209,102,.02); }
-    .standings-table td.pts { font-weight:900;color:#ffd166;text-align:center; }
+    .standings-table th { color:#64748b;text-align:left;padding:5px 7px;border-bottom:1px solid #1e3a5f;font-size:10px;font-weight:700; }
+    .standings-table td { padding:6px 7px;border-bottom:1px solid #0b1525;color:#e2e8f0;font-size:12px; }
+    .standings-table tr:hover td { background:rgba(0,212,170,.02); }
+    .standings-table td.pts { font-weight:900;color:#00d4aa;text-align:center; }
     .fdot { width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0; }
     .fdot.W { background:#22c55e; } .fdot.L { background:#ef4444; } .fdot.D { background:#94a3b8; }
     /* TOAST */
     .toast {
-      position: fixed; bottom: 24px; right: 24px; background: #1c1336; border: 1px solid #3b2d63;
+      position: fixed; bottom: 24px; right: 24px; background: #0e1628; border: 1px solid #1e3a5f;
       border-radius: 12px; padding: 13px 18px; font-size: 14px; color: #fff; font-weight: 500;
       opacity: 0; transform: translateY(12px); transition: all 0.3s; pointer-events: none; z-index: 300; max-width: 300px;
     }
     .toast.show { opacity: 1; transform: translateY(0); }
-    .toast.win { border-color: #ffd166; }
+    .toast.win { border-color: #00d4aa; }
     .toast.loss { border-color: #ef4444; }
-    .toast.coins { border-color: #f59e0b; }
+    .toast.coins { border-color: #00b894; }
     .toast.info { border-color: #5865F2; }
     /* MINI GAMES */
     .mini-view { padding: 18px; gap: 14px; overflow-y: auto; }
     .mini-shell { display: grid; grid-template-columns: 280px 1fr; gap: 14px; align-items: start; }
-    .mini-panel, .mini-board { background: #1c1336; border: 1px solid #3b2d63; border-radius: 12px; padding: 16px; }
-    .mini-board { min-height: 620px; display: flex; flex-direction: column; justify-content: center; }
+    .mini-panel, .mini-board { background: #0e1628; border: 1px solid #1e3a5f; border-radius: 12px; padding: 16px; }
+    .mini-board { min-height: 640px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .mini-title { font-size: 18px; color: #fff; font-weight: 800; margin-bottom: 6px; }
     .mini-sub { font-size: 13px; color: #94a3b8; line-height: 1.4; margin-bottom: 14px; }
     .game-status { min-height: 22px; color: #94a3b8; font-size: 13px; margin-top: 10px; }
-    .game-status.good { color: #ffd166; }
+    .game-status.good { color: #00d4aa; }
     .game-status.bad { color: #ef4444; }
     /* DIFFICULTY PILLS (tower) */
     .diff-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
     .diff-btn {
       flex: 1 1 auto; min-width: 60px; padding: 8px 6px; border-radius: 8px;
-      background: #120b24; border: 1px solid #3b2d63; color: #94a3b8;
+      background: #0a0f1e; border: 1px solid #1e3a5f; color: #94a3b8;
       font-size: 11px; font-weight: 700; cursor: pointer; transition: all 0.2s;
       text-transform: uppercase; letter-spacing: 0.3px;
     }
-    .diff-btn.active { border-color: #ffd166; color: #ffd166; background: rgba(255,209,102,0.08); transform: translateY(-1px); }
-    .diff-btn:hover:not(.active):not(:disabled) { border-color: #ffd166; color: #cbd5e1; }
+    .diff-btn.active { border-color: #00d4aa; color: #00d4aa; background: rgba(0,212,170,0.08); transform: translateY(-1px); }
+    .diff-btn:hover:not(.active):not(:disabled) { border-color: #00d4aa; color: #cbd5e1; }
     .diff-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     /* MULTIPLIER BADGE */
     .mult-badge {
-      background: linear-gradient(135deg, #2c2150, #3b2d63);
-      border: 1px solid #ffd166;
+      background: linear-gradient(135deg, #0f2040, #1e3a5f);
+      border: 1px solid #00d4aa;
       border-radius: 10px; padding: 12px;
       display: flex; flex-direction: column; align-items: center; gap: 2px;
       margin-top: 10px;
     }
     .mult-badge-label { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-    .mult-badge-val { font-size: 28px; font-weight: 900; color: #ffd166; letter-spacing: -1px; }
+    .mult-badge-val { font-size: 28px; font-weight: 900; color: #00d4aa; letter-spacing: -1px; }
     .mult-badge-next { font-size: 12px; color: #94a3b8; margin-top: 2px; }
 
     /* ═══ TOWER 3D ═══ */
@@ -444,7 +444,7 @@
       perspective: 1000px;
       display: flex; flex-direction: column-reverse;
       gap: 6px; padding: 16px;
-      background: linear-gradient(180deg, #0e0a1c 0%, #171029 100%);
+      background: linear-gradient(180deg, #060c16 0%, #080e1a 100%);
       border-radius: 12px;
       min-height: 480px;
     }
@@ -472,31 +472,31 @@
       content: attr(data-mult);
       position: absolute; right: -56px; top: 50%;
       transform: translateY(-50%);
-      font-size: 11px; color: #ffd166; font-weight: 700;
+      font-size: 11px; color: #00d4aa; font-weight: 700;
       width: 48px; text-align: left;
     }
     .tower-tile {
       aspect-ratio: 1.2; max-height: 48px;
-      background: linear-gradient(145deg, #241a42, #171029);
-      border: 1px solid #3b2d63; border-radius: 8px;
+      background: linear-gradient(145deg, #0c1a35, #080e1a);
+      border: 1px solid #1e3a5f; border-radius: 8px;
       color: #475569; font-size: 20px; cursor: pointer;
       transition: all 0.2s; position: relative;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 2px 0 #0d0918, inset 0 1px 0 rgba(255,255,255,0.05);
+      box-shadow: 0 2px 0 #060c16, inset 0 1px 0 rgba(255,255,255,0.05);
     }
     .tower-row.current .tower-tile {
-      background: linear-gradient(145deg, #2a1f4d, #1d1438);
+      background: linear-gradient(145deg, #0f2040, #0c1a35);
       border-color: #4a3a72;
       color: #94a3b8;
     }
     .tower-row.current .tower-tile:hover {
-      border-color: #ffd166; transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(255,209,102,0.2), 0 2px 0 #0d0918;
-      color: #ffd166;
+      border-color: #00d4aa; transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,212,170,0.2), 0 2px 0 #060c16;
+      color: #00d4aa;
     }
     .tower-tile.safe {
       background: linear-gradient(145deg, #1a4a30, #0d2a1c);
-      border-color: #ffd166; color: #ffd166;
+      border-color: #00d4aa; color: #00d4aa;
       animation: tileReveal 0.4s ease;
     }
     .tower-tile.bomb {
@@ -520,29 +520,29 @@
 
     /* ═══ MINES 5x5 3D ═══ */
     .mines-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
-      max-width: 580px; margin: 0 auto; width: 100%;
-      perspective: 800px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+      max-width: 100%; margin: 0 auto; width: 100%;
+      perspective: 800px; padding: 8px;
     }
     .mines-cell {
       aspect-ratio: 1;
-      background: linear-gradient(145deg, #2c2150, #171029);
-      border: 1px solid #3b2d63; border-radius: 10px;
-      color: #475569; font-size: 36px; font-weight: 900;
+      background: linear-gradient(145deg, #0f2040, #080e1a);
+      border: 1px solid #1e3a5f; border-radius: 10px;
+      color: #475569; font-size: 44px; font-weight: 900;
       cursor: pointer; transition: all 0.18s;
       position: relative; transform-style: preserve-3d;
       display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 3px 0 #0d0918, inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: 0 3px 0 #060c16, inset 0 1px 0 rgba(255,255,255,0.06);
     }
     .mines-cell:not(:disabled):hover {
-      border-color: #ffd166; transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(255,209,102,0.15), 0 3px 0 #0d0918;
+      border-color: #00d4aa; transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,212,170,0.15), 0 3px 0 #060c16;
     }
     .mines-cell.safe {
       background: linear-gradient(145deg, #1a4a30, #0d2a1c);
-      border-color: #ffd166; color: #ffd166;
+      border-color: #00d4aa; color: #00d4aa;
       animation: mineFlip 0.5s ease;
-      box-shadow: 0 0 20px rgba(255,209,102,0.25), inset 0 1px 0 rgba(255,209,102,0.2);
+      box-shadow: 0 0 20px rgba(0,212,170,0.25), inset 0 1px 0 rgba(0,212,170,0.2);
     }
     .mines-cell.bad {
       background: linear-gradient(145deg, #4a1a1a, #2a0d0d);
@@ -575,7 +575,7 @@
     /* ═══ TOWER RUSH (stacking) ═══ */
     .tower-stack-wrap {
       position: relative; width: 100%; min-height: 600px;
-      background: linear-gradient(180deg, #2a1f4d 0%, #171029 60%, #0a0716 100%);
+      background: linear-gradient(180deg, #0f2040 0%, #080e1a 60%, #040a12 100%);
       border-radius: 12px; overflow: hidden;
     }
     .tower-stack-wrap canvas {
@@ -583,7 +583,7 @@
     }
     .tower-build-btn {
       position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-      padding: 14px 38px; background: linear-gradient(180deg, #fbbf24, #f59e0b);
+      padding: 14px 38px; background: linear-gradient(180deg, #fbbf24, #00b894);
       color: #1a1a1a; border: 2px solid #d97706; border-radius: 30px;
       font-size: 18px; font-weight: 900; cursor: pointer;
       letter-spacing: 1px; text-transform: uppercase;
@@ -606,7 +606,7 @@
     }
     .tower-hud-box {
       background: rgba(15,29,46,0.85); backdrop-filter: blur(6px);
-      border: 1px solid #3b2d63; border-radius: 10px; padding: 8px 14px;
+      border: 1px solid #1e3a5f; border-radius: 10px; padding: 8px 14px;
       color: #fff; font-size: 13px; font-weight: 600;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
@@ -632,19 +632,19 @@
 
     /* ═══ BLACKJACK CARDS 3D ═══ */
     .bj-area { display: flex; flex-direction: column; gap: 18px; padding: 14px; min-height: 480px; justify-content: center; }
-    .bj-section { background: radial-gradient(ellipse at center, #1d1438 0%, #14102a 100%) !important; }
-    .bj-section { background: #120b24; border: 1px solid #3b2d63; border-radius: 10px; padding: 12px; }
+    .bj-section { background: radial-gradient(ellipse at center, #0c1a35 0%, #0b1525 100%) !important; }
+    .bj-section { background: #0a0f1e; border: 1px solid #1e3a5f; border-radius: 10px; padding: 12px; }
     .bj-section-title { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; margin-bottom: 8px; }
     .bj-section-score { color: #fbbf24; font-size: 16px; font-weight: 900; }
     .bj-section-score.bust { color: #ef4444; }
-    .bj-section-score.bj { color: #ffd166; }
+    .bj-section-score.bj { color: #00d4aa; }
     .bj-hand-row { display: flex; flex-wrap: wrap; gap: 8px; min-height: 128px; }
-    .bj-hand-row.split-hand { padding: 8px; border: 1px dashed #3b2d63; border-radius: 8px; }
+    .bj-hand-row.split-hand { padding: 8px; border: 1px dashed #1e3a5f; border-radius: 8px; }
     .bj-hand-row.split-hand.active { border-color: #fbbf24; border-style: solid; background: rgba(251,191,36,0.05); }
     .card {
       width: 82px; height: 120px; border-radius: 10px;
       background: linear-gradient(145deg, #fff, #e2e8f0);
-      color: #120b24; padding: 6px 8px;
+      color: #0a0f1e; padding: 6px 8px;
       display: flex; flex-direction: column; justify-content: space-between;
       font-weight: 900; box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
       border: 2px solid #cbd5e1;
@@ -669,11 +669,11 @@
       100% { transform: translateY(0) rotate(0); opacity: 1; }
     }
     .bj-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; }
-    .bj-actions button { background: #120b24; border: 1px solid #3b2d63; color: #cbd5e1; padding: 10px 8px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.15s; }
-    .bj-actions button:hover:not(:disabled) { border-color: #ffd166; color: #ffd166; transform: translateY(-1px); }
+    .bj-actions button { background: #0a0f1e; border: 1px solid #1e3a5f; color: #cbd5e1; padding: 10px 8px; border-radius: 8px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+    .bj-actions button:hover:not(:disabled) { border-color: #00d4aa; color: #00d4aa; transform: translateY(-1px); }
     .bj-actions button:disabled { opacity: 0.4; cursor: not-allowed; }
-    .bj-actions button.primary { background: #ffd166; color: #120b24; border-color: #ffd166; }
-    .bj-actions button.primary:hover:not(:disabled) { background: #ffc233; }
+    .bj-actions button.primary { background: #00d4aa; color: #0a0f1e; border-color: #00d4aa; }
+    .bj-actions button.primary:hover:not(:disabled) { background: #00b894; }
     .bj-actions button.danger { color: #ef4444; }
 
     /* ═══ ROULETTE REALISTIC ═══ */
@@ -689,7 +689,7 @@
     .roul-bowl {
       position: absolute; inset: 0;
       border-radius: 50%;
-      background: radial-gradient(circle at 50% 40%, #1c1336 0%, #0a0d12 70%);
+      background: radial-gradient(circle at 50% 40%, #0e1628 0%, #0a0d12 70%);
       box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5);
     }
     .roul-wheel {
@@ -715,7 +715,7 @@
     }
     .roul-result {
       position: absolute; top: -48px; left: 50%; transform: translateX(-50%);
-      background: #120b24; border: 2px solid #3b2d63; border-radius: 10px;
+      background: #0a0f1e; border: 2px solid #1e3a5f; border-radius: 10px;
       padding: 6px 16px; font-size: 22px; font-weight: 900;
       color: #fff; min-width: 60px; text-align: center;
       z-index: 20; transition: all 0.3s;
@@ -726,7 +726,7 @@
 
     .roul-bet-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 340px; margin: 0 auto; }
     .roul-bet-cell {
-      background: #1c1336; border: 1px solid #3b2d63; border-radius: 6px;
+      background: #0e1628; border: 1px solid #1e3a5f; border-radius: 6px;
       color: #cbd5e1; font-size: 12px; font-weight: 700; padding: 8px 6px;
       cursor: pointer; transition: all 0.15s; text-align: center;
     }
@@ -748,13 +748,13 @@
       animation: ballSpin 5s cubic-bezier(0.15, 0.05, 0.1, 1) forwards;
     }
     .cards-row { display: flex; flex-wrap: wrap; gap: 8px; min-height: 86px; margin: 8px 0 14px; }
-    .card-face { width: 54px; height: 78px; border-radius: 8px; background: #f8fafc; color: #120b24; display:flex; align-items:center; justify-content:center; font-weight:900; border: 2px solid #dbeafe; }
-    .roulette-wheel { width: 240px; height: 240px; border-radius: 50%; margin: 0 auto 16px; border: 10px solid #120b24; background: conic-gradient(#ef4444 0 10deg,#111827 10deg 20deg,#ffd166 20deg 30deg,#111827 30deg 40deg,#ef4444 40deg 50deg,#111827 50deg 60deg,#ef4444 60deg 70deg,#111827 70deg 80deg,#ffd166 80deg 90deg,#111827 90deg 100deg,#ef4444 100deg 110deg,#111827 110deg 120deg,#ef4444 120deg 130deg,#111827 130deg 140deg,#ffd166 140deg 150deg,#111827 150deg 160deg,#ef4444 160deg 170deg,#111827 170deg 180deg,#ef4444 180deg 190deg,#111827 190deg 200deg,#ffd166 200deg 210deg,#111827 210deg 220deg,#ef4444 220deg 230deg,#111827 230deg 240deg,#ef4444 240deg 250deg,#111827 250deg 260deg,#ffd166 260deg 270deg,#111827 270deg 280deg,#ef4444 280deg 290deg,#111827 290deg 300deg,#ef4444 300deg 310deg,#111827 310deg 320deg,#ffd166 320deg 330deg,#111827 330deg 340deg,#ef4444 340deg 350deg,#111827 350deg 360deg); position: relative; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
-    .roulette-wheel::after { content: ''; position: absolute; inset: 76px; border-radius: 50%; background: #1c1336; border: 2px solid #3b2d63; }
+    .card-face { width: 54px; height: 78px; border-radius: 8px; background: #f8fafc; color: #0a0f1e; display:flex; align-items:center; justify-content:center; font-weight:900; border: 2px solid #dbeafe; }
+    .roulette-wheel { width: 240px; height: 240px; border-radius: 50%; margin: 0 auto 16px; border: 10px solid #0a0f1e; background: conic-gradient(#ef4444 0 10deg,#111827 10deg 20deg,#00d4aa 20deg 30deg,#111827 30deg 40deg,#ef4444 40deg 50deg,#111827 50deg 60deg,#ef4444 60deg 70deg,#111827 70deg 80deg,#00d4aa 80deg 90deg,#111827 90deg 100deg,#ef4444 100deg 110deg,#111827 110deg 120deg,#ef4444 120deg 130deg,#111827 130deg 140deg,#00d4aa 140deg 150deg,#111827 150deg 160deg,#ef4444 160deg 170deg,#111827 170deg 180deg,#ef4444 180deg 190deg,#111827 190deg 200deg,#00d4aa 200deg 210deg,#111827 210deg 220deg,#ef4444 220deg 230deg,#111827 230deg 240deg,#ef4444 240deg 250deg,#111827 250deg 260deg,#00d4aa 260deg 270deg,#111827 270deg 280deg,#ef4444 280deg 290deg,#111827 290deg 300deg,#ef4444 300deg 310deg,#111827 310deg 320deg,#00d4aa 320deg 330deg,#111827 330deg 340deg,#ef4444 340deg 350deg,#111827 350deg 360deg); position: relative; transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+    .roulette-wheel::after { content: ''; position: absolute; inset: 76px; border-radius: 50%; background: #0e1628; border: 2px solid #1e3a5f; }
     .roulette-number { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-size:34px; font-weight:900; z-index:1; }
     .choice-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
-    .choice-btn { background:#120b24; border:1px solid #3b2d63; color:#94a3b8; border-radius:8px; padding:9px 12px; cursor:pointer; font-weight:700; }
-    .choice-btn.active { border-color:#ffd166; color:#ffd166; background:rgba(255,209,102,.08); }
+    .choice-btn { background:#0a0f1e; border:1px solid #1e3a5f; color:#94a3b8; border-radius:8px; padding:9px 12px; cursor:pointer; font-weight:700; }
+    .choice-btn.active { border-color:#00d4aa; color:#00d4aa; background:rgba(0,212,170,.08); }
     @media (max-width: 780px) { .mini-shell { grid-template-columns: 1fr; } .nav-tabs { overflow-x:auto; max-width: 100%; } }
     @media (max-width: 640px) {
       .game-layout { grid-template-columns: 1fr; }
@@ -825,10 +825,10 @@
         <div class="mini-title">🏗️ Tower Rush</div>
         <div class="mini-sub">Empile les blocs ! Clique BUILD au bon moment pour aligner. Manqué = la tour s'écroule.</div>
         <div class="ig"><label>Mise</label><input type="number" class="modal-inp" id="tower-bet" value="10" min="1" /></div>
-        <div style="margin-top:10px;padding:10px;background:rgba(255,209,102,0.06);border:1px solid rgba(255,209,102,0.2);border-radius:8px;font-size:12px;color:#94a3b8;line-height:1.5">
-          🎲 Chaque étage a un <strong style="color:#ffd166">multiplicateur aléatoire</strong> :<br>
-          1er étage = <strong style="color:#ffd166">×1.11</strong> garanti, ensuite ça varie —<br>
-          malus possibles (×0.70-0.95) et jackpots <strong style="color:#ffd166">×2</strong> !
+        <div style="margin-top:10px;padding:10px;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:8px;font-size:12px;color:#94a3b8;line-height:1.5">
+          🎲 Chaque étage a un <strong style="color:#00d4aa">multiplicateur aléatoire</strong> :<br>
+          1er étage = <strong style="color:#00d4aa">×1.11</strong> garanti, ensuite ça varie —<br>
+          malus possibles (×0.70-0.95) et jackpots <strong style="color:#00d4aa">×2</strong> !
         </div>
         <div class="mult-badge" id="tower-mult-badge" style="display:none">
           <div class="mult-badge-label">Multiplicateur · Etage</div>
@@ -934,7 +934,7 @@
         <button class="btn-main" id="roul-spin-btn" onclick="spinRoulette()" style="margin-top:10px">🎲 LANCER LA BILLE</button>
         <div class="game-status" id="roulette-status">Mise sur rouge.</div>
       </div>
-      <div class="mini-board" style="display:flex;align-items:center;justify-content:center;min-height:560px;background:radial-gradient(circle at center, #2a1f4d 0%, #0e0a1c 100%);border:1px solid #3b2d63">
+      <div class="mini-board" style="display:flex;align-items:center;justify-content:center;min-height:560px;background:radial-gradient(circle at center, #0f2040 0%, #060c16 100%);border:1px solid #1e3a5f">
         <div class="roulette-area">
           <div id="roul-history" style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;min-height:30px;margin-bottom:4px"></div>
           <div class="roulette-stage">
@@ -957,7 +957,7 @@
       <div style="display:flex;align-items:center;gap:7px">
         <span style="font-size:12px;color:#94a3b8">Mise :</span>
         <input type="number" class="modal-inp" id="sport-bet-amount" value="10" min="1" style="width:88px" />
-        <span style="font-size:12px;color:#ffd166;font-weight:700">T</span>
+        <span style="font-size:12px;color:#00d4aa;font-weight:700">T</span>
       </div>
     </div>
     <div class="sport-nav">
@@ -1015,7 +1015,7 @@
             <input type="number" class="modal-inp" id="adm-custom-coins" placeholder="Montant custom..." style="flex:1" />
             <button class="btn-confirm" style="flex:0 0 auto;padding:11px 16px" onclick="adminCoins(parseInt(document.getElementById('adm-custom-coins').value)||0)">OK</button>
           </div>
-          <button onclick="adminCoins(Infinity)" style="margin-top:8px;width:100%;padding:11px;background:rgba(245,158,11,0.1);border:1px solid #f59e0b;border-radius:8px;color:#f59e0b;font-size:14px;font-weight:800;cursor:pointer;">♾️ Toks infinis</button>
+          <button onclick="adminCoins(Infinity)" style="margin-top:8px;width:100%;padding:11px;background:rgba(245,158,11,0.1);border:1px solid #00b894;border-radius:8px;color:#00b894;font-size:14px;font-weight:800;cursor:pointer;">♾️ Toks infinis</button>
           <div style="display:flex;gap:8px;margin-top:8px">
             <input type="number" class="modal-inp" id="adm-set-balance" placeholder="Definir solde exact..." style="flex:1" />
             <button class="btn-confirm" style="flex:0 0 auto;padding:11px 16px" onclick="adminSetBalance()">Definir</button>
@@ -1025,7 +1025,7 @@
         <div id="adm-tab-ads" style="display:none">
           <div class="field-label" style="margin-bottom:8px">Pubs actives</div>
           <div class="ads-list" id="adm-ads-list">Chargement...</div>
-          <div style="margin-top:12px;padding-top:12px;border-top:1px solid #3b2d63">
+          <div style="margin-top:12px;padding-top:12px;border-top:1px solid #1e3a5f">
             <div class="field-label" style="margin-bottom:8px">Ajouter une pub partenaire</div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <input type="text" class="modal-inp" id="new-ad-name" placeholder="Nom du partenaire" />
@@ -1290,7 +1290,7 @@ async function loadStats() {
   document.getElementById('lb-rich-body').innerHTML = richSorted.map((r, i) => `
     <div class="lb-row">
       <span class="lb-rank ${rankClassesR[i]||''}">${rankEmojisR[i]||('#'+(i+1))}</span>
-      <span class="lb-name"><div class="lb-av">${r.username[0].toUpperCase()}</div>${r.username}${r.username===me.username?' <span style="font-size:10px;color:#ffd166">(toi)</span>':''}</span>
+      <span class="lb-name"><div class="lb-av">${r.username[0].toUpperCase()}</div>${r.username}${r.username===me.username?' <span style="font-size:10px;color:#00d4aa">(toi)</span>':''}</span>
       <span class="lb-num green">${r.is_infinite ? '∞' : (r.balance||0).toLocaleString('fr-FR')} T</span>
       <span class="lb-num">${(r.total_won||0).toLocaleString('fr-FR')} T</span>
       <span class="lb-num">${(r.best_multiplier||0).toFixed(2)}x</span>
@@ -1303,7 +1303,7 @@ async function loadStats() {
   document.getElementById('lb-body').innerHTML = lb?.map((r, i) => `
     <div class="lb-row">
       <span class="lb-rank ${rankClasses[i]||''}">${rankEmojis[i]||('#'+(i+1))}</span>
-      <span class="lb-name"><div class="lb-av">${r.username[0].toUpperCase()}</div>${r.username}${r.username===me.username?' <span style="font-size:10px;color:#ffd166">(toi)</span>':''}</span>
+      <span class="lb-name"><div class="lb-av">${r.username[0].toUpperCase()}</div>${r.username}${r.username===me.username?' <span style="font-size:10px;color:#00d4aa">(toi)</span>':''}</span>
       <span class="lb-num green">${(r.total_won||0).toLocaleString('fr-FR')} T</span>
       <span class="lb-num">${(r.biggest_win||0).toLocaleString('fr-FR')} T</span>
       <span class="lb-num">${(r.best_multiplier||0).toFixed(2)}x</span>
@@ -1422,7 +1422,7 @@ function showAd(ad) {
     ? `<img class="ad-img" src="${safeImg}" alt="${safeName}" onerror="this.outerHTML='<div class=&quot;ad-placeholder&quot;><div class=&quot;ad-placeholder-icon&quot;>AD</div><div class=&quot;ad-placeholder-name&quot;>${safeName}</div></div>'" />`
     : `<div class="ad-placeholder"><div class="ad-placeholder-icon">AD</div><div class="ad-placeholder-name">${safeName}</div></div>`;
 
-  card.innerHTML = inner + `<div class="ad-info"><div class="ad-name" id="ad-name-display">${safeName}</div><div class="ad-reward">+${AD_REWARD_COINS} coins si tu regardes jusqu'au bout !</div><div id="rewarded-ad-provider-slot"></div><a href="${safeLink}" target="_blank" rel="noopener sponsored" style="display:block;text-align:center;background:#120b24;border:1px solid #3b2d63;border-radius:8px;color:#ffd166;text-decoration:none;font-size:13px;font-weight:700;padding:9px;margin-top:2px">Visiter le partenaire</a><div class="ad-timer-bar"><div class="ad-timer-fill" id="ad-timer-fill" style="width:100%"></div></div><div class="ad-timer-label" id="ad-timer-label">${ad.duration_seconds}s restantes...</div></div>`;
+  card.innerHTML = inner + `<div class="ad-info"><div class="ad-name" id="ad-name-display">${safeName}</div><div class="ad-reward">+${AD_REWARD_COINS} coins si tu regardes jusqu'au bout !</div><div id="rewarded-ad-provider-slot"></div><a href="${safeLink}" target="_blank" rel="noopener sponsored" style="display:block;text-align:center;background:#0a0f1e;border:1px solid #1e3a5f;border-radius:8px;color:#00d4aa;text-decoration:none;font-size:13px;font-weight:700;padding:9px;margin-top:2px">Visiter le partenaire</a><div class="ad-timer-bar"><div class="ad-timer-fill" id="ad-timer-fill" style="width:100%"></div></div><div class="ad-timer-label" id="ad-timer-label">${ad.duration_seconds}s restantes...</div></div>`;
 
   const providerSlot = document.getElementById('rewarded-ad-provider-slot');
   if (providerSlot && REWARDED_AD_PROVIDER_HTML.trim()) providerSlot.innerHTML = REWARDED_AD_PROVIDER_HTML;
@@ -1637,7 +1637,7 @@ function towerSpeed() {
 let towerCanvas, towerCtx, tcw, tch;
 
 const TOWER_COLORS = [
-  ['#f59e0b', '#d97706'],  // amber
+  ['#00b894', '#d97706'],  // amber
   ['#10b981', '#059669'],  // emerald
   ['#3b82f6', '#1d4ed8'],  // blue
   ['#ec4899', '#be185d'],  // pink
@@ -1662,9 +1662,9 @@ function drawTowerScene() {
   if (!towerCtx) return;
   // Sky
   const sky = towerCtx.createLinearGradient(0, 0, 0, tch);
-  sky.addColorStop(0, '#2a1f4d');
-  sky.addColorStop(0.6, '#171029');
-  sky.addColorStop(1, '#0a0716');
+  sky.addColorStop(0, '#0f2040');
+  sky.addColorStop(0.6, '#080e1a');
+  sky.addColorStop(1, '#040a12');
   towerCtx.fillStyle = sky;
   towerCtx.fillRect(0, 0, tcw, tch);
 
@@ -1685,7 +1685,7 @@ function drawTowerScene() {
   towerCtx.fillStyle = groundGrad;
   towerCtx.fillRect(0, groundY, tcw, 30);
   // Grass line
-  towerCtx.strokeStyle = '#ffd166';
+  towerCtx.strokeStyle = '#00d4aa';
   towerCtx.lineWidth = 1.5;
   towerCtx.beginPath();
   towerCtx.moveTo(0, groundY);
@@ -1904,9 +1904,9 @@ async function towerDrop() {
 
   // Popup du multiplicateur de l'etage
   const pop = document.getElementById('tower-perfect');
-  if (floorMult >= 2) { pop.textContent = `🔥 x${floorMult.toFixed(2)} JACKPOT !`; pop.style.color = '#ffd166'; }
+  if (floorMult >= 2) { pop.textContent = `🔥 x${floorMult.toFixed(2)} JACKPOT !`; pop.style.color = '#00d4aa'; }
   else if (floorMult < 1) { pop.textContent = `x${floorMult.toFixed(2)} 😬`; pop.style.color = '#ef4444'; }
-  else if (isPerfect) { pop.textContent = `PERFECT ! x${floorMult.toFixed(2)}`; pop.style.color = '#ffd166'; }
+  else if (isPerfect) { pop.textContent = `PERFECT ! x${floorMult.toFixed(2)}`; pop.style.color = '#00d4aa'; }
   else { pop.textContent = `x${floorMult.toFixed(2)}`; pop.style.color = '#e8e6f0'; }
   pop.classList.remove('show');
   void pop.offsetWidth;
@@ -2221,7 +2221,7 @@ function bjRender() {
       const isActive = idx === bj.currentHand && bj.active;
       return `<div style="display:flex;flex-direction:column;gap:4px;width:100%">
         <div style="font-size:11px;color:#94a3b8;display:flex;justify-content:space-between"><span>Main ${idx+1}${h.doubled?' (x2)':''}${h.surrendered?' (abandon)':''}</span><span style="color:${bjHandValue(h.cards) > 21 ? '#ef4444' : '#fbbf24'};font-weight:900">${bjHandValue(h.cards)}</span></div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;padding:6px;border:${isActive ? '2px solid #fbbf24' : '1px dashed #3b2d63'};border-radius:6px;background:${isActive ? 'rgba(251,191,36,0.05)' : 'transparent'}">${h.cards.map(c => renderCard(c)).join('')}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;padding:6px;border:${isActive ? '2px solid #fbbf24' : '1px dashed #1e3a5f'};border-radius:6px;background:${isActive ? 'rgba(251,191,36,0.05)' : 'transparent'}">${h.cards.map(c => renderCard(c)).join('')}</div>
       </div>`;
     };
     playerHand.innerHTML = renderHand(bj.hands[0], 0);
@@ -2702,22 +2702,49 @@ function getMatch(cycle,m){
 function genEvents(base,t1,t2,lg){
   const ev=[];
   if(lg.sport==='basketball'){
-    for(let min=1;min<=48;min++){
-      const r1=sportRand(base*100+min*3),r2=sportRand(base*100+min*3+1);
-      const th1=(0.28+t1.att*0.45)/48*4, th2=(0.28+t2.att*0.45)/48*4;
-      const p1=r1<th1*.28?3:r1<th1?2:0, p2=r2<th2*.28?3:r2<th2?2:0;
-      if(p1)ev.push({min,team:1,pts:p1,q:Math.ceil(min/12)});
-      if(p2)ev.push({min,team:2,pts:p2,q:Math.ceil(min/12)});
+    // NBA realiste: ~95-115 pts / equipe
+    // 96 possessions par equipe (192 total), ~50% de reussite, 16% de 3pts
+    for(let poss=0;poss<192;poss++){
+      const team=poss%2===0?1:2;
+      const t=team===1?t1:t2;
+      const min=Math.min(48,Math.floor(poss/192*48)+1);
+      const q=Math.ceil(min/12);
+      const r=sportRand(base*500+poss*7);
+      if(r<(0.38+t.att*0.13)){ // 49-52% reussite
+        const is3=sportRand(base*500+poss*7+1)<0.16;
+        ev.push({min,team,pts:is3?3:2,q});
+      }
+    }
+    // Lancers francs (+1 par-ci par-la)
+    for(let i=0;i<20;i++){
+      const team=sportRand(base*900+i)<0.5?1:2;
+      const t=team===1?t1:t2;
+      const min=1+Math.floor(sportRand(base*901+i)*47);
+      if(sportRand(base*902+i)<0.75) ev.push({min,team,pts:1,q:Math.ceil(min/12),ft:true});
     }
     let s1=0,s2=0;ev.forEach(e=>e.team===1?s1+=e.pts:s2+=e.pts);
-    if(s1===s2){const w=sportRand(base+9999)<t1.att/(t1.att+t2.att)?1:2;ev.push({min:49,team:w,pts:3,ot:true,q:5});}
+    if(s1===s2){const w=sportRand(base+9999)<t1.att/(t1.att+t2.att)?1:2;ev.push({min:49,team:w,pts:2,ot:true,q:5});}
   } else {
-    for(let min=1;min<=90;min++){
-      const r=sportRand(base*91+min);
-      const th1=(t1.att*0.022)*(1-t2.def*0.6), th2=(t2.att*0.022)*(1-t1.def*0.6);
-      if(r<th1)ev.push({min,team:1,pts:1,half:min<=45?1:2});
-      else if(r<th1+th2)ev.push({min,team:2,pts:1,half:min<=45?1:2});
+    // Football realiste: 0-5 buts, ~2.5 en moyenne
+    // Approx normale (Box-Muller) autour des moyennes d'equipe
+    const mu1=Math.max(0, t1.att*1.6*(1-t2.def*0.52));
+    const mu2=Math.max(0, t2.att*1.6*(1-t1.def*0.52));
+    const norm=(mu,seed)=>{
+      const u1=Math.max(0.001,sportRand(seed));
+      const u2=sportRand(seed+1);
+      return Math.max(0,Math.round(mu+1.05*Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2)));
+    };
+    const g1=norm(mu1,base+10);
+    const g2=norm(mu2,base+20);
+    for(let g=0;g<g1;g++){
+      const min=1+Math.floor(sportRand(base*20+g*3)*89);
+      ev.push({min,team:1,pts:1,half:min<=45?1:2});
     }
+    for(let g=0;g<g2;g++){
+      const min=1+Math.floor(sportRand(base*20+g*3+100)*89);
+      ev.push({min,team:2,pts:1,half:min<=45?1:2});
+    }
+    ev.sort((a,b)=>a.min-b.min);
   }
   return ev;
 }
@@ -2754,7 +2781,7 @@ function liveOdds(match,minute,type='1X2'){
     else{const adv=(s1-s2)*1.2+(match.t1.att-match.t2.att+match.t2.def-match.t1.def)*1.8*rem;const r1=1/(1+Math.exp(-1.2*adv));const px=Math.max(.04,.28*Math.exp(-Math.abs(adv)*1.1)*(.3+rem*.7));return{o1:mk(r1*(1-px)),oX:mk(px),o2:mk((1-r1)*(1-px))};}
   }
   if(type==='OU_FOOT'){const g=totalGoals(match);const exp=g+(match.t1.att+match.t2.att)*2.2*rem;const pO=1/(1+Math.exp(-1.2*(exp-2.5)));return{oOver:mk(pO),oUnder:mk(1-pO)};}
-  if(type==='OU_NBA'){const p=totalPts(match),thr=215;const exp=p+(match.t1.att+match.t2.att)*55*rem;const pO=1/(1+Math.exp(-.06*(exp-thr)));return{oOver:mk(pO),oUnder:mk(1-pO),thr};}
+  if(type==='OU_NBA'){const p=totalPts(match),thr=210;const exp=p+(match.t1.att+match.t2.att)*55*rem;const pO=1/(1+Math.exp(-.06*(exp-thr)));return{oOver:mk(pO),oUnder:mk(1-pO),thr};}
   if(type==='HALF'){const[h1,h2]=halfScore(match,1);const m45=Math.min(45,minute),r1st=Math.max(0,(45-m45)/45);const adv=(h1-h2)*1.0+(match.t1.att-match.t2.att)*1.5*r1st;const p1=1/(1+Math.exp(-adv*1.1));const px=Math.max(.05,.25*Math.exp(-Math.abs(adv)));return{o1:mk(p1),oX:mk(px),o2:mk(1-p1-px)};}
   if(type==='QTR'){const cq=Math.min(4,Math.ceil(minute/12)||1);const[qs1,qs2]=qtrScore(match,cq);const qr=Math.max(0,(cq*12-minute)/12);const adv=(qs1-qs2)/6+(match.t1.att-match.t2.att)*1.5*qr;const p1=1/(1+Math.exp(-adv));return{o1:mk(p1),o2:mk(1-p1),q:cq};}
   return null;
@@ -2853,7 +2880,7 @@ function renderStandings(){
       <div class="section-title" style="font-size:14px;margin-bottom:8px">${lg.icon} ${lg.name}</div>
       <table class="standings-table"><thead><tr><th>#</th><th>Equipe</th><th>J</th><th>V</th>${isB?'':'<th>N</th>'}<th>D</th><th>${isB?'Pts moy':'Buts'}</th><th>Diff</th><th>Pts</th><th>Forme</th></tr></thead><tbody>
       ${rows.map((r,i)=>`<tr>
-        <td style="color:${i<4?'#ffd166':i<8?'#94a3b8':'#64748b'};font-weight:700;text-align:center;font-size:13px">${i+1}</td>
+        <td style="color:${i<4?'#00d4aa':i<8?'#94a3b8':'#64748b'};font-weight:700;text-align:center;font-size:13px">${i+1}</td>
         <td><span style="display:flex;align-items:center;gap:5px;font-weight:700">${r.team.logo} ${r.team.name}</span></td>
         <td style="text-align:center;color:#94a3b8">${r.played}</td>
         <td style="text-align:center;color:#22c55e">${r.w}</td>
@@ -2876,12 +2903,12 @@ function renderBetHistory(){
   if(!settled.length&&!pending.length){el.innerHTML='<div style="color:#64748b;padding:20px;text-align:center">Aucun pari</div>';return;}
   let html='';
   if(pending.length){
-    html+='<div style="font-size:11px;color:#ffd166;font-weight:700;text-transform:uppercase;margin-bottom:6px">En cours ('+pending.length+')</div>';
-    pending.forEach(b=>{const m=getMatch(b.cycle,b.m);html+=`<div style="background:#1c1336;border:1px solid #ffd166;border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}"${b.live?' (live)':''}</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:900;color:#ffd166">${b.odds}x</div><div style="font-size:11px;color:#94a3b8">${b.amount}T</div></div></div>`;});
+    html+='<div style="font-size:11px;color:#00d4aa;font-weight:700;text-transform:uppercase;margin-bottom:6px">En cours ('+pending.length+')</div>';
+    pending.forEach(b=>{const m=getMatch(b.cycle,b.m);html+=`<div style="background:#0e1628;border:1px solid #00d4aa;border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}"${b.live?' (live)':''}</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:900;color:#00d4aa">${b.odds}x</div><div style="font-size:11px;color:#94a3b8">${b.amount}T</div></div></div>`;});
   }
   if(settled.length){
     html+='<div style="font-size:11px;color:#64748b;font-weight:700;text-transform:uppercase;margin:10px 0 6px">Historique</div>';
-    settled.forEach(b=>{const m=getMatch(b.cycle,b.m),won=b.won>0;html+=`<div style="background:#1c1336;border:1px solid ${won?'rgba(255,209,102,.3)':'rgba(239,68,68,.2)'};border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}" @ ${b.odds}</div></div><div style="font-size:14px;font-weight:900;color:${won?'#22c55e':'#ef4444'}">${won?'+'+b.won:'-'+b.amount}T</div></div>`;});
+    settled.forEach(b=>{const m=getMatch(b.cycle,b.m),won=b.won>0;html+=`<div style="background:#0e1628;border:1px solid ${won?'rgba(0,212,170,.3)':'rgba(239,68,68,.2)'};border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}" @ ${b.odds}</div></div><div style="font-size:14px;font-weight:900;color:${won?'#22c55e':'#ef4444'}">${won?'+'+b.won:'-'+b.amount}T</div></div>`;});
   }
   el.innerHTML=html;
 }
@@ -2915,49 +2942,41 @@ function renderSports(){
     let halfHtml='';
     if(!isB&&ph.phase==='live'&&min>45){const[h1,h2]=halfScore(match,1);halfHtml=`<div style="font-size:10px;color:#64748b;text-align:center">MT: ${h1}-${h2}</div>`;}
 
-    // 1X2
-    const o1x2Html=`<div class="bet-stitle">Resultat final</div>
-    <div class="match-odds ${isB?'c2':'c3'}">
-      <button class="odd-btn ${myBets.find(b=>b.pick==='o1')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o1','1X2')"><span class="odd-label">${match.t1.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o1.toFixed(2)}${arr(o.o1,prev.o1)}</span></button>
-      ${!isB?`<button class="odd-btn ${myBets.find(b=>b.pick==='oX')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oX','1X2')"><span class="odd-label">Nul</span><span class="odd-val">${o.oX?.toFixed(2)||'-'}${arr(o.oX||0,prev.oX||0)}</span></button>`:''}
-      <button class="odd-btn ${myBets.find(b=>b.pick==='o2')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o2','1X2')"><span class="odd-label">${match.t2.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o2.toFixed(2)}${arr(o.o2,prev.o2)}</span></button>
+    // Résultat final 1X2
+    const o1x2Html=`<div class="match-odds ${isB?'c2':'c3'}">
+      <button class="odd-btn ${myBets.find(b=>b.pick==='o1')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o1','1X2')">
+        <span class="odd-label">${match.t1.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o1.toFixed(2)}${arr(o.o1,prev.o1)}</span></button>
+      ${!isB?`<button class="odd-btn ${myBets.find(b=>b.pick==='oX')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oX','1X2')">
+        <span class="odd-label">Nul</span><span class="odd-val">${o.oX?.toFixed(2)||'-'}${arr(o.oX||0,prev.oX||0)}</span></button>`:''}
+      <button class="odd-btn ${myBets.find(b=>b.pick==='o2')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o2','1X2')">
+        <span class="odd-label">${match.t2.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o2.toFixed(2)}${arr(o.o2,prev.o2)}</span></button>
     </div>`;
 
+    // 1 seul marché spécial propre
     let specHtml='';
     if(!isB){
       const ou=liveOdds(match,min,'OU_FOOT');
-      const hf=liveOdds(match,min,'HALF');
-      specHtml=`<div class="bet-stitle">+/- 2.5 buts</div>
+      specHtml=`<div class="bet-stitle" style="margin-top:6px">+/- 2.5 buts</div>
       <div class="match-odds c2">
-        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_FOOT')"><span class="odd-label">+2.5 buts</span><span class="odd-val">${ou.oOver.toFixed(2)}</span></button>
-        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_FOOT')"><span class="odd-label">-2.5 buts</span><span class="odd-val">${ou.oUnder.toFixed(2)}</span></button>
-      </div>
-      <div class="bet-stitle">Mi-temps (1X2)</div>
-      <div class="match-odds c3">
-        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'1','HALF')"><span class="odd-label">MT1</span><span class="odd-val">${hf.o1.toFixed(2)}</span></button>
-        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'X','HALF')"><span class="odd-label">MT Nul</span><span class="odd-val">${hf.oX.toFixed(2)}</span></button>
-        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'2','HALF')"><span class="odd-label">MT2</span><span class="odd-val">${hf.o2.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_FOOT')"><span class="odd-label">Plus de 2.5</span><span class="odd-val">${ou.oOver.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_FOOT')"><span class="odd-label">Moins de 2.5</span><span class="odd-val">${ou.oUnder.toFixed(2)}</span></button>
       </div>`;
     } else {
       const ouN=liveOdds(match,min,'OU_NBA');
-      const qt=liveOdds(match,min,'QTR');
-      const cq=Math.min(4,Math.ceil(min/12)||1);
-      specHtml=`<div class="bet-stitle">Total pts +/-${ouN.thr}</div>
+      specHtml=`<div class="bet-stitle" style="margin-top:6px">Total points</div>
       <div class="match-odds c2">
-        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_NBA')"><span class="odd-label">+${ouN.thr}</span><span class="odd-val">${ouN.oOver.toFixed(2)}</span></button>
-        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_NBA')"><span class="odd-label">-${ouN.thr}</span><span class="odd-val">${ouN.oUnder.toFixed(2)}</span></button>
-      </div>
-      <div class="bet-stitle">Q${cq} vainqueur</div>
-      <div class="match-odds c2">
-        <button class="odd-btn" ${canBet&&ph.phase==='live'?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o1','QTR')"><span class="odd-label">${match.t1.name.split(' ').slice(-1)[0]} Q${cq}</span><span class="odd-val">${qt.o1.toFixed(2)}</span></button>
-        <button class="odd-btn" ${canBet&&ph.phase==='live'?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o2','QTR')"><span class="odd-label">${match.t2.name.split(' ').slice(-1)[0]} Q${cq}</span><span class="odd-val">${qt.o2.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_NBA')"><span class="odd-label">+${ouN.thr} pts</span><span class="odd-val">${ouN.oOver.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_NBA')"><span class="odd-label">-${ouN.thr} pts</span><span class="odd-val">${ouN.oUnder.toFixed(2)}</span></button>
       </div>`;
     }
 
     const bHtml=myBets.map(b=>b.settled?(b.won>0?`<div class="match-result-banner won">🎉 ${b.type} "${b.pick}" @ ${b.odds} : +${b.won}T</div>`:`<div class="match-result-banner lost">${b.type} "${b.pick}" : -${b.amount}T</div>`):`<div class="match-mybet">💰 ${b.amount}T · ${b.type} "${b.pick}" @ ${b.odds}${b.live?' (live)':''}</div>`).join('');
 
     html+=`<div class="match-card ${ph.phase==='live'?'live':''} ${myBets.length?'has-bet':''}">
-      <div class="match-card-header">${statHtml}<span style="font-size:10px;color:#64748b;font-weight:700">${match.league.icon} ${match.league.abbr}</span></div>
+      <div class="match-card-header">
+        <div style="display:flex;align-items:center;gap:6px">${statHtml}</div>
+        <span style="font-size:11px;color:#64748b;font-weight:700;display:flex;align-items:center;gap:3px">${match.league.icon} ${match.league.abbr}</span>
+      </div>
       <div class="match-card-body">
         <div class="match-teams">
           <div class="match-team"><div class="match-team-logo">${match.t1.logo}</div><div class="match-team-name">${match.t1.name}</div></div>
@@ -3035,14 +3054,14 @@ function setupCanvas() {
 function drawSky() {
   const sky = ctx.createLinearGradient(0, 0, 0, ch);
   sky.addColorStop(0, '#1d1335');
-  sky.addColorStop(1, '#0d0918');
+  sky.addColorStop(1, '#060c16');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, cw, ch);
-  ctx.strokeStyle = 'rgba(167,139,250,0.12)';
+  ctx.strokeStyle = 'rgba(0,212,170,0.12)';
   ctx.lineWidth = 1;
   for (let x = 0; x < cw; x += 70) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, ch); ctx.stroke(); }
   for (let y = 30; y < ch; y += 55) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cw, y); ctx.stroke(); }
-  ctx.fillStyle = 'rgba(255,209,102,0.14)';
+  ctx.fillStyle = 'rgba(0,212,170,0.14)';
   ctx.fillRect(0, ch - 18, cw, 18);
 }
 function drawIdle() {
@@ -3056,14 +3075,14 @@ function drawPlaneAt(x, y, angle, crashed) {
   ctx.translate(x, y);
   ctx.rotate(angle);
   const body = crashed ? '#ef4444' : '#e8e6f0';
-  const accent = crashed ? '#7f1d1d' : '#ffd166';
+  const accent = crashed ? '#7f1d1d' : '#00d4aa';
   const dark = '#2a2148';
 
   // Trainee de reacteur
   if (!crashed) {
     const tg = ctx.createLinearGradient(-46, 0, -16, 0);
-    tg.addColorStop(0, 'rgba(255,209,102,0)');
-    tg.addColorStop(1, 'rgba(255,209,102,0.65)');
+    tg.addColorStop(0, 'rgba(0,212,170,0)');
+    tg.addColorStop(1, 'rgba(0,212,170,0.65)');
     ctx.fillStyle = tg;
     ctx.beginPath();
     ctx.moveTo(-16, -2.5); ctx.lineTo(-46, 0); ctx.lineTo(-16, 2.5);
@@ -3162,7 +3181,7 @@ function drawLine(mult, crashed) {
   // Zone sous la courbe
   const grad = ctx.createLinearGradient(0, padT, 0, ch - padB);
   if (crashed) { grad.addColorStop(0, 'rgba(239,68,68,0.35)'); grad.addColorStop(1, 'rgba(239,68,68,0.02)'); }
-  else { grad.addColorStop(0, 'rgba(255,209,102,0.3)'); grad.addColorStop(1, 'rgba(255,209,102,0.02)'); }
+  else { grad.addColorStop(0, 'rgba(0,212,170,0.3)'); grad.addColorStop(1, 'rgba(0,212,170,0.02)'); }
   ctx.beginPath();
   ctx.moveTo(toX(0), ch - padB);
   for (let i = 0; i < pts.length; i++) ctx.lineTo(toX(i), toY(pts[i]));
@@ -3173,7 +3192,7 @@ function drawLine(mult, crashed) {
   ctx.beginPath();
   ctx.moveTo(toX(0), toY(pts[0]));
   for (let i = 1; i < pts.length; i++) ctx.lineTo(toX(i), toY(pts[i]));
-  ctx.strokeStyle = crashed ? '#ef4444' : '#ffd166';
+  ctx.strokeStyle = crashed ? '#ef4444' : '#00d4aa';
   ctx.lineWidth = 3.5; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
   ctx.stroke();
 
@@ -3193,8 +3212,8 @@ function genBots() {
 }
 function renderLive() {
   let rows = '';
-  if(betPlaced&&!cashedOut) rows+=`<tr><td style="color:#ffd166;font-weight:700">${me.username}</td><td>${betAmount}T</td><td class="y">${currentMult.toFixed(2)}x</td><td class="g">+${(betAmount*currentMult).toFixed(1)}V</td></tr>`;
-  else if(betPlaced&&cashedOut) rows+=`<tr><td style="color:#ffd166;font-weight:700">${me.username}</td><td>${betAmount}T</td><td class="g">OK</td><td>-</td></tr>`;
+  if(betPlaced&&!cashedOut) rows+=`<tr><td style="color:#00d4aa;font-weight:700">${me.username}</td><td>${betAmount}T</td><td class="y">${currentMult.toFixed(2)}x</td><td class="g">+${(betAmount*currentMult).toFixed(1)}V</td></tr>`;
+  else if(betPlaced&&cashedOut) rows+=`<tr><td style="color:#00d4aa;font-weight:700">${me.username}</td><td>${betAmount}T</td><td class="g">OK</td><td>-</td></tr>`;
   if (!rows) rows = '<tr><td colspan="4" style="color:#64748b;padding:8px">Aucune mise sur cette manche</td></tr>';
   document.getElementById('live-body').innerHTML = rows;
 }
