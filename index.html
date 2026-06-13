@@ -338,6 +338,62 @@
     .match-result-banner.won { background: rgba(255,209,102,0.12); color: #ffd166; }
     .match-result-banner.lost { background: rgba(239,68,68,0.1); color: #ef4444; }
 
+    /* ═══ SPORT NAV / TABS ═══ */
+    .sport-nav { display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px; }
+    .sport-nav-btn { padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;background:#1c1336;border:1px solid #3b2d63;color:#94a3b8;cursor:pointer;transition:all 0.2s; }
+    .sport-nav-btn.active { background:rgba(255,209,102,.12);border-color:#ffd166;color:#ffd166; }
+    .sport-tabs { display:flex;border-bottom:1px solid #3b2d63;margin-bottom:12px;gap:0; }
+    .sport-tab-btn { padding:8px 16px;font-size:13px;font-weight:600;color:#64748b;background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:all 0.2s;margin-bottom:-1px; }
+    .sport-tab-btn.active { color:#ffd166;border-bottom-color:#ffd166; }
+    .sport-tab-panel { display:none; }
+    .sport-tab-panel.active { display:block; }
+    /* MATCH CARDS */
+    .match-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px; }
+    .match-card { background:#1c1336;border:1px solid #3b2d63;border-radius:12px;overflow:hidden;transition:border-color 0.2s; }
+    .match-card.live { border-color:#ef4444; }
+    .match-card.has-bet { border-color:#ffd166; }
+    .match-card-header { padding:8px 12px;border-bottom:1px solid #3b2d63;display:flex;justify-content:space-between;align-items:center; }
+    .match-card-body { padding:10px 12px; }
+    .match-card-footer { padding:0 12px 10px;display:flex;flex-direction:column;gap:5px; }
+    .match-status { display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;text-transform:uppercase;padding:3px 9px;border-radius:20px; }
+    .match-status.pre { background:rgba(255,209,102,.12);color:#ffd166; }
+    .match-status.live { background:rgba(239,68,68,.15);color:#ef4444; }
+    .match-status.live::before { content:'';width:6px;height:6px;border-radius:50%;background:#ef4444;animation:livePulse 1s infinite; }
+    .match-status.done { background:rgba(100,116,139,.15);color:#94a3b8; }
+    @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .match-teams { display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin-bottom:8px; }
+    .match-team { display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center; }
+    .match-team-logo { font-size:26px;line-height:1; }
+    .match-team-name { font-size:11px;font-weight:700;color:#e8e6f0;line-height:1.2; }
+    .match-score { font-size:26px;font-weight:900;color:#ffd166;letter-spacing:2px;text-align:center; }
+    .match-minute { font-size:10px;color:#ef4444;font-weight:700;text-align:center; }
+    .quarter-scores { display:flex;justify-content:center;gap:5px;font-size:10px;color:#64748b;margin-top:2px; }
+    .quarter-scores span { background:#120b24;border:1px solid #3b2d63;border-radius:3px;padding:1px 5px; }
+    .quarter-scores span.cur { border-color:#ef4444;color:#ef4444; }
+    .bet-stitle { font-size:10px;color:#64748b;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin:5px 0 4px; }
+    .match-odds { display:grid;gap:4px;margin-bottom:4px; }
+    .match-odds.c2 { grid-template-columns:1fr 1fr; }
+    .match-odds.c3 { grid-template-columns:1fr 1fr 1fr; }
+    .odd-btn { background:#120b24;border:1px solid #3b2d63;border-radius:7px;padding:7px 5px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:1px; }
+    .odd-btn:hover:not(:disabled) { border-color:#ffd166;transform:translateY(-1px); }
+    .odd-btn:disabled { opacity:.4;cursor:not-allowed; }
+    .odd-btn.picked { border-color:#ffd166;background:rgba(255,209,102,.1); }
+    .odd-label { font-size:9px;color:#94a3b8;font-weight:600;text-align:center;line-height:1.2; }
+    .odd-val { font-size:13px;color:#ffd166;font-weight:900; }
+    .aup { color:#ffd166;font-size:9px; }
+    .adn { color:#ef4444;font-size:9px; }
+    .match-mybet { font-size:11px;color:#ffd166;font-weight:600;background:rgba(255,209,102,.07);border-radius:5px;padding:5px 9px; }
+    .match-result-banner { font-size:11px;font-weight:800;text-align:center;padding:5px;border-radius:6px; }
+    .match-result-banner.won { background:rgba(255,209,102,.12);color:#ffd166; }
+    .match-result-banner.lost { background:rgba(239,68,68,.1);color:#ef4444; }
+    /* STANDINGS */
+    .standings-table { width:100%;border-collapse:collapse;font-size:12px; }
+    .standings-table th { color:#64748b;text-align:left;padding:5px 7px;border-bottom:1px solid #3b2d63;font-size:10px;font-weight:700; }
+    .standings-table td { padding:6px 7px;border-bottom:1px solid #1a1035;color:#e2e8f0;font-size:12px; }
+    .standings-table tr:hover td { background:rgba(255,209,102,.02); }
+    .standings-table td.pts { font-weight:900;color:#ffd166;text-align:center; }
+    .fdot { width:7px;height:7px;border-radius:50%;display:inline-block;flex-shrink:0; }
+    .fdot.W { background:#22c55e; } .fdot.L { background:#ef4444; } .fdot.D { background:#94a3b8; }
     /* TOAST */
     .toast {
       position: fixed; bottom: 24px; right: 24px; background: #1c1336; border: 1px solid #3b2d63;
@@ -895,18 +951,30 @@
 
   <!-- VIEW: SPORTS -->
   <div class="view sport-view" id="view-sport">
-    <div class="sport-head">
-      <div>
-        <div class="section-title">⚽🏀 Paris Sportifs — Foot & NBA</div>
-        <div style="font-size:12px;color:#94a3b8">10 matchs simules en continu (20 min chacun) · Cotes en direct qui bougent a chaque action · Paris live autorises (max 3/match) · Simulation non affiliee aux ligues officielles</div>
-      </div>
-      <div class="sport-bet-amount">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+      <div><div class="section-title">⚽🏀 Paris Sportifs</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px">Simulation non affiliee · Cotes live · Paris speciaux</div></div>
+      <div style="display:flex;align-items:center;gap:7px">
         <span style="font-size:12px;color:#94a3b8">Mise :</span>
-        <input type="number" class="modal-inp" id="sport-bet-amount" value="10" min="1" />
-        <span style="font-size:12px;color:#ffd166;font-weight:700">Toks</span>
+        <input type="number" class="modal-inp" id="sport-bet-amount" value="10" min="1" style="width:88px" />
+        <span style="font-size:12px;color:#ffd166;font-weight:700">T</span>
       </div>
     </div>
-    <div class="match-grid" id="match-grid"></div>
+    <div class="sport-nav">
+      <button class="sport-nav-btn active" onclick="filterSportLeague('all',this)">🌍 Tout</button>
+      <button class="sport-nav-btn" onclick="filterSportLeague('ucl',this)">⚽ UCL</button>
+      <button class="sport-nav-btn" onclick="filterSportLeague('ligue1',this)">⚽ Ligue 1</button>
+      <button class="sport-nav-btn" onclick="filterSportLeague('pl',this)">⚽ Premier League</button>
+      <button class="sport-nav-btn" onclick="filterSportLeague('nba',this)">🏀 NBA</button>
+    </div>
+    <div class="sport-tabs">
+      <button class="sport-tab-btn active" onclick="switchSportTab('matches',this)">🎯 Paris</button>
+      <button class="sport-tab-btn" onclick="switchSportTab('standings',this)">📊 Classements</button>
+      <button class="sport-tab-btn" onclick="switchSportTab('history',this)">📋 Mes paris</button>
+    </div>
+    <div class="sport-tab-panel active" id="sport-tab-matches"><div class="match-grid" id="match-grid"></div></div>
+    <div class="sport-tab-panel" id="sport-tab-standings"><div id="standings-content" style="padding:4px 0"></div></div>
+    <div class="sport-tab-panel" id="sport-tab-history"><div id="sport-history-content" style="display:flex;flex-direction:column;gap:8px;padding:4px 0"></div></div>
   </div>
 
   <div class="view stats-view" id="view-stats">
@@ -2576,276 +2644,332 @@ async function spinRoulette() {
 // ═══════════════════════════════════════════
 //  PARIS SPORTIFS VIRTUELS (temps reel, deterministe = synchro entre tous les joueurs)
 // ═══════════════════════════════════════════
-// Simulation non affiliee : noms d'equipes utilises a titre de simulation virtuelle uniquement
+// Simulation non affiliee - noms equipes illustratifs uniquement
 const SPORT_LEAGUES = {
-  ucl: {
-    name: 'Ligue des Champions',
-    icon: '⚽',
-    teams: [
-      { name: 'Real Madrid', logo: '⚪' }, { name: 'FC Barcelone', logo: '🔵' },
-      { name: 'Bayern Munich', logo: '🔴' }, { name: 'Manchester City', logo: '💠' },
-      { name: 'PSG', logo: '🔷' }, { name: 'Liverpool', logo: '❤️' },
-      { name: 'Inter Milan', logo: '🖤' }, { name: 'Arsenal', logo: '⭕' },
-      { name: 'Dortmund', logo: '💛' }, { name: 'Atletico Madrid', logo: '🔺' },
-      { name: 'Juventus', logo: '🦓' }, { name: 'AC Milan', logo: '😈' }
-    ],
-    matchMinutes: 90,
-    hasDraw: true
-  },
-  nba: {
-    name: 'NBA',
-    icon: '🏀',
-    teams: [
-      { name: 'Lakers', logo: '💜' }, { name: 'Celtics', logo: '🍀' },
-      { name: 'Warriors', logo: '💙' }, { name: 'Bucks', logo: '🦌' },
-      { name: 'Heat', logo: '🔥' }, { name: 'Nuggets', logo: '⛏️' },
-      { name: 'Suns', logo: '☀️' }, { name: 'Knicks', logo: '🗽' },
-      { name: 'Mavericks', logo: '🐴' }, { name: '76ers', logo: '🔔' }
-    ],
-    matchMinutes: 48,
-    hasDraw: false
-  }
+  ucl: {name:'Ligue des Champions',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'UCL',teams:[
+    {id:'rm',name:'Real Madrid',logo:'⚪',att:.90,def:.85},{id:'fcb',name:'Barcelone',logo:'🔵',att:.88,def:.78},
+    {id:'bay',name:'Bayern',logo:'🔴',att:.85,def:.82},{id:'mci',name:'Man City',logo:'💠',att:.87,def:.84},
+    {id:'psg',name:'PSG',logo:'🔷',att:.83,def:.75},{id:'liv',name:'Liverpool',logo:'❤️',att:.86,def:.80},
+    {id:'int',name:'Inter',logo:'🖤',att:.78,def:.83},{id:'ars',name:'Arsenal',logo:'⭕',att:.82,def:.79},
+    {id:'drt',name:'Dortmund',logo:'💛',att:.80,def:.72},{id:'atm',name:'Atletico',logo:'🔺',att:.74,def:.86},
+    {id:'juv',name:'Juventus',logo:'🦓',att:.76,def:.80},{id:'acm',name:'AC Milan',logo:'😈',att:.79,def:.77},
+  ]},
+  ligue1: {name:'Ligue 1',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'L1',teams:[
+    {id:'psg1',name:'PSG',logo:'🔷',att:.92,def:.88},{id:'om',name:'Marseille',logo:'🔵',att:.78,def:.74},
+    {id:'asm',name:'Monaco',logo:'🔴',att:.80,def:.75},{id:'ol',name:'Lyon',logo:'⚪',att:.77,def:.72},
+    {id:'lil',name:'Lille',logo:'🐺',att:.74,def:.76},{id:'ren',name:'Rennes',logo:'🟥',att:.72,def:.70},
+    {id:'nic',name:'Nice',logo:'🦅',att:.71,def:.73},{id:'lns',name:'Lens',logo:'🟡',att:.73,def:.71},
+  ]},
+  pl: {name:'Premier League',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'PL',teams:[
+    {id:'mci2',name:'Man City',logo:'💠',att:.90,def:.87},{id:'ars2',name:'Arsenal',logo:'⭕',att:.85,def:.82},
+    {id:'liv2',name:'Liverpool',logo:'❤️',att:.88,def:.83},{id:'che',name:'Chelsea',logo:'🔵',att:.80,def:.78},
+    {id:'mnu',name:'Man United',logo:'🔴',att:.79,def:.76},{id:'tot',name:'Tottenham',logo:'🐓',att:.81,def:.75},
+    {id:'new',name:'Newcastle',logo:'🦓',att:.78,def:.79},{id:'avl',name:'Aston Villa',logo:'🦁',att:.76,def:.74},
+  ]},
+  nba: {name:'NBA',icon:'🏀',sport:'basketball',hasDraw:false,matchMin:48,abbr:'NBA',teams:[
+    {id:'lal',name:'Lakers',logo:'💜',att:.85,def:.78},{id:'bos',name:'Celtics',logo:'🍀',att:.88,def:.85},
+    {id:'gsw',name:'Warriors',logo:'💙',att:.82,def:.80},{id:'mil',name:'Bucks',logo:'🦌',att:.86,def:.82},
+    {id:'mia',name:'Heat',logo:'🔥',att:.79,def:.81},{id:'den',name:'Nuggets',logo:'⛏️',att:.84,def:.79},
+    {id:'phx',name:'Suns',logo:'☀️',att:.81,def:.77},{id:'nyk',name:'Knicks',logo:'🗽',att:.77,def:.80},
+    {id:'dal',name:'Mavericks',logo:'🐴',att:.83,def:.76},{id:'phi',name:'76ers',logo:'🔔',att:.80,def:.78},
+  ]}
 };
 
-const SPORT_CYCLE_MS = 1320000;      // 22 min par journee (60s paris + 20 min match + 60s resultats)
-const SPORT_PREMATCH_S = 60;         // 60s pour parier avant le coup d'envoi
-const SPORT_LIVE_S = 1200;           // 20 minutes de match en temps reel
-const SPORT_FOOT_MATCHES = 6;        // 6 matchs de foot
-const SPORT_NBA_MATCHES = 4;         // 4 matchs NBA
-const SPORT_MATCHES_PER_CYCLE = SPORT_FOOT_MATCHES + SPORT_NBA_MATCHES;
-const SPORT_MAX_BETS_PER_MATCH = 3;  // 1 pre-match + jusqu'a 2 paris live
-let sportTimer = null;
-let sportBets = JSON.parse(localStorage.getItem('sportBets') || '[]');
+const LEAGUE_KEYS = ['ucl','ligue1','pl','nba'];
+const LEAGUE_MATCH_COUNTS = {ucl:6,ligue1:4,pl:4,nba:4};
+const TOTAL_MATCHES = Object.values(LEAGUE_MATCH_COUNTS).reduce((a,b)=>a+b,0); // 18
+const SPORT_CYCLE_MS=1320000, SPORT_PREMATCH_S=60, SPORT_LIVE_S=1200, SPORT_END_S=60;
+const SPORT_MAX_BETS=5;
+let sportTimer=null;
+let sportBets=JSON.parse(localStorage.getItem('sportBets_v2')||'[]');
+let sportLeagueFilter='all', sportActiveTab='matches';
+let standingsCache={}, lastOddsCache={};
 
-function sportRand(seed) { return seededRandom(Math.floor(seed) >>> 0); }
+function sportRand(seed){return seededRandom(Math.floor(seed)>>>0);}
 
-function getMatch(cycle, m) {
-  const isNba = m >= SPORT_FOOT_MATCHES;
-  const league = isNba ? SPORT_LEAGUES.nba : SPORT_LEAGUES.ucl;
-  const base = cycle * 1000 + m * 37;
-  const N = league.teams.length;
-  const i1 = Math.floor(sportRand(base + 1) * N);
-  let i2 = Math.floor(sportRand(base + 2) * (N - 1));
-  if (i2 >= i1) i2++;
-  const s1 = 0.3 + sportRand(base + 3) * 0.7;
-  const s2 = 0.3 + sportRand(base + 4) * 0.7;
+function getMatch(cycle,m){
+  let leagueKey,localM,off=0;
+  for(const lk of LEAGUE_KEYS){const cnt=LEAGUE_MATCH_COUNTS[lk];if(m<off+cnt){leagueKey=lk;localM=m-off;break;}off+=cnt;}
+  if(!leagueKey){leagueKey='nba';localM=0;}
+  const lg=SPORT_LEAGUES[leagueKey], N=lg.teams.length;
+  const base=cycle*10000+m*137;
+  const i1=Math.floor(sportRand(base+1)*N);
+  let i2=Math.floor(sportRand(base+2)*(N-1));if(i2>=i1)i2++;
+  const t1=lg.teams[i1],t2=lg.teams[i2];
+  return {cycle,m,leagueKey,league:lg,t1,t2,events:genEvents(base,t1,t2,lg)};
+}
 
-  let events = []; // {min, team, pts}
-  if (isNba) {
-    // Basket : des points presque chaque minute (48 min)
-    for (let min = 1; min <= 48; min++) {
-      const r1 = sportRand(base * 91 + min * 2);
-      const r2 = sportRand(base * 91 + min * 2 + 1);
-      // chaque equipe marque 0-3 pts/min selon sa force
-      const p1pts = r1 < 0.30 + s1 * 0.45 ? (r1 < 0.12 ? 3 : 2) : 0;
-      const p2pts = r2 < 0.30 + s2 * 0.45 ? (r2 < 0.12 ? 3 : 2) : 0;
-      if (p1pts) events.push({ min, team: 1, pts: p1pts });
-      if (p2pts) events.push({ min, team: 2, pts: p2pts });
+function genEvents(base,t1,t2,lg){
+  const ev=[];
+  if(lg.sport==='basketball'){
+    for(let min=1;min<=48;min++){
+      const r1=sportRand(base*100+min*3),r2=sportRand(base*100+min*3+1);
+      const th1=(0.28+t1.att*0.45)/48*4, th2=(0.28+t2.att*0.45)/48*4;
+      const p1=r1<th1*.28?3:r1<th1?2:0, p2=r2<th2*.28?3:r2<th2?2:0;
+      if(p1)ev.push({min,team:1,pts:p1,q:Math.ceil(min/12)});
+      if(p2)ev.push({min,team:2,pts:p2,q:Math.ceil(min/12)});
     }
-    // Pas de nul en NBA : en cas d'egalite a 48', prolongation simulee (+2 pour le "vainqueur OT")
-    let f1 = 0, f2 = 0;
-    events.forEach(e => e.team === 1 ? f1 += e.pts : f2 += e.pts);
-    if (f1 === f2) {
-      const otWinner = sportRand(base + 999) < s1 / (s1 + s2) ? 1 : 2;
-      events.push({ min: 48, team: otWinner, pts: 2, ot: true });
-    }
+    let s1=0,s2=0;ev.forEach(e=>e.team===1?s1+=e.pts:s2+=e.pts);
+    if(s1===s2){const w=sportRand(base+9999)<t1.att/(t1.att+t2.att)?1:2;ev.push({min:49,team:w,pts:3,ot:true,q:5});}
   } else {
-    // Foot : buts rares (90 min)
-    for (let min = 1; min <= 90; min++) {
-      const r = sportRand(base * 91 + min);
-      const th1 = (s1 * 2.6) / 90;
-      const th2 = (s2 * 2.6) / 90;
-      if (r < th1) events.push({ min, team: 1, pts: 1 });
-      else if (r < th1 + th2) events.push({ min, team: 2, pts: 1 });
+    for(let min=1;min<=90;min++){
+      const r=sportRand(base*91+min);
+      const th1=(t1.att*0.022)*(1-t2.def*0.6), th2=(t2.att*0.022)*(1-t1.def*0.6);
+      if(r<th1)ev.push({min,team:1,pts:1,half:min<=45?1:2});
+      else if(r<th1+th2)ev.push({min,team:2,pts:1,half:min<=45?1:2});
     }
   }
-
-  return { cycle, m, isNba, league, t1: league.teams[i1], t2: league.teams[i2], s1, s2, events };
+  return ev;
 }
 
-function sportPhase(now = Date.now()) {
-  const cycle = Math.floor(now / SPORT_CYCLE_MS);
-  const offset = (now - cycle * SPORT_CYCLE_MS) / 1000;
-  let phase = 'pre';
-  if (offset >= SPORT_PREMATCH_S) {
-    phase = (offset - SPORT_PREMATCH_S) < SPORT_LIVE_S ? 'live' : 'done';
+function scoreAt(match,minute){let s1=0,s2=0;match.events.forEach(e=>{if(e.min<=minute){e.team===1?s1+=e.pts:s2+=e.pts;}});return[s1,s2];}
+function halfScore(match,half){let s1=0,s2=0;match.events.forEach(e=>{if((e.half||1)===half){e.team===1?s1+=e.pts:s2+=e.pts;}});return[s1,s2];}
+function qtrScore(match,q){let s1=0,s2=0;match.events.forEach(e=>{if((e.q||1)===q){e.team===1?s1+=e.pts:s2+=e.pts;}});return[s1,s2];}
+function totalGoals(match){return match.events.filter(e=>e.pts===1).length;}
+function totalPts(match){let t=0;match.events.forEach(e=>t+=e.pts);return t;}
+function matchResult(match){const tot=match.league.matchMin;const[s1,s2]=scoreAt(match,tot);if(match.league.hasDraw&&s1===s2)return'X';return s1>s2?'1':'2';}
+
+function sportPhase(now=Date.now()){
+  const cycle=Math.floor(now/SPORT_CYCLE_MS);
+  const off=(now-cycle*SPORT_CYCLE_MS)/1000;
+  let phase='pre';
+  if(off>=SPORT_PREMATCH_S){const lo=off-SPORT_PREMATCH_S;phase=lo<SPORT_LIVE_S?'live':lo<SPORT_LIVE_S+SPORT_END_S?'done':'pre';}
+  return{cycle,offset:off,phase};
+}
+function matchMinute(ph,match){
+  if(ph.phase==='pre')return 0;
+  const tot=match.league.matchMin;
+  if(ph.phase==='done')return tot;
+  return Math.min(tot,Math.floor(((ph.offset-SPORT_PREMATCH_S)/SPORT_LIVE_S)*tot)+1);
+}
+
+function liveOdds(match,minute,type='1X2'){
+  const tot=match.league.matchMin, rem=Math.max(0,(tot-minute)/tot);
+  const[s1,s2]=scoreAt(match,minute);
+  const isB=match.league.sport==='basketball';
+  const mk=p=>p<=.001?99:Math.min(99,Math.max(1.01,Math.round(.93/Math.max(.001,p)*100)/100));
+
+  if(type==='1X2'){
+    if(isB){const adv=(s1-s2)/12+(match.t1.att-match.t2.att)*2.5*rem;const p1=1/(1+Math.exp(-adv));return{o1:mk(p1),oX:null,o2:mk(1-p1)};}
+    else{const adv=(s1-s2)*1.2+(match.t1.att-match.t2.att+match.t2.def-match.t1.def)*1.8*rem;const r1=1/(1+Math.exp(-1.2*adv));const px=Math.max(.04,.28*Math.exp(-Math.abs(adv)*1.1)*(.3+rem*.7));return{o1:mk(r1*(1-px)),oX:mk(px),o2:mk((1-r1)*(1-px))};}
   }
-  return { cycle, offset, phase };
+  if(type==='OU_FOOT'){const g=totalGoals(match);const exp=g+(match.t1.att+match.t2.att)*2.2*rem;const pO=1/(1+Math.exp(-1.2*(exp-2.5)));return{oOver:mk(pO),oUnder:mk(1-pO)};}
+  if(type==='OU_NBA'){const p=totalPts(match),thr=215;const exp=p+(match.t1.att+match.t2.att)*55*rem;const pO=1/(1+Math.exp(-.06*(exp-thr)));return{oOver:mk(pO),oUnder:mk(1-pO),thr};}
+  if(type==='HALF'){const[h1,h2]=halfScore(match,1);const m45=Math.min(45,minute),r1st=Math.max(0,(45-m45)/45);const adv=(h1-h2)*1.0+(match.t1.att-match.t2.att)*1.5*r1st;const p1=1/(1+Math.exp(-adv*1.1));const px=Math.max(.05,.25*Math.exp(-Math.abs(adv)));return{o1:mk(p1),oX:mk(px),o2:mk(1-p1-px)};}
+  if(type==='QTR'){const cq=Math.min(4,Math.ceil(minute/12)||1);const[qs1,qs2]=qtrScore(match,cq);const qr=Math.max(0,(cq*12-minute)/12);const adv=(qs1-qs2)/6+(match.t1.att-match.t2.att)*1.5*qr;const p1=1/(1+Math.exp(-adv));return{o1:mk(p1),o2:mk(1-p1),q:cq};}
+  return null;
 }
 
-// Minute simulee du match (depend de la ligue : 90' foot / 48' nba sur 20 min reelles)
-function matchMinute(ph, match) {
-  if (ph.phase === 'pre') return 0;
-  const total = match.isNba ? 48 : 90;
-  if (ph.phase === 'done') return total;
-  const liveOffset = ph.offset - SPORT_PREMATCH_S;
-  return Math.min(total, Math.floor((liveOffset / SPORT_LIVE_S) * total) + 1);
-}
-
-function matchScoreAt(match, minute) {
-  let g1 = 0, g2 = 0;
-  match.events.forEach(e => { if (e.min <= minute) { e.team === 1 ? g1 += e.pts : g2 += e.pts; } });
-  return [g1, g2];
-}
-
-function matchResult(match) {
-  const total = match.isNba ? 48 : 90;
-  const [g1, g2] = matchScoreAt(match, total);
-  return g1 > g2 ? '1' : g2 > g1 ? '2' : 'X';
-}
-
-// ═══ COTES DYNAMIQUES : recalculees a chaque action du match ═══
-function liveOdds(match, minute) {
-  const total = match.isNba ? 48 : 90;
-  const remaining = Math.max(0, (total - minute) / total);
-  const [g1, g2] = matchScoreAt(match, minute);
-
-  let p1, px, p2;
-  if (match.isNba) {
-    // avantage = ecart de points pondere + force restante
-    const adv = (g1 - g2) / 8 + (match.s1 - match.s2) * 3 * remaining;
-    p1 = 1 / (1 + Math.exp(-adv));
-    p2 = 1 - p1;
-    px = 0;
-  } else {
-    const adv = (g1 - g2) + (match.s1 - match.s2) * 2.4 * remaining;
-    const raw1 = 1 / (1 + Math.exp(-1.15 * adv));
-    px = Math.max(0.04, 0.30 * Math.exp(-Math.abs(adv) * 1.1) * (0.3 + remaining * 0.7));
-    p1 = raw1 * (1 - px);
-    p2 = (1 - raw1) * (1 - px);
-  }
-  const mk = p => p <= 0.001 ? 99 : Math.min(99, Math.max(1.01, Math.round((0.94 / p) * 100) / 100));
-  return { o1: mk(p1), oX: match.isNba ? null : mk(px), o2: mk(p2) };
-}
-
-async function placeSportBet(cycle, m, pick) {
-  const ph = sportPhase();
-  if (ph.cycle !== cycle || ph.phase === 'done') { toast('Match termine !', 'loss'); return; }
-  const match = getMatch(cycle, m);
-  const minute = matchMinute(ph, match);
-  const odds = liveOdds(match, minute);
-  const pickOdds = pick === '1' ? odds.o1 : pick === '2' ? odds.o2 : odds.oX;
-  if (!pickOdds) return;
-
-  const amount = parseInt(document.getElementById('sport-bet-amount').value) || 10;
-  if (amount < 1) { toast('Mise minimale : 1 Tok', ''); return; }
-  if (!me.is_infinite && amount > me.balance) { toast('Solde insuffisant !', 'loss'); return; }
-  const myBets = sportBets.filter(b => b.cycle === cycle && b.m === m);
-  if (myBets.length >= SPORT_MAX_BETS_PER_MATCH) {
-    toast(`Max ${SPORT_MAX_BETS_PER_MATCH} paris par match !`, ''); return;
-  }
+async function placeSportBet(cycle,m,pick,type){
+  const ph=sportPhase();
+  if(ph.cycle!==cycle||ph.phase==='done'){toast('Match termine !','loss');return;}
+  const match=getMatch(cycle,m);
+  const min=matchMinute(ph,match);
+  const od=liveOdds(match,min,type||'1X2');
+  const pickOdds=od?od[pick]:null;
+  if(!pickOdds||pickOdds<=0){toast('Cote indisponible','');return;}
+  const amount=parseInt(document.getElementById('sport-bet-amount').value)||10;
+  if(amount<1){toast('Mise min 1T','');return;}
+  if(!me.is_infinite&&amount>me.balance){toast('Solde insuffisant !','loss');return;}
+  if(sportBets.filter(b=>b.cycle===cycle&&b.m===m).length>=SPORT_MAX_BETS){toast('Max '+SPORT_MAX_BETS+'/match','');return;}
   await debitCoins(amount);
-  sportBets.push({ cycle, m, pick, odds: pickOdds, amount, settled: false, live: ph.phase === 'live', atMinute: minute });
-  localStorage.setItem('sportBets', JSON.stringify(sportBets));
-  const lbl = pick === '1' ? 'victoire domicile' : pick === '2' ? 'victoire exterieur' : 'match nul';
-  toast(`${match.isNba ? '🏀' : '⚽'} ${amount} Toks sur ${lbl} @ ${pickOdds}${ph.phase === 'live' ? ' (LIVE ' + minute + "')" : ''}`, 'coins');
+  sportBets.push({cycle,m,pick,odds:pickOdds,amount,type:type||'1X2',settled:false,live:ph.phase==='live',atMin:min,lk:match.leagueKey});
+  localStorage.setItem('sportBets_v2',JSON.stringify(sportBets));
+  toast(`${match.league.icon} ${amount}T @ ${pickOdds}${ph.phase==='live'?' LIVE':''}`, 'coins');
   renderSports();
 }
 
-async function settleSportBets() {
-  const now = Date.now();
-  let changed = false;
-  for (const bet of sportBets) {
-    if (bet.settled) continue;
-    const ph = sportPhase(now);
-    const isFinished = (ph.cycle > bet.cycle) || (ph.cycle === bet.cycle && ph.phase === 'done');
-    if (!isFinished) continue;
-    const match = getMatch(bet.cycle, bet.m);
-    const result = matchResult(match);
-    bet.settled = true;
-    bet.result = result;
-    changed = true;
-    if (result === bet.pick) {
-      const win = Math.floor(bet.amount * bet.odds);
-      bet.won = win;
-      await creditCoins(win);
-      if (me.id) await db.from('bets').insert({
-        player_id: me.id, username: me.username, game_type: 'sport',
-        amount: bet.amount, cashout_multiplier: bet.odds, profit: win - bet.amount, cashed_out: true
-      }).then(()=>{}).catch(()=>{});
-      toast(`🎉 Pari sportif gagne ! +${win} Toks`, 'win');
-    } else {
-      bet.won = 0;
-      me.total_wagered = (me.total_wagered || 0) + bet.amount;
-      await saveBalance();
-      if (me.id) await db.from('bets').insert({
-        player_id: me.id, username: me.username, game_type: 'sport',
-        amount: bet.amount, cashed_out: false, profit: 0
-      }).then(()=>{}).catch(()=>{});
-    }
+async function settleSportBets(){
+  const now=Date.now();let changed=false;
+  for(const bet of sportBets){
+    if(bet.settled)continue;
+    const ph=sportPhase(now);
+    if(!(ph.cycle>bet.cycle||(ph.cycle===bet.cycle&&ph.phase==='done')))continue;
+    const match=getMatch(bet.cycle,bet.m);
+    let won=false;
+    if(bet.type==='1X2')won=matchResult(match)===bet.pick;
+    else if(bet.type==='OU_FOOT'){const g=totalGoals(match);won=(bet.pick==='oOver'&&g>2)||(bet.pick==='oUnder'&&g<=2);}
+    else if(bet.type==='OU_NBA'){const p=totalPts(match);won=(bet.pick==='oOver'&&p>215)||(bet.pick==='oUnder'&&p<=215);}
+    else if(bet.type==='HALF'){const[h1,h2]=halfScore(match,1);const r=h1>h2?'1':h1===h2?'X':'2';won=r===bet.pick;}
+    else if(bet.type==='QTR'){const q=bet.atQ||1;const[q1,q2]=qtrScore(match,q);won=(bet.pick==='o1'&&q1>q2)||(bet.pick==='o2'&&q2>q1);}
+    bet.settled=true;bet.won=won?Math.floor(bet.amount*bet.odds):0;changed=true;
+    if(won){await creditCoins(bet.won);toast('🎉 Paris gagne ! +'+bet.won+'T','win');}
+    else{me.total_wagered=(me.total_wagered||0)+bet.amount;await saveBalance();}
+    if(me.id)await db.from('bets').insert({player_id:me.id,username:me.username,game_type:'sport',amount:bet.amount,cashout_multiplier:bet.odds,profit:bet.won-bet.amount,cashed_out:won}).then(()=>{}).catch(()=>{});
   }
-  if (changed) {
-    sportBets = sportBets.slice(-50);
-    localStorage.setItem('sportBets', JSON.stringify(sportBets));
-  }
+  if(changed){sportBets=sportBets.slice(-100);localStorage.setItem('sportBets_v2',JSON.stringify(sportBets));}
 }
 
-let lastOddsCache = {}; // pour fleches montee/descente des cotes
+function computeStandings(lk){
+  if(standingsCache[lk]&&standingsCache[lk].ts>Date.now()-60000)return standingsCache[lk].data;
+  const lg=SPORT_LEAGUES[lk],N=lg.teams.length;
+  const stats={};lg.teams.forEach(t=>{stats[t.id]={team:t,p:0,w:0,d:0,l:0,gf:0,ga:0,form:[]};});
+  const curCycle=Math.floor(Date.now()/SPORT_CYCLE_MS);
+  let mOff=0;for(const k of LEAGUE_KEYS){if(k===lk)break;mOff+=LEAGUE_MATCH_COUNTS[k];}
+  for(let cy=Math.max(0,curCycle-40);cy<curCycle;cy++){
+    for(let lm=0;lm<LEAGUE_MATCH_COUNTS[lk];lm++){
+      const match=getMatch(cy,mOff+lm);
+      const[s1,s2]=scoreAt(match,match.league.matchMin);
+      const r=matchResult(match);
+      const st1=stats[match.t1.id],st2=stats[match.t2.id];
+      if(!st1||!st2)continue;
+      st1.gf+=s1;st1.ga+=s2;st2.gf+=s2;st2.ga+=s1;
+      if(r==='1'){st1.w++;st1.p+=3;st2.l++;st1.form.push('W');st2.form.push('L');}
+      else if(r==='2'){st2.w++;st2.p+=3;st1.l++;st2.form.push('W');st1.form.push('L');}
+      else{st1.d++;st2.d++;st1.p++;st2.p++;st1.form.push('D');st2.form.push('D');}
+    }
+  }
+  const arr=Object.values(stats).sort((a,b)=>b.p-a.p||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf).map(s=>({...s,form:s.form.slice(-5),gd:s.gf-s.ga,played:s.w+s.d+s.l}));
+  standingsCache[lk]={data:arr,ts:Date.now()};
+  return arr;
+}
 
-function renderSports() {
-  const grid = document.getElementById('match-grid');
-  if (!grid || !document.getElementById('view-sport').classList.contains('active')) return;
-  const ph = sportPhase();
-  let html = '';
-  for (let m = 0; m < SPORT_MATCHES_PER_CYCLE; m++) {
-    const match = getMatch(ph.cycle, m);
-    const minute = matchMinute(ph, match);
-    const [g1, g2] = ph.phase === 'pre' ? [0, 0] : matchScoreAt(match, minute);
-    const odds = liveOdds(match, minute);
-    const myBets = sportBets.filter(b => b.cycle === ph.cycle && b.m === m);
-    const canBet = ph.phase !== 'done' && myBets.length < SPORT_MAX_BETS_PER_MATCH;
-    const total = match.isNba ? 48 : 90;
+function filterSportLeague(key,btn){
+  sportLeagueFilter=key;
+  document.querySelectorAll('.sport-nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderSports();
+}
 
-    // Fleches de variation des cotes
-    const ck = ph.cycle + '-' + m;
-    const prev = lastOddsCache[ck] || odds;
-    const arrow = (cur, old) => cur > old ? ' <span style="color:#ffd166;font-size:9px">▲</span>' : cur < old ? ' <span style="color:#ef4444;font-size:9px">▼</span>' : '';
-    lastOddsCache[ck] = odds;
+function switchSportTab(tab,btn){
+  sportActiveTab=tab;
+  document.querySelectorAll('.sport-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.sport-tab-panel').forEach(p=>p.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('sport-tab-'+tab)?.classList.add('active');
+  if(tab==='standings')renderStandings();
+  else if(tab==='history')renderBetHistory();
+  else renderSports();
+}
 
-    const statusHtml = ph.phase === 'pre'
-      ? `<span class="match-status pre">⏳ Paris ouverts · coup d'envoi dans ${Math.max(0, Math.ceil(SPORT_PREMATCH_S - ph.offset))}s</span>`
-      : ph.phase === 'live'
-      ? `<span class="match-status live">LIVE ${minute}' / ${total}' · cotes en direct</span>`
-      : `<span class="match-status done">Termine ${g1}-${g2}</span>`;
+function renderStandings(){
+  const el=document.getElementById('standings-content');if(!el)return;
+  const lks=sportLeagueFilter==='all'?LEAGUE_KEYS:[sportLeagueFilter].filter(k=>SPORT_LEAGUES[k]);
+  let html='';
+  for(const lk of lks){
+    const lg=SPORT_LEAGUES[lk],rows=computeStandings(lk);
+    const isB=lg.sport==='basketball';
+    html+=`<div style="margin-bottom:22px">
+      <div class="section-title" style="font-size:14px;margin-bottom:8px">${lg.icon} ${lg.name}</div>
+      <table class="standings-table"><thead><tr><th>#</th><th>Equipe</th><th>J</th><th>V</th>${isB?'':'<th>N</th>'}<th>D</th><th>${isB?'Pts moy':'Buts'}</th><th>Diff</th><th>Pts</th><th>Forme</th></tr></thead><tbody>
+      ${rows.map((r,i)=>`<tr>
+        <td style="color:${i<4?'#ffd166':i<8?'#94a3b8':'#64748b'};font-weight:700;text-align:center;font-size:13px">${i+1}</td>
+        <td><span style="display:flex;align-items:center;gap:5px;font-weight:700">${r.team.logo} ${r.team.name}</span></td>
+        <td style="text-align:center;color:#94a3b8">${r.played}</td>
+        <td style="text-align:center;color:#22c55e">${r.w}</td>
+        ${isB?'':`<td style="text-align:center;color:#94a3b8">${r.d}</td>`}
+        <td style="text-align:center;color:#ef4444">${r.l}</td>
+        <td style="text-align:center;color:#94a3b8">${r.gf}-${r.ga}</td>
+        <td style="text-align:center;color:${r.gd>=0?'#22c55e':'#ef4444'}">${r.gd>=0?'+':''}${r.gd}</td>
+        <td class="pts">${r.p}</td>
+        <td><span style="display:flex;gap:3px;align-items:center">${r.form.map(f=>`<span class="fdot ${f}" title="${f==='W'?'V':f==='D'?'N':'D'}"></span>`).join('')}</span></td>
+      </tr>`).join('')}
+      </tbody></table></div>`;
+  }
+  el.innerHTML=html||'<div style="color:#64748b;padding:20px">Selectionne une ligue</div>';
+}
 
-    let betsHtml = myBets.map(b => {
-      if (b.settled) {
-        return b.won > 0
-          ? `<div class="match-result-banner won">🎉 "${b.pick}" @ ${b.odds} : +${b.won} Toks</div>`
-          : `<div class="match-result-banner lost">"${b.pick}" @ ${b.odds} : perdu (${b.amount} Toks)</div>`;
-      }
-      return `<div class="match-mybet">💰 ${b.amount} Toks sur "${b.pick}" @ ${b.odds}${b.live ? ' (live ' + b.atMinute + "')" : ''}</div>`;
-    }).join('');
+function renderBetHistory(){
+  const el=document.getElementById('sport-history-content');if(!el)return;
+  const settled=sportBets.filter(b=>b.settled).reverse().slice(0,20);
+  const pending=sportBets.filter(b=>!b.settled);
+  if(!settled.length&&!pending.length){el.innerHTML='<div style="color:#64748b;padding:20px;text-align:center">Aucun pari</div>';return;}
+  let html='';
+  if(pending.length){
+    html+='<div style="font-size:11px;color:#ffd166;font-weight:700;text-transform:uppercase;margin-bottom:6px">En cours ('+pending.length+')</div>';
+    pending.forEach(b=>{const m=getMatch(b.cycle,b.m);html+=`<div style="background:#1c1336;border:1px solid #ffd166;border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}"${b.live?' (live)':''}</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:900;color:#ffd166">${b.odds}x</div><div style="font-size:11px;color:#94a3b8">${b.amount}T</div></div></div>`;});
+  }
+  if(settled.length){
+    html+='<div style="font-size:11px;color:#64748b;font-weight:700;text-transform:uppercase;margin:10px 0 6px">Historique</div>';
+    settled.forEach(b=>{const m=getMatch(b.cycle,b.m),won=b.won>0;html+=`<div style="background:#1c1336;border:1px solid ${won?'rgba(255,209,102,.3)':'rgba(239,68,68,.2)'};border-radius:8px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-size:12px;font-weight:700">${m.t1.name} vs ${m.t2.name}</div><div style="font-size:11px;color:#94a3b8">${b.type} "${b.pick}" @ ${b.odds}</div></div><div style="font-size:14px;font-weight:900;color:${won?'#22c55e':'#ef4444'}">${won?'+'+b.won:'-'+b.amount}T</div></div>`;});
+  }
+  el.innerHTML=html;
+}
 
-    html += `
-    <div class="match-card ${ph.phase === 'live' ? 'live' : ''} ${myBets.length ? 'has-bet' : ''}">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        ${statusHtml}
-        <span style="font-size:11px;color:#94a3b8;font-weight:700">${match.league.icon} ${match.league.name}</span>
+function renderSports(){
+  const grid=document.getElementById('match-grid');
+  if(!grid||sportActiveTab!=='matches')return;
+  const ph=sportPhase();let html='';
+  for(let m=0;m<TOTAL_MATCHES;m++){
+    const match=getMatch(ph.cycle,m);
+    if(sportLeagueFilter!=='all'&&match.leagueKey!==sportLeagueFilter)continue;
+    const min=matchMinute(ph,match);
+    const[s1,s2]=ph.phase==='pre'?[0,0]:scoreAt(match,min);
+    const isB=match.league.sport==='basketball';
+    const tot=match.league.matchMin;
+    const myBets=sportBets.filter(b=>b.cycle===ph.cycle&&b.m===m);
+    const canBet=ph.phase!=='done'&&myBets.length<SPORT_MAX_BETS;
+    const ck=ph.cycle+'-'+m;
+    const o=liveOdds(match,min,'1X2');
+    const prev=lastOddsCache[ck]||o;
+    const arr=(c,p)=>c>p+.04?'<span class="aup">▲</span>':c<p-.04?'<span class="adn">▼</span>':'';
+    lastOddsCache[ck]=o;
+
+    const statHtml=ph.phase==='pre'?`<span class="match-status pre">⏳ ${Math.max(0,Math.ceil(SPORT_PREMATCH_S-ph.offset))}s</span>`:ph.phase==='live'?`<span class="match-status live">LIVE ${min}' / ${tot}'</span>`:`<span class="match-status done">FT</span>`;
+
+    let qHtml='';
+    if(isB&&ph.phase!=='pre'){
+      const cq=Math.min(4,Math.ceil(min/12)||1);
+      qHtml='<div class="quarter-scores">'+[1,2,3,4].map(q=>{const[q1,q2]=qtrScore(match,q);return`<span class="${q===cq&&ph.phase==='live'?'cur':''}">${q1}-${q2}</span>`;}).join('')+'</div>';
+    }
+    let halfHtml='';
+    if(!isB&&ph.phase==='live'&&min>45){const[h1,h2]=halfScore(match,1);halfHtml=`<div style="font-size:10px;color:#64748b;text-align:center">MT: ${h1}-${h2}</div>`;}
+
+    // 1X2
+    const o1x2Html=`<div class="bet-stitle">Resultat final</div>
+    <div class="match-odds ${isB?'c2':'c3'}">
+      <button class="odd-btn ${myBets.find(b=>b.pick==='o1')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o1','1X2')"><span class="odd-label">${match.t1.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o1.toFixed(2)}${arr(o.o1,prev.o1)}</span></button>
+      ${!isB?`<button class="odd-btn ${myBets.find(b=>b.pick==='oX')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oX','1X2')"><span class="odd-label">Nul</span><span class="odd-val">${o.oX?.toFixed(2)||'-'}${arr(o.oX||0,prev.oX||0)}</span></button>`:''}
+      <button class="odd-btn ${myBets.find(b=>b.pick==='o2')?'picked':''}" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o2','1X2')"><span class="odd-label">${match.t2.name.split(' ').slice(-1)[0]}</span><span class="odd-val">${o.o2.toFixed(2)}${arr(o.o2,prev.o2)}</span></button>
+    </div>`;
+
+    let specHtml='';
+    if(!isB){
+      const ou=liveOdds(match,min,'OU_FOOT');
+      const hf=liveOdds(match,min,'HALF');
+      specHtml=`<div class="bet-stitle">+/- 2.5 buts</div>
+      <div class="match-odds c2">
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_FOOT')"><span class="odd-label">+2.5 buts</span><span class="odd-val">${ou.oOver.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_FOOT')"><span class="odd-label">-2.5 buts</span><span class="odd-val">${ou.oUnder.toFixed(2)}</span></button>
       </div>
-      <div class="match-teams">
-        <div class="match-team"><div class="match-team-logo">${match.t1.logo}</div><div class="match-team-name">${match.t1.name}</div></div>
-        <div>
-          <div class="match-score">${g1} - ${g2}</div>
-          ${ph.phase === 'live' ? `<div class="match-minute">${minute}'</div>` : ''}
+      <div class="bet-stitle">Mi-temps (1X2)</div>
+      <div class="match-odds c3">
+        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'1','HALF')"><span class="odd-label">MT1</span><span class="odd-val">${hf.o1.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'X','HALF')"><span class="odd-label">MT Nul</span><span class="odd-val">${hf.oX.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet&&min<45?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'2','HALF')"><span class="odd-label">MT2</span><span class="odd-val">${hf.o2.toFixed(2)}</span></button>
+      </div>`;
+    } else {
+      const ouN=liveOdds(match,min,'OU_NBA');
+      const qt=liveOdds(match,min,'QTR');
+      const cq=Math.min(4,Math.ceil(min/12)||1);
+      specHtml=`<div class="bet-stitle">Total pts +/-${ouN.thr}</div>
+      <div class="match-odds c2">
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oOver','OU_NBA')"><span class="odd-label">+${ouN.thr}</span><span class="odd-val">${ouN.oOver.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'oUnder','OU_NBA')"><span class="odd-label">-${ouN.thr}</span><span class="odd-val">${ouN.oUnder.toFixed(2)}</span></button>
+      </div>
+      <div class="bet-stitle">Q${cq} vainqueur</div>
+      <div class="match-odds c2">
+        <button class="odd-btn" ${canBet&&ph.phase==='live'?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o1','QTR')"><span class="odd-label">${match.t1.name.split(' ').slice(-1)[0]} Q${cq}</span><span class="odd-val">${qt.o1.toFixed(2)}</span></button>
+        <button class="odd-btn" ${canBet&&ph.phase==='live'?'':'disabled'} onclick="placeSportBet(${ph.cycle},${m},'o2','QTR')"><span class="odd-label">${match.t2.name.split(' ').slice(-1)[0]} Q${cq}</span><span class="odd-val">${qt.o2.toFixed(2)}</span></button>
+      </div>`;
+    }
+
+    const bHtml=myBets.map(b=>b.settled?(b.won>0?`<div class="match-result-banner won">🎉 ${b.type} "${b.pick}" @ ${b.odds} : +${b.won}T</div>`:`<div class="match-result-banner lost">${b.type} "${b.pick}" : -${b.amount}T</div>`):`<div class="match-mybet">💰 ${b.amount}T · ${b.type} "${b.pick}" @ ${b.odds}${b.live?' (live)':''}</div>`).join('');
+
+    html+=`<div class="match-card ${ph.phase==='live'?'live':''} ${myBets.length?'has-bet':''}">
+      <div class="match-card-header">${statHtml}<span style="font-size:10px;color:#64748b;font-weight:700">${match.league.icon} ${match.league.abbr}</span></div>
+      <div class="match-card-body">
+        <div class="match-teams">
+          <div class="match-team"><div class="match-team-logo">${match.t1.logo}</div><div class="match-team-name">${match.t1.name}</div></div>
+          <div><div class="match-score">${s1}-${s2}</div>${ph.phase==='live'?`<div class="match-minute">${min}'</div>`:''}${qHtml}${halfHtml}</div>
+          <div class="match-team"><div class="match-team-logo">${match.t2.logo}</div><div class="match-team-name">${match.t2.name}</div></div>
         </div>
-        <div class="match-team"><div class="match-team-logo">${match.t2.logo}</div><div class="match-team-name">${match.t2.name}</div></div>
+        ${o1x2Html}${specHtml}
       </div>
-      <div class="match-odds" style="${match.isNba ? 'grid-template-columns:1fr 1fr' : ''}">
-        <button class="odd-btn" ${canBet ? '' : 'disabled'} onclick="placeSportBet(${ph.cycle},${m},'1')">
-          <span class="odd-label">1 · ${match.t1.name.split(' ')[0]}</span><span class="odd-val">${odds.o1.toFixed(2)}${arrow(odds.o1, prev.o1)}</span>
-        </button>
-        ${match.isNba ? '' : `<button class="odd-btn" ${canBet ? '' : 'disabled'} onclick="placeSportBet(${ph.cycle},${m},'X')">
-          <span class="odd-label">X · Nul</span><span class="odd-val">${odds.oX.toFixed(2)}${arrow(odds.oX, prev.oX || odds.oX)}</span>
-        </button>`}
-        <button class="odd-btn" ${canBet ? '' : 'disabled'} onclick="placeSportBet(${ph.cycle},${m},'2')">
-          <span class="odd-label">2 · ${match.t2.name.split(' ')[0]}</span><span class="odd-val">${odds.o2.toFixed(2)}${arrow(odds.o2, prev.o2)}</span>
-        </button>
-      </div>
-      ${betsHtml}
+      <div class="match-card-footer">${bHtml}</div>
     </div>`;
   }
-  grid.innerHTML = html;
+  grid.innerHTML=html||'<div style="color:#64748b;padding:20px;text-align:center">Aucun match</div>';
 }
 
 function startSportLoop() {
