@@ -409,7 +409,7 @@
     .mini-view { padding: 18px; gap: 14px; overflow-y: auto; }
     .mini-shell { display: grid; grid-template-columns: 280px 1fr; gap: 14px; align-items: start; }
     .mini-panel, .mini-board { background: #0e1628; border: 1px solid #1e3a5f; border-radius: 12px; padding: 16px; }
-    .mini-board { min-height: 640px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .mini-board { min-height: 560px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .mini-title { font-size: 18px; color: #fff; font-weight: 800; margin-bottom: 6px; }
     .mini-sub { font-size: 13px; color: #94a3b8; line-height: 1.4; margin-bottom: 14px; }
     .game-status { min-height: 22px; color: #94a3b8; font-size: 13px; margin-top: 10px; }
@@ -520,15 +520,15 @@
 
     /* ═══ MINES 5x5 3D ═══ */
     .mines-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
-      max-width: 100%; margin: 0 auto; width: 100%;
-      perspective: 800px; padding: 8px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+      max-width: 460px; margin: 0 auto; width: 100%;
+      perspective: 800px;
     }
     .mines-cell {
       aspect-ratio: 1;
       background: linear-gradient(145deg, #0f2040, #080e1a);
       border: 1px solid #1e3a5f; border-radius: 10px;
-      color: #475569; font-size: 44px; font-weight: 900;
+      color: #475569; font-size: 32px; font-weight: 900;
       cursor: pointer; transition: all 0.18s;
       position: relative; transform-style: preserve-3d;
       display: flex; align-items: center; justify-content: center;
@@ -943,6 +943,7 @@
             <div class="roul-wheel" id="roul-wheel"></div>
             <div class="roul-center"></div>
             <div class="roul-ball" id="roul-ball"></div>
+            <div id="roul-pointer" style="position:absolute;top:4%;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:12px solid #00d4aa;z-index:15"></div>
           </div>
         </div>
       </div>
@@ -2578,7 +2579,11 @@ async function spinRoulette() {
   ball.style.transition = 'none';
   ball.style.transform = `translate(-50%, -50%) rotate(${rouletteBallAngleAcc}deg) translateX(${orbitStart}px) rotate(${-rouletteBallAngleAcc}deg)`;
   void ball.offsetWidth;
-  const ballFinalAngle = rouletteBallAngleAcc - 6 * 360 - (((rouletteBallAngleAcc % 360) + 360) % 360);
+  // Bille finit EN HAUT (270° = 12h = pointeur teal)
+  const curBallMod = ((rouletteBallAngleAcc % 360) + 360) % 360;
+  let ballDelta = 270 - curBallMod;
+  if (ballDelta >= 0) ballDelta -= 360;
+  const ballFinalAngle = rouletteBallAngleAcc + ballDelta - 6 * 360;
   rouletteBallAngleAcc = ballFinalAngle;
   ball.style.transition = 'transform 5s cubic-bezier(0.2, 0.05, 0.1, 1)';
   ball.style.transform = `translate(-50%, -50%) rotate(${ballFinalAngle}deg) translateX(${orbitEnd}px) rotate(${-ballFinalAngle}deg)`;
@@ -2647,31 +2652,31 @@ async function spinRoulette() {
 // Simulation non affiliee - noms equipes illustratifs uniquement
 const SPORT_LEAGUES = {
   ucl: {name:'Ligue des Champions',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'UCL',teams:[
-    {id:'rm',name:'Real Madrid',logo:'⚪',att:.90,def:.85},{id:'fcb',name:'Barcelone',logo:'🔵',att:.88,def:.78},
-    {id:'bay',name:'Bayern',logo:'🔴',att:.85,def:.82},{id:'mci',name:'Man City',logo:'💠',att:.87,def:.84},
-    {id:'psg',name:'PSG',logo:'🔷',att:.83,def:.75},{id:'liv',name:'Liverpool',logo:'❤️',att:.86,def:.80},
-    {id:'int',name:'Inter',logo:'🖤',att:.78,def:.83},{id:'ars',name:'Arsenal',logo:'⭕',att:.82,def:.79},
-    {id:'drt',name:'Dortmund',logo:'💛',att:.80,def:.72},{id:'atm',name:'Atletico',logo:'🔺',att:.74,def:.86},
-    {id:'juv',name:'Juventus',logo:'🦓',att:.76,def:.80},{id:'acm',name:'AC Milan',logo:'😈',att:.79,def:.77},
+    {id:'rm',name:'Real Madrid',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#fff" stroke="#00529F" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="10" font-weight="900" fill="#00529F">RM</text></svg>',att:.90,def:.85},{id:'fcb',name:'Barcelone',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#A50044" stroke="#004D98" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#EDBB00">FCB</text></svg>',att:.88,def:.78},
+    {id:'bay',name:'Bayern',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#DC052D" stroke="#0066B2" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">FCB</text></svg>',att:.85,def:.82},{id:'mci',name:'Man City',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#6CABDD" stroke="#1C2C5B" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="10" font-weight="900" fill="#fff">MC</text></svg>',att:.87,def:.84},
+    {id:'psg',name:'PSG',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#003370" stroke="#DA291C" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">PSG</text></svg>',att:.83,def:.75},{id:'liv',name:'Liverpool',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#C8102E" stroke="#F6EB61" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">LFC</text></svg>',att:.86,def:.80},
+    {id:'int',name:'Inter',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#010E80" stroke="#000" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">INT</text></svg>',att:.78,def:.83},{id:'ars',name:'Arsenal',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#EF0107" stroke="#063672" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">ARS</text></svg>',att:.82,def:.79},
+    {id:'drt',name:'Dortmund',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#FDE100" stroke="#000" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#000">BVB</text></svg>',att:.80,def:.72},{id:'atm',name:'Atletico',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#CB3524" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">ATM</text></svg>',att:.74,def:.86},
+    {id:'juv',name:'Juventus',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#000" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">JUV</text></svg>',att:.76,def:.80},{id:'acm',name:'AC Milan',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#FB090B" stroke="#000" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#000">ACM</text></svg>',att:.79,def:.77},
   ]},
   ligue1: {name:'Ligue 1',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'L1',teams:[
-    {id:'psg1',name:'PSG',logo:'🔷',att:.92,def:.88},{id:'om',name:'Marseille',logo:'🔵',att:.78,def:.74},
-    {id:'asm',name:'Monaco',logo:'🔴',att:.80,def:.75},{id:'ol',name:'Lyon',logo:'⚪',att:.77,def:.72},
-    {id:'lil',name:'Lille',logo:'🐺',att:.74,def:.76},{id:'ren',name:'Rennes',logo:'🟥',att:.72,def:.70},
-    {id:'nic',name:'Nice',logo:'🦅',att:.71,def:.73},{id:'lns',name:'Lens',logo:'🟡',att:.73,def:.71},
+    {id:'psg1',name:'PSG',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#003370" stroke="#DA291C" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">PSG</text></svg>',att:.92,def:.88},{id:'om',name:'Marseille',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#2FAEE0" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">OM</text></svg>',att:.78,def:.74},
+    {id:'asm',name:'Monaco',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#CE1625" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">ASM</text></svg>',att:.80,def:.75},{id:'ol',name:'Lyon',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1A2957" stroke="#E32118" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">OL</text></svg>',att:.77,def:.72},
+    {id:'lil',name:'Lille',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#E32118" stroke="#002F5F" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">LOSC</text></svg>',att:.74,def:.76},{id:'ren',name:'Rennes',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#000" stroke="#E32118" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#E32118">SRFC</text></svg>',att:.72,def:.70},
+    {id:'nic',name:'Nice',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#E32118" stroke="#000" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#000">OGC</text></svg>',att:.71,def:.73},{id:'lns',name:'Lens',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#E32118" stroke="#FFD700" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#FFD700">RCL</text></svg>',att:.73,def:.71},
   ]},
   pl: {name:'Premier League',icon:'⚽',sport:'football',hasDraw:true,matchMin:90,abbr:'PL',teams:[
-    {id:'mci2',name:'Man City',logo:'💠',att:.90,def:.87},{id:'ars2',name:'Arsenal',logo:'⭕',att:.85,def:.82},
-    {id:'liv2',name:'Liverpool',logo:'❤️',att:.88,def:.83},{id:'che',name:'Chelsea',logo:'🔵',att:.80,def:.78},
-    {id:'mnu',name:'Man United',logo:'🔴',att:.79,def:.76},{id:'tot',name:'Tottenham',logo:'🐓',att:.81,def:.75},
-    {id:'new',name:'Newcastle',logo:'🦓',att:.78,def:.79},{id:'avl',name:'Aston Villa',logo:'🦁',att:.76,def:.74},
+    {id:'mci2',name:'Man City',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#6CABDD" stroke="#1C2C5B" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="10" font-weight="900" fill="#fff">MC</text></svg>',att:.90,def:.87},{id:'ars2',name:'Arsenal',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#EF0107" stroke="#063672" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">ARS</text></svg>',att:.85,def:.82},
+    {id:'liv2',name:'Liverpool',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#C8102E" stroke="#F6EB61" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">LFC</text></svg>',att:.88,def:.83},{id:'che',name:'Chelsea',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#034694" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">CFC</text></svg>',att:.80,def:.78},
+    {id:'mnu',name:'Man United',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#DA291C" stroke="#FBE122" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="9" font-weight="900" fill="#fff">MNU</text></svg>',att:.79,def:.76},{id:'tot',name:'Tottenham',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#132257" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">THFC</text></svg>',att:.81,def:.75},
+    {id:'new',name:'Newcastle',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#241F20" stroke="#fff" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">NUFC</text></svg>',att:.78,def:.79},{id:'avl',name:'Aston Villa',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#670E36" stroke="#95BFE5" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#95BFE5">AVFC</text></svg>',att:.76,def:.74},
   ]},
   nba: {name:'NBA',icon:'🏀',sport:'basketball',hasDraw:false,matchMin:48,abbr:'NBA',teams:[
-    {id:'lal',name:'Lakers',logo:'💜',att:.85,def:.78},{id:'bos',name:'Celtics',logo:'🍀',att:.88,def:.85},
-    {id:'gsw',name:'Warriors',logo:'💙',att:.82,def:.80},{id:'mil',name:'Bucks',logo:'🦌',att:.86,def:.82},
-    {id:'mia',name:'Heat',logo:'🔥',att:.79,def:.81},{id:'den',name:'Nuggets',logo:'⛏️',att:.84,def:.79},
-    {id:'phx',name:'Suns',logo:'☀️',att:.81,def:.77},{id:'nyk',name:'Knicks',logo:'🗽',att:.77,def:.80},
-    {id:'dal',name:'Mavericks',logo:'🐴',att:.83,def:.76},{id:'phi',name:'76ers',logo:'🔔',att:.80,def:.78},
+    {id:'lal',name:'Lakers',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#552583" stroke="#FDB927" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#FDB927">LAL</text></svg>',att:.85,def:.78},{id:'bos',name:'Celtics',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#007A33" stroke="#BA9653" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#BA9653">BOS</text></svg>',att:.88,def:.85},
+    {id:'gsw',name:'Warriors',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1D428A" stroke="#FFC72C" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#FFC72C">GSW</text></svg>',att:.82,def:.80},{id:'mil',name:'Bucks',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#00471B" stroke="#EEE1C6" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#EEE1C6">MIL</text></svg>',att:.86,def:.82},
+    {id:'mia',name:'Heat',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#98002E" stroke="#F9A01B" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#F9A01B">MIA</text></svg>',att:.79,def:.81},{id:'den',name:'Nuggets',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#0E2240" stroke="#FEC524" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#FEC524">DEN</text></svg>',att:.84,def:.79},
+    {id:'phx',name:'Suns',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#1D1160" stroke="#E56020" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#E56020">PHX</text></svg>',att:.81,def:.77},{id:'nyk',name:'Knicks',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#006BB6" stroke="#F58426" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#F58426">NYK</text></svg>',att:.77,def:.80},
+    {id:'dal',name:'Mavericks',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#00538C" stroke="#B8C4CA" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#fff">DAL</text></svg>',att:.83,def:.76},{id:'phi',name:'76ers',logo:'<svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="#006BB6" stroke="#ED174C" stroke-width="2"/><text x="16" y="20" text-anchor="middle" font-size="8" font-weight="900" fill="#ED174C">PHI</text></svg>',att:.80,def:.78},
   ]}
 };
 
@@ -2937,7 +2942,7 @@ function renderSports(){
     let qHtml='';
     if(isB&&ph.phase!=='pre'){
       const cq=Math.min(4,Math.ceil(min/12)||1);
-      qHtml='<div class="quarter-scores">'+[1,2,3,4].map(q=>{const[q1,q2]=qtrScore(match,q);return`<span class="${q===cq&&ph.phase==='live'?'cur':''}">${q1}-${q2}</span>`;}).join('')+'</div>';
+      qHtml='<div class="quarter-scores">'+[1,2,3,4].map(q=>{if(q>cq)return'';const[q1,q2]=qtrScore(match,q);return`<span class="${q===cq&&ph.phase==='live'?'cur':''}">${q1}-${q2}</span>`;}).join('')+'</div>';
     }
     let halfHtml='';
     if(!isB&&ph.phase==='live'&&min>45){const[h1,h2]=halfScore(match,1);halfHtml=`<div style="font-size:10px;color:#64748b;text-align:center">MT: ${h1}-${h2}</div>`;}
